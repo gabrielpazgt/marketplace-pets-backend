@@ -726,6 +726,7 @@ export interface ApiCatalogCategoryCatalogCategory
     > &
       Schema.Attribute.Private;
     matchTerms: Schema.Attribute.JSON;
+    navigationImage: Schema.Attribute.Media<'images'>;
     parent: Schema.Attribute.Relation<
       'manyToOne',
       'api::catalog-category.catalog-category'
@@ -915,6 +916,7 @@ export interface ApiHeaderAnnouncementHeaderAnnouncement
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    footerNewsletterPromoImage: Schema.Attribute.Media<'images'>;
     isEnabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     items: Schema.Attribute.Component<'shared.header-slide', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1336,6 +1338,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       ['food', 'treats', 'hygiene', 'health', 'accesories', 'other']
     > &
       Schema.Attribute.DefaultTo<'other'>;
+    compareAtPrice: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

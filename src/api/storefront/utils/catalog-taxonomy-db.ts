@@ -44,6 +44,7 @@ type CatalogCategoryRecord = {
   slug?: string;
   label?: string;
   description?: string | null;
+  navigationImage?: any;
   level?: CategoryLevel;
   legacyCategory?: string | null;
   matchTerms?: unknown;
@@ -230,6 +231,7 @@ const buildDatabasePayload = (
             ...serializeLeaf(category),
             legacyCategory: normalizeText(category.legacyCategory) || null,
             description: normalizeText(category.description),
+            ...(category.navigationImage ? { image: category.navigationImage } : {}),
             recommendedFilters: (category.recommendedFilters || [])
               .sort(compareBySortOrder)
               .map(serializeFilter),
@@ -437,6 +439,7 @@ export const getCatalogTaxonomyPayloadFromDatabase = async (strapi: Core.Strapi)
       populate: {
         animal: true,
         parent: true,
+        navigationImage: true,
         recommendedFilters: true,
       },
     }),

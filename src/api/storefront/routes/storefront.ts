@@ -52,6 +52,12 @@ export default {
     },
     {
       method: 'GET',
+      path: '/storefront/footer-newsletter-promo',
+      handler: 'storefront.getFooterNewsletterPromo',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
       path: '/storefront/taxonomy/pets',
       handler: 'storefront.listPetTaxonomy',
       config: { auth: false },

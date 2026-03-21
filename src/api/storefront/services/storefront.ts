@@ -149,6 +149,104 @@ const roundMoney = (value: number): number => Math.round((value + Number.EPSILON
 
 const normalizeText = (value: any): string => (typeof value === 'string' ? value.trim() : '');
 
+const normalizeSearchText = (value: any): string =>
+  normalizeText(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const SEARCH_TERM_ALIASES: Record<string, string[]> = {
+  alimento: ['alimentacion', 'comida', 'food', 'croquetas', 'croqueta', 'nutricion'],
+  alimentacion: ['alimento', 'comida', 'food', 'nutricion'],
+  comida: ['alimento', 'alimentacion', 'food', 'croquetas', 'croqueta', 'nutricion'],
+  food: ['alimento', 'alimentacion', 'comida', 'nutricion'],
+  treats: ['treat', 'snack', 'snacks', 'premio', 'premios'],
+  treat: ['treats', 'snack', 'snacks', 'premio', 'premios'],
+  snack: ['snacks', 'treat', 'treats', 'premio', 'premios'],
+  snacks: ['snack', 'treat', 'treats', 'premio', 'premios'],
+  premio: ['premios', 'snack', 'snacks', 'treat', 'treats'],
+  premios: ['premio', 'snack', 'snacks', 'treat', 'treats'],
+  salud: ['health', 'farmacia', 'bienestar'],
+  health: ['salud', 'farmacia', 'bienestar'],
+  farmacia: ['salud', 'health', 'bienestar'],
+  higiene: ['aseo', 'grooming', 'limpieza', 'hygiene'],
+  aseo: ['higiene', 'grooming', 'limpieza', 'hygiene'],
+  grooming: ['higiene', 'aseo', 'limpieza', 'hygiene'],
+  limpieza: ['higiene', 'aseo', 'grooming', 'hygiene'],
+  accesorios: ['accesories', 'accessories', 'equipo', 'suministros'],
+  accesories: ['accesorios', 'accessories', 'equipo', 'suministros'],
+  accessories: ['accesorios', 'accesories', 'equipo', 'suministros'],
+  ropa: ['zapatos', 'calzado', 'vestimenta'],
+  zapatos: ['zapato', 'calzado', 'ropa'],
+  zapato: ['zapatos', 'calzado', 'ropa'],
+  calzado: ['zapato', 'zapatos', 'ropa'],
+  perro: ['perros', 'dog', 'dogs', 'canino'],
+  perros: ['perro', 'dog', 'dogs', 'canino'],
+  dog: ['dogs', 'perro', 'perros', 'canino'],
+  dogs: ['dog', 'perro', 'perros', 'canino'],
+  gato: ['gatos', 'cat', 'cats', 'felino'],
+  gatos: ['gato', 'cat', 'cats', 'felino'],
+  cat: ['cats', 'gato', 'gatos', 'felino'],
+  cats: ['cat', 'gato', 'gatos', 'felino'],
+  caballo: ['caballos', 'horse', 'horses', 'equina', 'equino'],
+  caballos: ['caballo', 'horse', 'horses', 'equina', 'equino'],
+  horse: ['horses', 'caballo', 'caballos', 'equina', 'equino'],
+  horses: ['horse', 'caballo', 'caballos', 'equina', 'equino'],
+  ave: ['aves', 'bird', 'birds'],
+  aves: ['ave', 'bird', 'birds'],
+  bird: ['birds', 'ave', 'aves'],
+  birds: ['bird', 'ave', 'aves'],
+  reptil: ['reptiles', 'reptile', 'reptiles'],
+  reptiles: ['reptil', 'reptile'],
+  reptile: ['reptil', 'reptiles'],
+  pez: ['peces', 'fish', 'acuario', 'acuarios'],
+  peces: ['pez', 'fish', 'acuario', 'acuarios'],
+  fish: ['pez', 'peces', 'acuario', 'acuarios'],
+  acuario: ['acuarios', 'fish', 'pez', 'peces'],
+  acuarios: ['acuario', 'fish', 'pez', 'peces'],
+};
+
+const tokenizeSearch = (value: any): string[] =>
+  Array.from(
+    new Set(
+      normalizeSearchText(value)
+        .split(' ')
+        .map((token) => token.trim())
+        .filter((token) => token.length >= 2)
+    )
+  );
+
+const expandSearchToken = (token: string): string[] => {
+  const normalized = normalizeSearchText(token);
+  if (!normalized) return [];
+
+  const singular = normalized.endsWith('s') && normalized.length > 3 ? normalized.slice(0, -1) : '';
+  const plural = !normalized.endsWith('s') && normalized.length > 2 ? `${normalized}s` : '';
+  const aliases = [
+    normalized,
+    singular,
+    plural,
+    ...(SEARCH_TERM_ALIASES[normalized] || []),
+    ...(singular ? SEARCH_TERM_ALIASES[singular] || [] : []),
+  ];
+
+  return Array.from(new Set(aliases.map((item) => normalizeSearchText(item)).filter((item) => item.length >= 2)));
+};
+
+const buildSearchFieldConditions = (term: string): any[] => [
+  { name: { $containsi: term } },
+  { slug: { $containsi: term } },
+  { category: { $containsi: term } },
+  { subcategory: { $containsi: term } },
+  { form: { $containsi: term } },
+  { proteinSource: { $containsi: term } },
+  { brand: { name: { $containsi: term } } },
+  { speciesSupported: { name: { $containsi: term } } },
+];
+
 const pickFirstNonEmpty = (values: any[]): string => {
   for (const value of values) {
     const normalized = normalizeText(value);
@@ -248,6 +346,7 @@ const serializeProduct = (product: any) => ({
   slug: product.slug,
   description: product.description,
   price: roundMoney(toNumber(product.price, 0)),
+  compareAtPrice: roundMoney(toNumber(product.compareAtPrice, 0)) || null,
   stock: toInt(product.stock, 0),
   isFeatured: Boolean(product.isFeatured),
   category: product.category,
@@ -272,6 +371,7 @@ const serializeProductCompact = (product: any) => ({
   name: product.name,
   slug: product.slug,
   price: roundMoney(toNumber(product.price, 0)),
+  compareAtPrice: roundMoney(toNumber(product.compareAtPrice, 0)) || null,
   stock: toInt(product.stock, 0),
   category: product.category,
   subcategory: normalizeText(product.subcategory) || null,
@@ -630,6 +730,19 @@ const serializeHeaderAnnouncement = (announcement: any) => ({
   startsAt: announcement.startsAt || null,
   endsAt: announcement.endsAt || null,
 });
+
+const serializeMedia = (file: any) => {
+  if (!file) return null;
+
+  return {
+    id: file.id,
+    documentId: file.documentId || null,
+    url: file.url || '',
+    alternativeText: file.alternativeText || null,
+    name: file.name || null,
+    formats: file.formats || {},
+  };
+};
 
 const serializeCart = (cart: any) => ({
   id: cart.id,
@@ -1633,9 +1746,21 @@ export default ({ strapi }) => {
 
     const search = normalizeText(query?.search);
     if (search) {
-      conditions.push({
-        $or: [{ name: { $containsi: search } }, { slug: { $containsi: search } }],
-      });
+      const searchGroups = tokenizeSearch(search)
+        .map((token) => expandSearchToken(token))
+        .filter((group) => group.length > 0);
+
+      if (searchGroups.length) {
+        for (const group of searchGroups) {
+          conditions.push({
+            $or: group.flatMap((term) => buildSearchFieldConditions(term)),
+          });
+        }
+      } else {
+        conditions.push({
+          $or: buildSearchFieldConditions(search),
+        });
+      }
     }
 
     const excludeId = toInt(query?.excludeId, 0);
@@ -2145,6 +2270,21 @@ export default ({ strapi }) => {
     };
   };
 
+  const getFooterNewsletterPromoPayload = async () => {
+    const announcementConfig = await strapi.db.query(HEADER_ANNOUNCEMENT_UID).findOne({
+      where: {
+        publishedAt: { $notNull: true },
+      },
+      populate: {
+        footerNewsletterPromoImage: true,
+      },
+    });
+
+    return {
+      data: serializeMedia(announcementConfig?.footerNewsletterPromoImage || null),
+    };
+  };
+
   const resolveMembershipTierFromName = (name: string): 'free' | 'premium' => {
     const normalized = normalizeText(name).toLowerCase();
     if (normalized.includes('premium')) return 'premium';
@@ -2336,6 +2476,10 @@ export default ({ strapi }) => {
 
     async listHeaderAnnouncements() {
       return listHeaderAnnouncementsPayload();
+    },
+
+    async getFooterNewsletterPromo() {
+      return getFooterNewsletterPromoPayload();
     },
 
     async listPetTaxonomy() {

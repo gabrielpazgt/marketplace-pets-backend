@@ -97,6 +97,10 @@ export default ({ strapi }) => {
       return execute(ctx, async () => service.listHeaderAnnouncements());
     },
 
+    async getFooterNewsletterPromo(ctx: any) {
+      return execute(ctx, async () => service.getFooterNewsletterPromo());
+    },
+
     async listPetTaxonomy(ctx: any) {
       return execute(ctx, async () => service.listPetTaxonomy());
     },

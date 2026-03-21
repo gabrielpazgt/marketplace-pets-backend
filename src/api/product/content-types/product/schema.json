@@ -26,6 +26,9 @@
       "type": "decimal",
       "required": true
     },
+    "compareAtPrice": {
+      "type": "decimal"
+    },
     "stock": {
       "type": "integer",
       "default": 0
