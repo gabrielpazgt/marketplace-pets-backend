@@ -14,6 +14,9 @@ const {
 } = require('./seed-storefront-catalog-data');
 
 const PRODUCT_UID = 'api::product.product';
+const CART_ITEM_UID = 'api::cart-item.cart-item';
+const ORDER_ITEM_UID = 'api::order-item.order-item';
+const COUPON_UID = 'api::coupon.coupon';
 const BRAND_UID = 'api::brand.brand';
 const SPECIE_UID = 'api::specie.specie';
 const LIFE_STAGE_UID = 'api::life-stage.life-stage';
@@ -22,6 +25,70 @@ const HEALTH_CONDITION_UID = 'api::health-condition.health-condition';
 const INGREDIENT_UID = 'api::ingredient.ingredient';
 const MEMBERSHIP_UID = 'api::membership.membership';
 const FILE_UID = 'plugin::upload.file';
+const PRODUCT_CATEGORY_VALUES = new Set(['food', 'treats', 'hygiene', 'health', 'accesories', 'other']);
+
+const ANIMAL_SPECIE_SLUG_MAP = {
+  dog: 'perro',
+  cat: 'gato',
+  bird: 'ave',
+  fish: 'pez',
+  reptile: 'reptil',
+  'small-pet': 'pequena-mascota',
+};
+
+const PROTEIN_BY_ANIMAL = {
+  dog: ['chicken', 'lamb', 'beef'],
+  cat: ['fish', 'turkey', 'chicken'],
+  bird: ['plant', 'mixed', 'insect'],
+  fish: ['fish', 'plant', 'mixed'],
+  reptile: ['insect', 'mixed', 'plant'],
+  'small-pet': ['plant', 'mixed', 'insect'],
+};
+
+const WEIGHT_BY_ANIMAL = {
+  dog: [{ min: 1, max: 10 }, { min: 10, max: 25 }, { min: 25, max: 45 }],
+  cat: [{ min: 0.5, max: 4 }, { min: 4, max: 7 }, { min: 7, max: 12 }],
+  bird: [{ min: 0.05, max: 0.2 }, { min: 0.2, max: 0.8 }, { min: 0.8, max: 2.5 }],
+  fish: [{ min: 0.01, max: 0.1 }, { min: 0.1, max: 0.5 }, { min: 0.5, max: 5 }],
+  reptile: [{ min: 0.3, max: 2 }, { min: 2, max: 6 }, { min: 6, max: 20 }],
+  'small-pet': [{ min: 0.2, max: 1 }, { min: 1, max: 3 }, { min: 3, max: 8 }],
+};
+
+const LIFE_STAGES_BY_ANIMAL = {
+  dog: ['cachorro', 'adulto', 'senior'],
+  cat: ['gatito', 'adulto', 'senior'],
+  bird: ['cachorro', 'adulto', 'senior'],
+  fish: ['cachorro', 'adulto', 'senior'],
+  reptile: ['cachorro', 'adulto', 'senior'],
+  'small-pet': ['cachorro', 'adulto', 'senior'],
+};
+
+const PACKS_BY_CATEGORY = {
+  food: ['2kg', '1.5kg', '3kg'],
+  treats: ['90g', '150g', '220g'],
+  hygiene: ['300ml', '500ml', '750ml'],
+  health: ['60 tabs', '120g', '250ml'],
+  accesories: ['Talla S', 'Talla M', 'Talla L'],
+  other: ['Kit', 'Set', 'Duo'],
+};
+
+const TITLE_PREFIXES_BY_CATEGORY = {
+  food: ['Formula', 'Receta', 'Blend'],
+  treats: ['Snack', 'Premio', 'Bocado'],
+  hygiene: ['Care', 'Fresh', 'Clean'],
+  health: ['Support', 'Balance', 'Vital'],
+  accesories: ['Home', 'Move', 'Play'],
+  other: ['Kit', 'Set', 'Pack'],
+};
+
+const PRICE_BASE_BY_CATEGORY = {
+  food: 68,
+  treats: 29,
+  hygiene: 41,
+  health: 62,
+  accesories: 88,
+  other: 54,
+};
 
 const nowIso = () => new Date().toISOString();
 
@@ -169,7 +236,286 @@ const ensureProduct = async (strapi, productData) => {
   return { id: created.id, action: 'created' };
 };
 
+const parseFlag = (name) => process.argv.includes(name);
+
+const parseArgNumber = (name, fallback) => {
+  const prefix = `${name}=`;
+  const found = process.argv.find((arg) => arg.startsWith(prefix));
+  if (!found) return fallback;
+
+  const parsed = Number(found.slice(prefix.length));
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+};
+
+const normalizeText = (value) =>
+  String(value || '')
+    .trim()
+    .toLowerCase();
+
+const collectEntityIds = async (strapi, uid, where = {}) => {
+  const ids = [];
+  let lastId = 0;
+  const limit = 250;
+
+  for (;;) {
+    const constraints = [{ id: { $gt: lastId } }];
+    if (where && Object.keys(where).length) {
+      constraints.unshift(where);
+    }
+
+    const rows = await strapi.db.query(uid).findMany({
+      where: constraints.length === 1 ? constraints[0] : { $and: constraints },
+      select: ['id'],
+      limit,
+      orderBy: { id: 'asc' },
+    });
+
+    if (!rows.length) break;
+    for (const row of rows) {
+      ids.push(row.id);
+    }
+
+    lastId = rows[rows.length - 1].id;
+    if (rows.length < limit) break;
+  }
+
+  return ids;
+};
+
+const resetProductsCatalog = async (strapi) => {
+  const couponIds = await collectEntityIds(strapi, COUPON_UID);
+  for (const couponId of couponIds) {
+    await strapi.db.query(COUPON_UID).update({
+      where: { id: couponId },
+      data: { eligibleProducts: [] },
+    });
+  }
+
+  const cartItemIds = await collectEntityIds(strapi, CART_ITEM_UID, {
+    product: { id: { $notNull: true } },
+  });
+  for (const itemId of cartItemIds) {
+    await strapi.db.query(CART_ITEM_UID).delete({ where: { id: itemId } });
+  }
+
+  const orderItemIds = await collectEntityIds(strapi, ORDER_ITEM_UID, {
+    product: { id: { $notNull: true } },
+  });
+  for (const itemId of orderItemIds) {
+    await strapi.db.query(ORDER_ITEM_UID).update({
+      where: { id: itemId },
+      data: { product: null },
+    });
+  }
+
+  const productIds = await collectEntityIds(strapi, PRODUCT_UID);
+  for (const productId of productIds) {
+    await strapi.db.query(PRODUCT_UID).delete({ where: { id: productId } });
+  }
+
+  return {
+    couponsUpdated: couponIds.length,
+    cartItemsDeleted: cartItemIds.length,
+    orderItemsDetached: orderItemIds.length,
+    productsDeleted: productIds.length,
+  };
+};
+
+const resolveLegacyCategory = (category) => {
+  const raw = normalizeText(category?.legacyCategory);
+  if (PRODUCT_CATEGORY_VALUES.has(raw)) return raw;
+  return 'other';
+};
+
+const resolveAnimalKey = (animal) => normalizeText(animal?.key || animal?.slug);
+
+const resolveSpecieSlug = (animal) => {
+  const key = resolveAnimalKey(animal);
+  if (ANIMAL_SPECIE_SLUG_MAP[key]) return ANIMAL_SPECIE_SLUG_MAP[key];
+
+  const hints = (animal?.legacySpeciesHints || []).map((hint) => normalizeText(hint));
+  if (hints.includes('perro') || hints.includes('dog')) return 'perro';
+  if (hints.includes('gato') || hints.includes('cat')) return 'gato';
+  if (hints.includes('ave') || hints.includes('bird')) return 'ave';
+  if (hints.includes('pez') || hints.includes('fish') || hints.includes('acuario')) return 'pez';
+  if (hints.includes('reptil') || hints.includes('reptile')) return 'reptil';
+  if (hints.includes('roedor') || hints.includes('small-pet') || hints.includes('pequena mascota')) return 'pequena-mascota';
+
+  return null;
+};
+
+const resolveForm = (legacyCategory, subcategorySlug) => {
+  if (legacyCategory === 'food') {
+    return normalizeText(subcategorySlug).includes('humedo') ? 'wet' : 'kibble';
+  }
+  if (legacyCategory === 'treats') return 'treat';
+  if (legacyCategory === 'hygiene') return 'hygiene';
+  if (legacyCategory === 'health') return 'supplement';
+  return 'accesory';
+};
+
+const resolveProteinSource = (animalKey, legacyCategory, index) => {
+  if (!['food', 'treats', 'health'].includes(legacyCategory)) {
+    return undefined;
+  }
+
+  const pool = PROTEIN_BY_ANIMAL[animalKey] || ['mixed', 'plant', 'chicken'];
+  return pool[index % pool.length];
+};
+
+const resolveWeightRange = (animalKey, legacyCategory, index) => {
+  if (['hygiene', 'accesories', 'other'].includes(legacyCategory)) {
+    return { min: 0, max: 999 };
+  }
+
+  const pool = WEIGHT_BY_ANIMAL[animalKey] || [{ min: 0, max: 999 }];
+  return pool[index % pool.length];
+};
+
+const resolveLifeStages = (animalKey, legacyCategory, index) => {
+  const defaults = LIFE_STAGES_BY_ANIMAL[animalKey] || ['adulto', 'senior'];
+
+  if (['food', 'treats', 'health'].includes(legacyCategory)) {
+    return [defaults[index % defaults.length]];
+  }
+
+  return defaults;
+};
+
+const buildDescription = (animalLabel, categoryLabel, subcategoryLabel, name) => [
+  {
+    type: 'paragraph',
+    children: [
+      {
+        type: 'text',
+        text: `${name}. Producto de prueba para ${animalLabel.toLowerCase()} dentro de ${categoryLabel} / ${subcategoryLabel}.`,
+      },
+    ],
+  },
+];
+
+const buildProductsFromTaxonomy = (taxonomyData, slugify, targetCount) => {
+  const animals = Array.isArray(taxonomyData?.animals) ? taxonomyData.animals : [];
+  const combos = [];
+
+  for (const animal of animals) {
+    const animalKey = resolveAnimalKey(animal);
+    const animalLabel = String(animal?.label || animalKey || 'Mascota').trim();
+    const specieSlug = resolveSpecieSlug(animal);
+    const categories = Array.isArray(animal?.categories) ? animal.categories : [];
+
+    for (const category of categories) {
+      const legacyCategory = resolveLegacyCategory(category);
+      const categoryLabel = String(category?.label || legacyCategory).trim();
+      const subcategories = Array.isArray(category?.subcategories) ? category.subcategories : [];
+
+      for (const subcategory of subcategories) {
+        const subcategoryLabel = String(subcategory?.label || subcategory?.slug || 'General').trim();
+        const subcategorySlug = String(subcategory?.slug || '').trim();
+
+        if (!subcategoryLabel) continue;
+
+        combos.push({
+          animalKey,
+          animalLabel,
+          specieSlug,
+          legacyCategory,
+          categoryLabel,
+          subcategoryLabel,
+          subcategorySlug,
+        });
+      }
+    }
+  }
+
+  const grouped = new Map();
+  for (const combo of combos) {
+    const key = `${combo.animalKey}|${combo.legacyCategory}`;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(combo);
+  }
+
+  const groupKeys = Array.from(grouped.keys()).sort();
+  for (const key of groupKeys) {
+    grouped.get(key).sort((a, b) => a.subcategoryLabel.localeCompare(b.subcategoryLabel, 'es'));
+  }
+
+  const selected = [];
+  while (selected.length < targetCount) {
+    let added = false;
+
+    for (const key of groupKeys) {
+      const bucket = grouped.get(key);
+      if (!bucket || !bucket.length) continue;
+      selected.push(bucket.shift());
+      added = true;
+      if (selected.length >= targetCount) break;
+    }
+
+    if (!added) break;
+  }
+
+  const dietSlugs = DIET_TAG_SEED.map((item) => item.slug);
+  const healthSlugs = HEALTH_SEED.map((item) => item.slug);
+  const ingredientSlugs = INGREDIENT_SEED.map((item) => item.slug);
+  const products = [];
+
+  selected.forEach((entry, index) => {
+    const packPool = PACKS_BY_CATEGORY[entry.legacyCategory] || ['Unidad'];
+    const titlePool = TITLE_PREFIXES_BY_CATEGORY[entry.legacyCategory] || ['Pack'];
+    const title = titlePool[index % titlePool.length];
+    const pack = packPool[index % packPool.length];
+    const proteinSource = resolveProteinSource(entry.animalKey, entry.legacyCategory, index);
+    const weightRange = resolveWeightRange(entry.animalKey, entry.legacyCategory, index);
+    const lifeStages = resolveLifeStages(entry.animalKey, entry.legacyCategory, index);
+    const form = resolveForm(entry.legacyCategory, entry.subcategorySlug);
+
+    const name = entry.legacyCategory === 'other'
+      ? `${title} ${entry.subcategoryLabel} ${entry.animalLabel}`
+      : `${title} ${entry.subcategoryLabel} ${entry.animalLabel} ${pack}`.trim();
+
+    const basePrice = PRICE_BASE_BY_CATEGORY[entry.legacyCategory] || 49;
+    const price = Number((basePrice + (index % 7) * 5 + Math.floor(index / 9) * 2).toFixed(2));
+    const stock = 12 + (index % 9) * 4 + Math.floor(index / 6);
+    const dietTags = ['food', 'treats', 'health'].includes(entry.legacyCategory)
+      ? [dietSlugs[index % dietSlugs.length]]
+      : [];
+    const health = [healthSlugs[index % healthSlugs.length]];
+    const ingredients =
+      entry.legacyCategory === 'accesories' || entry.legacyCategory === 'other'
+        ? []
+        : [ingredientSlugs[index % ingredientSlugs.length], ingredientSlugs[(index + 3) % ingredientSlugs.length]];
+
+    products.push({
+      name,
+      subtitle: `Prueba de filtros para ${entry.animalLabel.toLowerCase()} en ${entry.categoryLabel.toLowerCase()}.`,
+      description: buildDescription(entry.animalLabel, entry.categoryLabel, entry.subcategoryLabel, name),
+      slug: slugify(`${entry.animalKey}-${entry.legacyCategory}-${entry.subcategorySlug || entry.subcategoryLabel}-${index + 1}`),
+      price,
+      stock,
+      isFeatured: index % 11 === 0,
+      category: entry.legacyCategory,
+      subcategory: entry.subcategoryLabel,
+      form,
+      proteinSource,
+      brandSlug: BRAND_SEED[index % BRAND_SEED.length].slug,
+      species: entry.specieSlug ? [entry.specieSlug] : [],
+      lifeStages,
+      dietTags,
+      health,
+      ingredients,
+      weightMinKg: weightRange.min,
+      weightMaxKg: weightRange.max,
+    });
+  });
+
+  return products;
+};
+
 const main = async () => {
+  const resetProducts = parseFlag('--reset-products');
+  const targetCount = parseArgNumber('--target-count', 108);
+
   const strapi = createStrapi({
     appDir: process.cwd(),
     distDir: path.join(process.cwd(), 'dist'),
@@ -180,6 +526,15 @@ const main = async () => {
   try {
     await strapi.load();
 
+    if (resetProducts) {
+      const resetSummary = await resetProductsCatalog(strapi);
+      console.log('Limpieza de productos completada');
+      console.log(`- Cupones actualizados: ${resetSummary.couponsUpdated}`);
+      console.log(`- Cart items eliminados: ${resetSummary.cartItemsDeleted}`);
+      console.log(`- Order items desligados: ${resetSummary.orderItemsDetached}`);
+      console.log(`- Productos eliminados: ${resetSummary.productsDeleted}`);
+    }
+
     const brandMap = await ensureCatalogMap(strapi, BRAND_UID, BRAND_SEED);
     const specieMap = await ensureCatalogMap(strapi, SPECIE_UID, SPECIE_SEED);
     const lifeStageMap = await ensureCatalogMap(strapi, LIFE_STAGE_UID, LIFE_STAGE_SEED);
@@ -189,7 +544,16 @@ const main = async () => {
 
     await ensureCatalogMap(strapi, MEMBERSHIP_UID, MEMBERSHIP_SEED);
 
-    const products = buildSeedProducts(slugify);
+    let products = [];
+    try {
+      const storefrontService = strapi.service('api::storefront.storefront');
+      const taxonomyPayload = await storefrontService.listCatalogTaxonomy();
+      products = buildProductsFromTaxonomy(taxonomyPayload?.data || {}, slugify, targetCount);
+    } catch (taxonomyError) {
+      console.warn('No se pudo usar la taxonomia en DB, usando seed estatico.', taxonomyError?.message || taxonomyError);
+      products = buildSeedProducts(slugify);
+    }
+
     const palettes = [
       { background: '#FFF8EC', accent: '#EA9A00' },
       { background: '#EEF6FF', accent: '#1976D2' },

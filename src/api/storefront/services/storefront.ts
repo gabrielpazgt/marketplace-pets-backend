@@ -21,6 +21,8 @@ const ORDER_ITEM_UID = 'api::order-item.order-item';
 const DEFAULT_CURRENCY = 'GTQ';
 const MAX_PAGE_SIZE = 100;
 const PRODUCT_QUERY_TIMEOUT_MS = 8000;
+const QUERY_CACHE_TTL_MS = 5000;
+const QUERY_CACHE_MAX_ENTRIES = 300;
 const DEFAULT_LANGUAGE = 'es';
 const DEFAULT_TIME_ZONE = 'America/Guatemala';
 const FREE_SHIPPING_THRESHOLD = 500;
@@ -84,6 +86,54 @@ const runWithTimeout = <T>(operation: Promise<T>, timeoutMs: number, context: st
 
 const isQueryTimeoutError = (error: unknown): boolean =>
   Boolean(error && typeof error === 'object' && (error as any).code === 'QUERY_TIMEOUT');
+
+const productsQueryCache = new Map<string, { expiresAt: number; payload: any }>();
+const facetsQueryCache = new Map<string, { expiresAt: number; payload: any }>();
+
+const stableSerialize = (input: any): any => {
+  if (Array.isArray(input)) {
+    return input.map((item) => stableSerialize(item));
+  }
+
+  if (!input || typeof input !== 'object') {
+    return input;
+  }
+
+  return Object.keys(input)
+    .sort()
+    .reduce((acc, key) => {
+      acc[key] = stableSerialize((input as Record<string, any>)[key]);
+      return acc;
+    }, {} as Record<string, any>);
+};
+
+const buildQueryCacheKey = (scope: string, query: any, userId?: number): string =>
+  `${scope}|u:${toInt(userId, 0)}|${JSON.stringify(stableSerialize(query || {}))}`;
+
+const getQueryCache = <T>(cache: Map<string, { expiresAt: number; payload: T }>, key: string): T | null => {
+  const current = cache.get(key);
+  if (!current) return null;
+  if (current.expiresAt <= Date.now()) {
+    cache.delete(key);
+    return null;
+  }
+
+  return current.payload;
+};
+
+const setQueryCache = <T>(cache: Map<string, { expiresAt: number; payload: T }>, key: string, payload: T): void => {
+  if (cache.size >= QUERY_CACHE_MAX_ENTRIES) {
+    const oldestKey = cache.keys().next().value;
+    if (oldestKey) {
+      cache.delete(oldestKey);
+    }
+  }
+
+  cache.set(key, {
+    expiresAt: Date.now() + QUERY_CACHE_TTL_MS,
+    payload,
+  });
+};
 
 const toNumber = (value: any, fallback = 0): number => {
   const parsed = Number(value);
@@ -2164,6 +2214,12 @@ export default ({ strapi }) => {
     },
 
     async listProducts(query: any = {}, userId?: number) {
+      const cacheKey = buildQueryCacheKey('products', query, userId);
+      const cached = getQueryCache(productsQueryCache, cacheKey);
+      if (cached) {
+        return cached;
+      }
+
       const page = Math.max(1, toInt(query.page, 1));
       const pageSize = Math.min(MAX_PAGE_SIZE, Math.max(1, toInt(query.pageSize, 25)));
       const offset = (page - 1) * pageSize;
@@ -2213,7 +2269,7 @@ export default ({ strapi }) => {
         ? offset + pageSize + 1
         : offset + pageItems.length;
 
-      return {
+      const payload = {
         data: pageItems.map(compact ? serializeProductCompact : serializeProduct),
         meta: {
           pagination: {
@@ -2224,10 +2280,21 @@ export default ({ strapi }) => {
           },
         },
       };
+
+      setQueryCache(productsQueryCache, cacheKey, payload);
+      return payload;
     },
 
     async listProductFacets(query: any = {}, userId?: number) {
-      return listProductFacetsPayload(query, userId);
+      const cacheKey = buildQueryCacheKey('facets', query, userId);
+      const cached = getQueryCache(facetsQueryCache, cacheKey);
+      if (cached) {
+        return cached;
+      }
+
+      const payload = await listProductFacetsPayload(query, userId);
+      setQueryCache(facetsQueryCache, cacheKey, payload);
+      return payload;
     },
 
     async getProduct(idOrSlug: string) {
