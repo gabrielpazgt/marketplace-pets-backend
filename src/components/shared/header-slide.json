@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_header_slides",
+  "info": {
+    "displayName": "Header Slide",
+    "description": "Mensaje individual del slider superior"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text",
+      "required": true
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "startsAt": {
+      "type": "datetime"
+    },
+    "endsAt": {
+      "type": "datetime"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "strapi-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "npm run check:node && strapi build",
+    "check:node": "node scripts/check-node-version.js",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "npm run check:node && strapi develop",
+    "develop": "npm run check:node && strapi develop",
+    "seed:storefront": "node scripts/seed-storefront-data.js",
+    "start": "npm run check:node && strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "^5.40.0",
+    "@strapi/plugin-users-permissions": "^5.40.0",
+    "@strapi/provider-email-nodemailer": "^5.40.0",
+    "@strapi/strapi": "^5.40.0",
+    "pg": "^8.19.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.30.3",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "baseline-browser-mapping": "^2.10.0",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "0305e5d1-c766-4f21-9a0a-ca54227b76dc",
+    "installId": "0b7f96d8f0c4f5b36acff119605409d0b20e160a22cf7ff545a47643acb6c0c3"
+  }
+}

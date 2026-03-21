@@ -1,0 +1,140 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "stock": {
+      "type": "integer",
+      "default": 0
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::brand.brand",
+      "inversedBy": "products"
+    },
+    "category": {
+      "type": "enumeration",
+      "default": "other",
+      "enum": [
+        "food",
+        "treats",
+        "hygiene",
+        "health",
+        "accesories",
+        "other"
+      ]
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "form": {
+      "type": "enumeration",
+      "enum": [
+        "kibble",
+        "wet",
+        "treat",
+        "supplement",
+        "accesory",
+        "hygiene"
+      ]
+    },
+    "proteinSource": {
+      "type": "enumeration",
+      "enum": [
+        "chicken",
+        "beef",
+        "fish",
+        "lamb",
+        "turkey",
+        "insect",
+        "plant",
+        "mixed"
+      ]
+    },
+    "speciesSupported": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::specie.specie",
+      "inversedBy": "products"
+    },
+    "lifeStages": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::life-stage.life-stage",
+      "mappedBy": "products"
+    },
+    "weightMinKg": {
+      "type": "decimal",
+      "default": 0
+    },
+    "weightMaxKg": {
+      "type": "decimal",
+      "default": 999
+    },
+    "diet_tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::diet-tag.diet-tag",
+      "mappedBy": "products"
+    },
+    "health_claims": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::health-condition.health-condition",
+      "mappedBy": "products"
+    },
+    "ingredients": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::ingredient.ingredient",
+      "mappedBy": "products"
+    },
+    "cart_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cart-item.cart-item",
+      "mappedBy": "product"
+    },
+    "order_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-item.order-item",
+      "mappedBy": "product"
+    }
+  }
+}

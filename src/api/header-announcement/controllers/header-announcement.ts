@@ -1,0 +1,7 @@
+/**
+ * header-announcement controller
+ */
+
+import { factories } from '@strapi/strapi';
+
+export default factories.createCoreController('api::header-announcement.header-announcement');

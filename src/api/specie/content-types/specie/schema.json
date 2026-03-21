@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "species",
+  "info": {
+    "singularName": "specie",
+    "pluralName": "species",
+    "displayName": "Specie"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "speciesSupported"
+    },
+    "pet_profiles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pet-profile.pet-profile",
+      "mappedBy": "specie"
+    }
+  }
+}

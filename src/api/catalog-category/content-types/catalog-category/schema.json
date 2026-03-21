@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "catalog_categories",
+  "info": {
+    "singularName": "catalog-category",
+    "pluralName": "catalog-categories",
+    "displayName": "Catalog Category",
+    "description": "Jerarquia de categorias, subcategorias y detalle del catalogo."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "key": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "category",
+        "subcategory",
+        "detail"
+      ],
+      "required": true,
+      "default": "category"
+    },
+    "legacyCategory": {
+      "type": "string"
+    },
+    "matchTerms": {
+      "type": "json"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "animal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalog-animal.catalog-animal",
+      "inversedBy": "categories"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalog-category.catalog-category",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::catalog-category.catalog-category",
+      "mappedBy": "parent"
+    },
+    "recommendedFilters": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::catalog-filter.catalog-filter",
+      "inversedBy": "recommendedByCategories"
+    }
+  }
+}

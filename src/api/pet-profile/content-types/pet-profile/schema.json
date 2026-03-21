@@ -1,0 +1,109 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pet_profiles",
+  "info": {
+    "singularName": "pet-profile",
+    "pluralName": "pet-profiles",
+    "displayName": "Pet Profile"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "breed": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "avatarHex": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "pet_profiles"
+    },
+    "specie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::specie.specie",
+      "inversedBy": "pet_profiles"
+    },
+    "lifeStage": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::life-stage.life-stage",
+      "inversedBy": "pet_profiles"
+    },
+    "birthdate": {
+      "type": "date"
+    },
+    "weightKg": {
+      "type": "decimal"
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": [
+        "toy",
+        "small",
+        "medium",
+        "large",
+        "giant"
+      ]
+    },
+    "sex": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female"
+      ]
+    },
+    "sterilized": {
+      "type": "boolean"
+    },
+    "activity": {
+      "type": "enumeration",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "allergies": {
+      "type": "json"
+    },
+    "dietTags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::diet-tag.diet-tag",
+      "mappedBy": "pet_profiles"
+    },
+    "healthConditions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::health-condition.health-condition",
+      "mappedBy": "pet_profiles"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}

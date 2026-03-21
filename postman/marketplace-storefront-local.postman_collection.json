@@ -1,0 +1,872 @@
+{
+  "info": {
+    "_postman_id": "354276c0-cf25-4ac7-9a8b-ffb6efbf9b74",
+    "name": "Marketplace Strapi Storefront (Local)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Coleccion para integrar frontend Angular con Strapi storefront. Incluye auth, catalogo, carrito invitado, carrito autenticado y ordenes.\\n\\nOrden sugerido: 1) Auth/Login 2) Catalog/List products 3) Guest cart o My cart 4) Checkout 5) Orders."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:1338"
+    },
+    {
+      "key": "registerEmail",
+      "value": ""
+    },
+    {
+      "key": "registerUsername",
+      "value": ""
+    },
+    {
+      "key": "registerPassword",
+      "value": "Test123456!"
+    },
+    {
+      "key": "loginIdentifier",
+      "value": ""
+    },
+    {
+      "key": "loginPassword",
+      "value": ""
+    },
+    {
+      "key": "jwt",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "productId",
+      "value": ""
+    },
+    {
+      "key": "productSlug",
+      "value": ""
+    },
+    {
+      "key": "guestSessionKey",
+      "value": ""
+    },
+    {
+      "key": "guestItemId",
+      "value": ""
+    },
+    {
+      "key": "myItemId",
+      "value": ""
+    },
+    {
+      "key": "couponCode",
+      "value": "WELCOME10"
+    },
+    {
+      "key": "petProfileId",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register (email/password)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/local/register",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{registerUsername}}\",\n  \"email\": \"{{registerEmail}}\",\n  \"password\": \"{{registerPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const suffix = Date.now();",
+                  "pm.collectionVariables.set('registerEmail', `postman_${suffix}@example.com`);",
+                  "pm.collectionVariables.set('registerUsername', `postman_${suffix}`);",
+                  "if (!pm.collectionVariables.get('registerPassword')) pm.collectionVariables.set('registerPassword', 'Test123456!');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Register status is 200 or 400 (duplicate)', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });",
+                  "let json = {}; try { json = pm.response.json(); } catch (e) {}",
+                  "if (pm.response.code === 200 && json.jwt) {",
+                  "  pm.collectionVariables.set('jwt', json.jwt);",
+                  "  pm.collectionVariables.set('userId', String(json.user.id));",
+                  "  pm.collectionVariables.set('loginIdentifier', json.user.email);",
+                  "  pm.collectionVariables.set('loginPassword', pm.collectionVariables.get('registerPassword'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login (email/password)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/auth/local",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{loginIdentifier}}\",\n  \"password\": \"{{loginPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get('loginIdentifier')) {",
+                  "  const fallbackEmail = pm.collectionVariables.get('registerEmail') || 'frontend_test_001@example.com';",
+                  "  pm.collectionVariables.set('loginIdentifier', fallbackEmail);",
+                  "}",
+                  "if (!pm.collectionVariables.get('loginPassword')) {",
+                  "  pm.collectionVariables.set('loginPassword', pm.collectionVariables.get('registerPassword') || 'Test123456!');",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Login status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set('jwt', json.jwt);",
+                  "pm.collectionVariables.set('userId', String(json.user.id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Users Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/users/me",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Users me status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Catalog",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/storefront/products?page=1&pageSize=12&sort=createdAt:desc&inStock=true",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('List products status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.length) {",
+                  "  pm.collectionVariables.set('productId', String(json.data[0].id));",
+                  "  if (json.data[0].slug) pm.collectionVariables.set('productSlug', json.data[0].slug);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/storefront/products/{{productId}}",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Get product status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Product By Slug",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/storefront/products/{{productSlug}}",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Get product by slug status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "My Products By Pet (optional)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/products?petProfileId={{petProfileId}}",
+            "description": "Opcional: requiere petProfileId valido y propiedad del usuario autenticado. Puede responder 404/401 si no existe o no pertenece."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Response is not 5xx', function () { pm.expect(pm.response.code).to.be.below(500); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Guest Cart",
+      "item": [
+        {
+          "name": "Get/Create Guest Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Guest cart status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.sessionKey) pm.collectionVariables.set('guestSessionKey', json.data.sessionKey);",
+                  "if (json?.data?.items?.length) pm.collectionVariables.set('guestItemId', String(json.data.items[0].id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add Guest Cart Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart/items",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"qty\": 1,\n  \"notes\": \"Postman guest item\",\n  \"variant\": {\n    \"size\": \"default\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Add guest item status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.sessionKey) pm.collectionVariables.set('guestSessionKey', json.data.sessionKey);",
+                  "if (json?.data?.items?.length) {",
+                  "  const productId = Number(pm.collectionVariables.get('productId'));",
+                  "  const match = json.data.items.find(i => i.product && i.product.id === productId) || json.data.items[0];",
+                  "  pm.collectionVariables.set('guestItemId', String(match.id));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Guest Cart Item Qty",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart/items/{{guestItemId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qty\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Update guest item status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Apply Guest Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart/coupon",
+            "description": "Si el cupon no existe/expira/minimo no cumple, respondera 400/404 (esperado).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{couponCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Apply guest coupon returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400, 404]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Clear Guest Coupon",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart/coupon",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Clear guest coupon status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Checkout Guest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/checkout",
+            "description": "Requiere carrito con items. Si esta vacio, devuelve 400 (esperado).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"guest.checkout@example.com\",\n  \"billingAddress\": {\n    \"fullName\": \"Guest Buyer\",\n    \"phone\": \"+50255550000\",\n    \"country\": \"GT\",\n    \"city\": \"Guatemala\",\n    \"addressLine1\": \"Zona 10, calle 1-01\"\n  },\n  \"shippingAddress\": {\n    \"fullName\": \"Guest Buyer\",\n    \"phone\": \"+50255550000\",\n    \"country\": \"GT\",\n    \"city\": \"Guatemala\",\n    \"addressLine1\": \"Zona 10, calle 1-01\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Checkout guest returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });",
+                  "let json = {}; try { json = pm.response.json(); } catch (e) {}",
+                  "if (pm.response.code === 200 && json?.data?.order?.id) pm.collectionVariables.set('orderId', String(json.data.order.id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove Guest Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Cart-Session",
+                "value": "{{guestSessionKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/guest/cart/items/{{guestItemId}}",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Remove guest item returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 404]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "My Cart (Authenticated)",
+      "item": [
+        {
+          "name": "Get/Create My Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('My cart status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.items?.length) pm.collectionVariables.set('myItemId', String(json.data.items[0].id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add My Cart Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart/items",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"qty\": 1,\n  \"notes\": \"Postman my-cart item\",\n  \"variant\": {\n    \"size\": \"default\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Add my-cart item status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.items?.length) {",
+                  "  const productId = Number(pm.collectionVariables.get('productId'));",
+                  "  const match = json.data.items.find(i => i.product && i.product.id === productId) || json.data.items[0];",
+                  "  pm.collectionVariables.set('myItemId', String(match.id));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update My Cart Item Qty",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart/items/{{myItemId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qty\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Update my-cart item status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Apply My Coupon",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart/coupon",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{couponCode}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Apply my coupon returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400, 404]); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Clear My Coupon",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart/coupon",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Clear my coupon status is 200', function () { pm.expect(pm.response.code).to.eql(200); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Checkout My Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/checkout",
+            "description": "Email es opcional aqui: backend toma email del usuario autenticado.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billingAddress\": {\n    \"fullName\": \"Authenticated Buyer\",\n    \"phone\": \"+50255550001\",\n    \"country\": \"GT\",\n    \"city\": \"Guatemala\",\n    \"addressLine1\": \"Zona 14, 1 avenida\"\n  },\n  \"shippingAddress\": {\n    \"fullName\": \"Authenticated Buyer\",\n    \"phone\": \"+50255550001\",\n    \"country\": \"GT\",\n    \"city\": \"Guatemala\",\n    \"addressLine1\": \"Zona 14, 1 avenida\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Checkout my-cart returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });",
+                  "let json = {}; try { json = pm.response.json(); } catch (e) {}",
+                  "if (pm.response.code === 200 && json?.data?.order?.id) pm.collectionVariables.set('orderId', String(json.data.order.id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove My Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/cart/items/{{myItemId}}",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Remove my-cart item returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 404]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Orders (Authenticated)",
+      "item": [
+        {
+          "name": "List My Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/orders?page=1&pageSize=20",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('List my orders status is 200', function () { pm.expect(pm.response.code).to.eql(200); });",
+                  "const json = pm.response.json();",
+                  "if (json?.data?.length) pm.collectionVariables.set('orderId', String(json.data[0].id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get My Order By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/storefront/me/orders/{{orderId}}",
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Get my order returns controlled status', function () { pm.expect(pm.response.code).to.be.oneOf([200, 404]); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

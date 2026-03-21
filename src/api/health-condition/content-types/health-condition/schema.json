@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "health_conditions",
+  "info": {
+    "singularName": "health-condition",
+    "pluralName": "health-conditions",
+    "displayName": "Health Condition"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "health_claims"
+    },
+    "pet_profiles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pet-profile.pet-profile",
+      "inversedBy": "healthConditions"
+    }
+  }
+}

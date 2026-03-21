@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "diet_tags",
+  "info": {
+    "singularName": "diet-tag",
+    "pluralName": "diet-tags",
+    "displayName": "Diet Tag"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "diet_tags"
+    },
+    "pet_profiles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::pet-profile.pet-profile",
+      "inversedBy": "dietTags"
+    }
+  }
+}

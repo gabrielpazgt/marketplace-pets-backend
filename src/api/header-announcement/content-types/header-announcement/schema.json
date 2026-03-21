@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "header_announcements",
+  "info": {
+    "singularName": "header-announcement",
+    "pluralName": "header-announcements",
+    "displayName": "Header Announcement",
+    "description": "Configuracion manual del slider superior del sitio"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Header Slider"
+    },
+    "isEnabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.header-slide"
+    }
+  }
+}

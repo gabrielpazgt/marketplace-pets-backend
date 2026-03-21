@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "life_stages",
+  "info": {
+    "singularName": "life-stage",
+    "pluralName": "life-stages",
+    "displayName": "Life Stage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "lifeStages"
+    },
+    "pet_profiles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pet-profile.pet-profile",
+      "mappedBy": "lifeStage"
+    }
+  }
+}

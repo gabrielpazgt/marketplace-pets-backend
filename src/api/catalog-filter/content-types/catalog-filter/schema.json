@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "catalog_filters",
+  "info": {
+    "singularName": "catalog-filter",
+    "pluralName": "catalog-filters",
+    "displayName": "Catalog Filter",
+    "description": "Definiciones de filtros curados para la navegacion del catalogo."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "rationale": {
+      "type": "text"
+    },
+    "availability": {
+      "type": "enumeration",
+      "enum": [
+        "available",
+        "planned"
+      ],
+      "default": "available"
+    },
+    "control": {
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "recommendedByCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::catalog-category.catalog-category",
+      "mappedBy": "recommendedFilters"
+    }
+  }
+}

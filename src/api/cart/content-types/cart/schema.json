@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "carts",
+  "info": {
+    "singularName": "cart",
+    "pluralName": "carts",
+    "displayName": "Cart"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "sessionKey": {
+      "type": "uid"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "cart"
+    },
+    "items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cart-item.cart-item",
+      "mappedBy": "cart"
+    },
+    "currency": {
+      "type": "enumeration",
+      "required": true,
+      "default": "GTQ",
+      "enum": [
+        "GTQ",
+        "USD"
+      ]
+    },
+    "subtotal": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "discountTotal": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "shippingTotal": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "grandTotal": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "membershipApplied": {
+      "type": "boolean",
+      "default": false
+    },
+    "statusCart": {
+      "type": "enumeration",
+      "required": true,
+      "default": "active",
+      "enum": [
+        "active",
+        "locked",
+        "converted"
+      ]
+    },
+    "expiresAt": {
+      "type": "datetime"
+    },
+    "coupon": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::coupon.coupon",
+      "inversedBy": "carts"
+    }
+  }
+}
