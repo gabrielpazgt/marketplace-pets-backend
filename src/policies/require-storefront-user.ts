@@ -5,7 +5,37 @@ const normalizeHeader = (value: unknown): string => {
   return typeof value === 'string' ? value.trim() : '';
 };
 
-export default async (policyContext: any, _config: any, { strapi }: { strapi: any }) => {
+interface PolicyContextLike {
+  request: {
+    header?: {
+      authorization?: unknown;
+    };
+  };
+  state: {
+    user?: unknown;
+  };
+}
+
+interface JwtPayloadLike {
+  id?: number;
+}
+
+interface StrapiLike {
+  service(uid: 'plugin::users-permissions.jwt'): {
+    verify(token: string): Promise<JwtPayloadLike>;
+  };
+  db: {
+    query(uid: 'plugin::users-permissions.user'): {
+      findOne(args: { where: { id: number } }): Promise<unknown>;
+    };
+  };
+}
+
+export default async (
+  policyContext: PolicyContextLike,
+  _config: unknown,
+  { strapi }: { strapi: StrapiLike }
+) => {
   const rawAuth = normalizeHeader(policyContext.request.header?.authorization);
   if (!rawAuth.toLowerCase().startsWith('bearer ')) {
     return false;

@@ -20,6 +20,37 @@ type CatalogFilterRecord = {
   updatedAt?: string | null;
 };
 
+type CatalogMediaRecord = Record<string, unknown>;
+
+type CatalogFilterRef = {
+  key?: string;
+};
+
+type CatalogDetailSeed = {
+  key?: string;
+  slug?: string;
+  label?: string;
+};
+
+type CatalogSubcategorySeed = {
+  key?: string;
+  slug?: string;
+  label?: string;
+  description?: string | null;
+  recommendedFilters?: CatalogFilterRef[];
+  level4?: CatalogDetailSeed[];
+};
+
+type CatalogRootCategorySeed = {
+  key?: string;
+  slug?: string;
+  label?: string;
+  description?: string | null;
+  legacyCategory?: string | null;
+  recommendedFilters?: CatalogFilterRef[];
+  subcategories?: CatalogSubcategorySeed[];
+};
+
 type CatalogAnimalRecord = {
   id: number;
   key?: string;
@@ -29,7 +60,7 @@ type CatalogAnimalRecord = {
   headline?: string | null;
   subtitle?: string | null;
   searchHint?: string | null;
-  navigationImage?: any;
+  navigationImage?: CatalogMediaRecord;
   legacySpeciesHints?: unknown;
   sortOrder?: number | null;
   isActive?: boolean | null;
@@ -44,7 +75,7 @@ type CatalogCategoryRecord = {
   slug?: string;
   label?: string;
   description?: string | null;
-  navigationImage?: any;
+  navigationImage?: CatalogMediaRecord;
   level?: CategoryLevel;
   legacyCategory?: string | null;
   matchTerms?: unknown;
@@ -271,7 +302,7 @@ const createCategoryBranch = async (
   strapi: Core.Strapi,
   animalId: number,
   animalKey: string,
-  rootCategory: any,
+  rootCategory: CatalogRootCategorySeed,
   rootCategoryIndex: number,
   filterMap: Map<string, number>,
   publishedAt: string
@@ -287,7 +318,7 @@ const createCategoryBranch = async (
         description: normalizeText(rootCategory.description),
         level: 'category',
         legacyCategory: normalizeText(rootCategory.legacyCategory) || null,
-        matchTerms: (rootCategory.subcategories || []).flatMap((subcategory: any) => buildSubcategoryMatchTerms(subcategory)),
+        matchTerms: (rootCategory.subcategories || []).flatMap((subcategory) => buildSubcategoryMatchTerms(subcategory)),
         sortOrder: (rootCategoryIndex + 1) * 10,
         isActive: true,
         animal: animalId,
