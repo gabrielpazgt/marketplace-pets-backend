@@ -34,6 +34,20 @@ npm run build
 yarn build
 ```
 
+## Discovery Endpoints
+
+Para indexacion y descubrimiento publico de la tienda, el backend expone:
+
+- `GET /api/storefront/sitemap.xml`
+- `GET /api/storefront/merchant-feed.xml`
+
+Variables de entorno recomendadas para generar URLs correctas:
+
+- `PUBLIC_URL`: URL publica del backend
+- `FRONTEND_PUBLIC_URL`: URL publica de la tienda frontend
+
+Si `FRONTEND_PUBLIC_URL` no esta definida, el backend intentara inferir el origen publico desde variables ya existentes, pero en produccion conviene declararla explicitamente.
+
 ## ⚙️ Deployment
 
 Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.

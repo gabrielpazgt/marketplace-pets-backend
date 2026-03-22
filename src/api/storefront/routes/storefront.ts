@@ -68,6 +68,18 @@ export default {
       handler: 'storefront.listCatalogTaxonomy',
       config: { auth: false },
     },
+    {
+      method: 'GET',
+      path: '/storefront/sitemap.xml',
+      handler: 'storefront.getSitemapXml',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/merchant-feed.xml',
+      handler: 'storefront.getMerchantFeedXml',
+      config: { auth: false },
+    },
 
     {
       method: 'GET',

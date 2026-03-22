@@ -20,9 +20,11 @@ const ORDER_ITEM_UID = 'api::order-item.order-item';
 
 const DEFAULT_CURRENCY = 'GTQ';
 const MAX_PAGE_SIZE = 100;
+const MAX_DISCOVERY_PRODUCTS = 5000;
 const PRODUCT_QUERY_TIMEOUT_MS = 8000;
 const QUERY_CACHE_TTL_MS = 5000;
 const QUERY_CACHE_MAX_ENTRIES = 300;
+const DISCOVERY_CACHE_TTL_MS = 1000 * 60 * 15;
 const DEFAULT_LANGUAGE = 'es';
 const DEFAULT_TIME_ZONE = 'America/Guatemala';
 const FREE_SHIPPING_THRESHOLD = 500;
@@ -89,6 +91,7 @@ const isQueryTimeoutError = (error: unknown): boolean =>
 
 const productsQueryCache = new Map<string, { expiresAt: number; payload: any }>();
 const facetsQueryCache = new Map<string, { expiresAt: number; payload: any }>();
+const discoveryCache = new Map<string, { expiresAt: number; payload: string }>();
 
 const stableSerialize = (input: any): any => {
   if (Array.isArray(input)) {
@@ -146,6 +149,93 @@ const toInt = (value: any, fallback = 0): number => {
 };
 
 const roundMoney = (value: number): number => Math.round((value + Number.EPSILON) * 100) / 100;
+
+const normalizePublicUrl = (value: unknown): string =>
+  normalizeText(value).replace(/\/+$/g, '');
+
+const resolveOrigin = (value: unknown): string => {
+  const normalized = normalizeText(value);
+  if (!normalized) return '';
+
+  try {
+    return new URL(normalized).origin;
+  } catch {
+    return '';
+  }
+};
+
+const joinPublicUrl = (baseUrl: string, path = ''): string => {
+  const normalizedBase = normalizePublicUrl(baseUrl);
+  const normalizedPath = normalizeText(path);
+  if (!normalizedPath) return normalizedBase;
+  if (/^https?:\/\//i.test(normalizedPath)) return normalizedPath;
+  if (!normalizedBase) return normalizedPath;
+  return normalizedPath.startsWith('/')
+    ? `${normalizedBase}${normalizedPath}`
+    : `${normalizedBase}/${normalizedPath}`;
+};
+
+const escapeXml = (value: unknown): string =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
+const toIsoDate = (value: unknown): string => {
+  const normalized = normalizeText(value);
+  if (!normalized) return '';
+
+  const parsed = new Date(normalized);
+  return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString();
+};
+
+const xmlTag = (tag: string, value: unknown): string => `<${tag}>${escapeXml(value)}</${tag}>`;
+
+const formatFeedPrice = (value: number): string => `${roundMoney(value).toFixed(2)} ${DEFAULT_CURRENCY}`;
+
+const extractRichTextPlainText = (value: unknown): string => {
+  if (typeof value === 'string') {
+    return value.trim();
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => extractRichTextPlainText(item))
+      .filter(Boolean)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  if (!value || typeof value !== 'object') {
+    return '';
+  }
+
+  const node = value as Record<string, unknown>;
+  const parts = [
+    typeof node.text === 'string' ? node.text.trim() : '',
+    extractRichTextPlainText(node.children),
+    extractRichTextPlainText(node.content),
+  ];
+
+  if (!parts.some(Boolean)) {
+    const fallback = Object.entries(node)
+      .filter(([key]) => !['type', 'level', 'format', 'text', 'children', 'content'].includes(key))
+      .map(([, nestedValue]) => extractRichTextPlainText(nestedValue))
+      .filter(Boolean)
+      .join(' ');
+
+    parts.push(fallback);
+  }
+
+  return parts
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
 
 const normalizeText = (value: any): string => (typeof value === 'string' ? value.trim() : '');
 
@@ -2348,6 +2438,211 @@ export default ({ strapi }) => {
     });
   };
 
+  const getBackendPublicUrl = (): string =>
+    normalizePublicUrl(strapi.config.get('server.url', '') || process.env.PUBLIC_URL || '');
+
+  const getStorefrontPublicUrl = (): string => {
+    const configuredOrigin = normalizePublicUrl(
+      process.env.FRONTEND_PUBLIC_URL
+      || process.env.STOREFRONT_PUBLIC_URL
+      || resolveOrigin(process.env.UP_RESET_PASSWORD_URL)
+      || normalizeText(process.env.CORS_ORIGIN).split(',')[0]
+      || getBackendPublicUrl()
+    );
+
+    return configuredOrigin || getBackendPublicUrl();
+  };
+
+  const getMediaPublicUrl = (path?: string | null): string =>
+    joinPublicUrl(getBackendPublicUrl() || getStorefrontPublicUrl(), path || '');
+
+  const getStorefrontUrl = (path = ''): string =>
+    joinPublicUrl(getStorefrontPublicUrl(), path);
+
+  const getDiscoveryProducts = async () =>
+    strapi.db.query(PRODUCT_UID).findMany({
+      where: { publishedAt: { $notNull: true } },
+      populate: {
+        images: true,
+        brand: true,
+        speciesSupported: true,
+      },
+      orderBy: { updatedAt: 'desc' },
+      limit: MAX_DISCOVERY_PRODUCTS,
+    });
+
+  const getSitemapEntries = async () => {
+    const taxonomy = await listCatalogTaxonomyPayload();
+    const products = await getDiscoveryProducts();
+    const fallbackLastmod = normalizeText(taxonomy?.data?.version) || toIsoNow().slice(0, 10);
+    const urls = new Map<string, { loc: string; lastmod: string; changefreq: string; priority: string }>();
+
+    const register = (loc: string, lastmod: unknown, changefreq: string, priority: string) => {
+      const normalizedLoc = normalizeText(loc);
+      if (!normalizedLoc || urls.has(normalizedLoc)) return;
+
+      urls.set(normalizedLoc, {
+        loc: normalizedLoc,
+        lastmod: toIsoDate(lastmod) || fallbackLastmod,
+        changefreq,
+        priority,
+      });
+    };
+
+    register(getStorefrontUrl('/'), fallbackLastmod, 'daily', '1.0');
+    register(getStorefrontUrl('/home'), fallbackLastmod, 'daily', '0.9');
+    register(getStorefrontUrl('/catalog'), fallbackLastmod, 'daily', '0.9');
+    register(getStorefrontUrl('/catalog?tag=new'), fallbackLastmod, 'daily', '0.8');
+    register(getStorefrontUrl('/catalog?tag=clearance'), fallbackLastmod, 'daily', '0.8');
+    register(getStorefrontUrl('/memberships/plans'), fallbackLastmod, 'weekly', '0.8');
+    register(getStorefrontUrl('/about'), fallbackLastmod, 'monthly', '0.6');
+    register(getStorefrontUrl('/terms'), fallbackLastmod, 'monthly', '0.4');
+
+    for (const animal of taxonomy?.data?.animals || []) {
+      const petType = normalizeText(animal?.key || animal?.slug);
+      if (!petType) continue;
+
+      register(getStorefrontUrl(`/catalog?petType=${encodeURIComponent(petType)}`), fallbackLastmod, 'daily', '0.8');
+
+      for (const category of animal.categories || []) {
+        const categoryParam = normalizeText(category.legacyCategory || category.slug);
+        if (!categoryParam) continue;
+
+        register(
+          getStorefrontUrl(`/catalog?petType=${encodeURIComponent(petType)}&cat=${encodeURIComponent(categoryParam)}`),
+          fallbackLastmod,
+          'weekly',
+          '0.7'
+        );
+
+        for (const subcategory of category.subcategories || []) {
+          const subcategoryParam = normalizeText(subcategory.slug);
+          if (!subcategoryParam) continue;
+
+          register(
+            getStorefrontUrl(
+              `/catalog?petType=${encodeURIComponent(petType)}&cat=${encodeURIComponent(categoryParam)}&sub=${encodeURIComponent(subcategoryParam)}`
+            ),
+            fallbackLastmod,
+            'weekly',
+            '0.6'
+          );
+        }
+      }
+    }
+
+    for (const product of products || []) {
+      const slug = normalizeText(product?.slug);
+      if (!slug) continue;
+
+      register(
+        getStorefrontUrl(`/catalog/product/${encodeURIComponent(slug)}`),
+        product?.updatedAt || product?.publishedAt || fallbackLastmod,
+        'weekly',
+        '0.7'
+      );
+    }
+
+    return Array.from(urls.values());
+  };
+
+  const getSitemapXmlPayload = async (): Promise<string> => {
+    const cacheKey = 'sitemap-xml';
+    const cached = getQueryCache(discoveryCache, cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const entries = await getSitemapEntries();
+    const xml = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      ...entries.map(
+        (entry) =>
+          `  <url>${xmlTag('loc', entry.loc)}${entry.lastmod ? xmlTag('lastmod', entry.lastmod) : ''}${xmlTag('changefreq', entry.changefreq)}${xmlTag('priority', entry.priority)}</url>`
+      ),
+      '</urlset>',
+    ].join('\n');
+
+    setQueryCache(discoveryCache, cacheKey, xml);
+    return xml;
+  };
+
+  const buildMerchantProductType = (product: any): string => {
+    const speciesLabel = normalizeText(product?.speciesSupported?.[0]?.name);
+    const categoryLabel = CATEGORY_LABELS[normalizeText(product?.category)] || normalizeText(product?.category);
+    const subcategoryLabel = normalizeText(product?.subcategory);
+
+    return [speciesLabel, categoryLabel, subcategoryLabel].filter(Boolean).join(' > ');
+  };
+
+  const getMerchantFeedXmlPayload = async (): Promise<string> => {
+    const cacheKey = 'merchant-feed-xml';
+    const cached = getQueryCache(discoveryCache, cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const products = await getDiscoveryProducts();
+    const items = (products || [])
+      .filter(
+        (product: any) =>
+          normalizeText(product?.slug)
+          && Number(toNumber(product?.price, 0)) > 0
+          && Boolean(normalizeText(product?.images?.[0]?.url))
+      )
+      .map((product: any) => {
+        const slug = normalizeText(product.slug);
+        const currentPrice = roundMoney(toNumber(product.price, 0));
+        const compareAtPrice = roundMoney(toNumber(product.compareAtPrice, 0));
+        const hasSalePrice = compareAtPrice > currentPrice;
+        const productLink = getStorefrontUrl(`/catalog/product/${encodeURIComponent(slug)}`);
+        const mainImage = getMediaPublicUrl(product?.images?.[0]?.url || '');
+        const additionalImages = (product?.images || [])
+          .slice(1, 10)
+          .map((image: any) => getMediaPublicUrl(image?.url || ''))
+          .filter(Boolean);
+        const description = extractRichTextPlainText(product?.description) || normalizeText(product?.name);
+        const brandName = normalizeText(product?.brand?.name);
+        const productType = buildMerchantProductType(product);
+        const availability = toInt(product?.stock, 0) > 0 ? 'in_stock' : 'out_of_stock';
+
+        const xmlLines = [
+          '    <item>',
+          `      ${xmlTag('g:id', product?.documentId || product?.id || slug)}`,
+          `      ${xmlTag('title', normalizeText(product?.name))}`,
+          `      ${xmlTag('description', description)}`,
+          `      ${xmlTag('link', productLink)}`,
+          mainImage ? `      ${xmlTag('g:image_link', mainImage)}` : '',
+          ...additionalImages.map((url) => `      ${xmlTag('g:additional_image_link', url)}`),
+          `      ${xmlTag('g:availability', availability)}`,
+          `      ${xmlTag('g:condition', 'new')}`,
+          `      ${xmlTag('g:price', formatFeedPrice(hasSalePrice ? compareAtPrice : currentPrice))}`,
+          hasSalePrice ? `      ${xmlTag('g:sale_price', formatFeedPrice(currentPrice))}` : '',
+          brandName ? `      ${xmlTag('g:brand', brandName)}` : `      ${xmlTag('g:identifier_exists', 'no')}`,
+          productType ? `      ${xmlTag('g:product_type', productType)}` : '',
+        ].filter(Boolean);
+
+        xmlLines.push('    </item>');
+        return xmlLines.join('\n');
+      });
+
+    const xml = [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">',
+      '  <channel>',
+      `    ${xmlTag('title', 'Aumakki - Catalogo de productos para mascotas')}`,
+      `    ${xmlTag('link', getStorefrontUrl('/catalog'))}`,
+      `    ${xmlTag('description', 'Feed publico de productos para Merchant Center y otras superficies de descubrimiento.')}`,
+      ...items,
+      '  </channel>',
+      '</rss>',
+    ].join('\n');
+
+    setQueryCache(discoveryCache, cacheKey, xml);
+    return xml;
+  };
+
   return {
     async resolveUserFromAuthorization(authorizationHeader: string, required = false) {
       return getUserFromAuthorization(authorizationHeader, required);
@@ -2488,6 +2783,14 @@ export default ({ strapi }) => {
 
     async listCatalogTaxonomy() {
       return listCatalogTaxonomyPayload();
+    },
+
+    async getSitemapXml() {
+      return getSitemapXmlPayload();
+    },
+
+    async getMerchantFeedXml() {
+      return getMerchantFeedXmlPayload();
     },
 
     async getOrCreateGuestCart(sessionKeyInput: string) {

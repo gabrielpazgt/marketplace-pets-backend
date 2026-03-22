@@ -109,6 +109,26 @@ export default ({ strapi }) => {
       return execute(ctx, async () => service.listCatalogTaxonomy());
     },
 
+    async getSitemapXml(ctx: any) {
+      try {
+        ctx.type = 'application/xml';
+        ctx.set('Cache-Control', 'public, max-age=900');
+        ctx.body = await service.getSitemapXml();
+      } catch (error) {
+        return handleError(ctx, error);
+      }
+    },
+
+    async getMerchantFeedXml(ctx: any) {
+      try {
+        ctx.type = 'application/xml';
+        ctx.set('Cache-Control', 'public, max-age=900');
+        ctx.body = await service.getMerchantFeedXml();
+      } catch (error) {
+        return handleError(ctx, error);
+      }
+    },
+
     async getGuestCart(ctx: any) {
       return execute(ctx, async () => service.getOrCreateGuestCart(getSessionKey(ctx)));
     },
