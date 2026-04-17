@@ -37,10 +37,8 @@ export default ({ env }) => {
           directory: env('SUPABASE_DIRECTORY', ''),
           options: {},
         } : {},
-        // Desactiva la re-compresión del archivo original por Sharp.
-        // En Windows, el archivo temporal "optimized-*" queda bloqueado
-        // y causa EBUSY al intentar borrarlo.
         sizeOptimization: false,
+        responsiveDimensions: false,
       },
     },
     'users-permissions': {
