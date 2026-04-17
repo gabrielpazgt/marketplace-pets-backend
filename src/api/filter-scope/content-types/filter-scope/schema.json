@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "filter_scopes",
+  "info": {
+    "singularName": "filter-scope",
+    "pluralName": "filter-scopes",
+    "displayName": "Filter Scope",
+    "description": "Define qué filtros aplican para una combinación de especie y categoría."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "catalogFilter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalog-filter.catalog-filter",
+      "required": true,
+      "description": "Filtro del catalogo que controla este scope."
+    },
+    "filterKey": {
+      "type": "string",
+      "private": true,
+      "description": "Campo legado autocompletado desde catalogFilter para compatibilidad interna.",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        },
+        "content-type-builder": {
+          "visible": false
+        }
+      }
+    },
+    "animals": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::catalog-animal.catalog-animal",
+      "description": "Animales donde aplica. Vacío = todos."
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::catalog-category.catalog-category",
+      "description": "Categorías donde aplica. Vacío = todas."
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 50
+    },
+    "isVisible": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

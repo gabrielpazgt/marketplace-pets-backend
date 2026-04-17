@@ -27,10 +27,30 @@ export default ({ env }) => {
         },
       },
     },
+    upload: {
+      config: {
+        // Desactiva la re-compresión del archivo original por Sharp.
+        // En Windows, el archivo temporal "optimized-*" queda bloqueado
+        // y causa EBUSY al intentar borrarlo. Los breakpoints (thumbnail,
+        // small, medium, large) siguen generándose normalmente.
+        sizeOptimization: false,
+      },
+    },
     'users-permissions': {
       config: {
         register: {
           allowedFields: ['firstName', 'lastName', 'phone'],
+        },
+        providers: {
+          google: {
+            enabled: true,
+            icon: 'google',
+            key: env('GOOGLE_CLIENT_ID', ''),
+            secret: env('GOOGLE_CLIENT_SECRET', ''),
+            callback: `${env('PUBLIC_URL', 'http://localhost:1338')}/api/auth/google/callback`,
+            scope: ['email', 'profile'],
+            custom_params: { prompt: 'select_account' },
+          },
         },
       },
     },

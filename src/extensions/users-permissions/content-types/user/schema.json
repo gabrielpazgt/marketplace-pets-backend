@@ -26,83 +26,6 @@
       "configurable": false,
       "required": true
     },
-    "firstName": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 80
-    },
-    "lastName": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 80
-    },
-    "phone": {
-      "type": "string",
-      "minLength": 7,
-      "maxLength": 25
-    },
-    "documentIdNumber": {
-      "type": "string",
-      "minLength": 6,
-      "maxLength": 40
-    },
-    "birthDate": {
-      "type": "date"
-    },
-    "avatar": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "preferredLanguage": {
-      "type": "enumeration",
-      "enum": [
-        "es",
-        "en"
-      ],
-      "default": "es"
-    },
-    "preferredCurrency": {
-      "type": "enumeration",
-      "enum": [
-        "GTQ",
-        "USD"
-      ],
-      "default": "GTQ"
-    },
-    "timeZone": {
-      "type": "string",
-      "default": "America/Guatemala"
-    },
-    "notifyOrderUpdates": {
-      "type": "boolean",
-      "default": true
-    },
-    "notifyPromotions": {
-      "type": "boolean",
-      "default": true
-    },
-    "notifyNewsletter": {
-      "type": "boolean",
-      "default": true
-    },
-    "twoFactorEnabled": {
-      "type": "boolean",
-      "default": false
-    },
-    "membershipTier": {
-      "type": "enumeration",
-      "enum": [
-        "free",
-        "premium"
-      ],
-      "default": "free"
-    },
-    "membershipStartedAt": {
-      "type": "datetime"
-    },
     "provider": {
       "type": "string",
       "configurable": false
@@ -143,13 +66,90 @@
       "inversedBy": "users",
       "configurable": false
     },
+    "firstName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "phone": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 25
+    },
+    "documentIdNumber": {
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 40
+    },
+    "birthDate": {
+      "type": "date"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "preferredLanguage": {
+      "type": "enumeration",
+      "default": "es",
+      "enum": [
+        "es",
+        "en"
+      ]
+    },
+    "preferredCurrency": {
+      "type": "enumeration",
+      "default": "GTQ",
+      "enum": [
+        "GTQ",
+        "USD"
+      ]
+    },
+    "timeZone": {
+      "type": "string",
+      "default": "America/Guatemala"
+    },
+    "notifyOrderUpdates": {
+      "type": "boolean",
+      "default": true
+    },
+    "notifyPromotions": {
+      "type": "boolean",
+      "default": true
+    },
+    "notifyNewsletter": {
+      "type": "boolean",
+      "default": true
+    },
+    "twoFactorEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "membershipTier": {
+      "type": "enumeration",
+      "default": "free",
+      "enum": [
+        "free",
+        "premium"
+      ]
+    },
+    "membershipStartedAt": {
+      "type": "datetime"
+    },
     "pet_profiles": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::pet-profile.pet-profile",
       "mappedBy": "owner"
     },
-    "adresses": {
+    "addresses": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::adress.adress",

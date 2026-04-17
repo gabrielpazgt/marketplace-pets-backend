@@ -24,14 +24,21 @@
     },
     "price": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "default": 0
     },
     "compareAtPrice": {
       "type": "decimal"
     },
+    "sku": {
+      "type": "string"
+    },
     "stock": {
       "type": "integer",
       "default": 0
+    },
+    "variants": {
+      "type": "json"
     },
     "isFeatured": {
       "type": "boolean",
@@ -138,6 +145,30 @@
       "relation": "oneToMany",
       "target": "api::order-item.order-item",
       "mappedBy": "product"
+    },
+    "catalogAnimals": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::catalog-animal.catalog-animal"
+    },
+    "catalogCategory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalog-category.catalog-category"
+    },
+    "badge": {
+      "type": "enumeration",
+      "enum": [
+        "NEW",
+        "TOP",
+        "SALE"
+      ]
+    },
+    "characteristics": {
+      "type": "blocks"
+    },
+    "benefits": {
+      "type": "blocks"
     }
   }
 }

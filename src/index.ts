@@ -1,5 +1,99 @@
 import type { Core } from '@strapi/strapi';
-import { seedCatalogTaxonomy } from './api/storefront/utils/catalog-taxonomy-db';
+import {
+  CATALOG_FILTER_UID,
+  FILTER_SCOPE_UID,
+  resolveCatalogFilterKeyFromScopeKey,
+  resolveFilterScopeKeyFromScopeRecord,
+} from './api/filter-scope/utils/catalog-filter-key-map';
+
+const ensureOperatorRole = async (strapi: Core.Strapi) => {
+  try {
+    // 1. Crear rol si no existe
+    let role = await strapi.db.query('plugin::users-permissions.role').findOne({
+      where: { type: 'operator' },
+    });
+
+    if (!role) {
+      role = await strapi.db.query('plugin::users-permissions.role').create({
+        data: {
+          name: 'Operator',
+          type: 'operator',
+          description: 'Rol operativo: acceso al portal de gestión de pedidos',
+        },
+      });
+      strapi.log.info('[users-permissions] Rol "operator" creado automáticamente');
+    }
+
+    // 2. Copiar permisos del rol "authenticated" para que /api/users/me y demás funcionen
+    const authenticatedRole = await strapi.db.query('plugin::users-permissions.role').findOne({
+      where: { type: 'authenticated' },
+      populate: ['permissions'],
+    });
+
+    if (!authenticatedRole?.permissions?.length) return;
+
+    const existingPerms = await strapi.db.query('plugin::users-permissions.permission').findMany({
+      where: { role: { id: (role as any).id } },
+    });
+
+    const existingActions = new Set((existingPerms as any[]).map((p) => p.action));
+    let copied = 0;
+
+    for (const perm of authenticatedRole.permissions as any[]) {
+      if (!existingActions.has(perm.action)) {
+        await strapi.db.query('plugin::users-permissions.permission').create({
+          data: { action: perm.action, role: (role as any).id },
+        });
+        copied++;
+      }
+    }
+
+    if (copied > 0) {
+      strapi.log.info(`[users-permissions] ${copied} permisos copiados de "authenticated" a "operator"`);
+    }
+  } catch (err) {
+    strapi.log.warn('[users-permissions] No se pudo configurar rol operator:', err);
+  }
+};
+
+const ensureOpsUser = async (strapi: Core.Strapi) => {
+  const username = process.env.OPS_USER_USERNAME?.trim();
+  const email    = process.env.OPS_USER_EMAIL?.trim();
+  const password = process.env.OPS_USER_PASSWORD?.trim();
+
+  if (!username || !email || !password) return; // sin vars de entorno, no hace nada
+
+  try {
+    const role = await strapi.db.query('plugin::users-permissions.role').findOne({
+      where: { type: 'operator' },
+    });
+    if (!role) return; // el rol debe existir primero (corre después de ensureOperatorRole)
+
+    const userService = strapi.plugin('users-permissions').service('user');
+    const existing = await strapi.db.query('plugin::users-permissions.user').findOne({
+      where: { username },
+    });
+
+    if (existing) {
+      // Solo actualizar password y rol si cambió algo
+      await userService.edit(existing.id, { password, role: (role as any).id, confirmed: true, blocked: false });
+      strapi.log.info(`[ops-user] Usuario "${username}" actualizado`);
+    } else {
+      await userService.add({
+        username,
+        email,
+        password,
+        role: (role as any).id,
+        confirmed: true,
+        blocked: false,
+        provider: 'local',
+      });
+      strapi.log.info(`[ops-user] Usuario "${username}" creado automáticamente`);
+    }
+  } catch (err) {
+    strapi.log.warn('[ops-user] No se pudo crear/actualizar el usuario operativo:', err);
+  }
+};
 
 const PERFORMANCE_INDEX_STATEMENTS = [
   `CREATE INDEX IF NOT EXISTS idx_products_published_created_at ON public.products USING btree (created_at DESC) WHERE published_at IS NOT NULL`,
@@ -32,6 +126,86 @@ const ensurePerformanceIndexes = async (strapi: Core.Strapi) => {
   }
 };
 
+const ensureGoogleOAuthPrompt = async (strapi: Core.Strapi) => {
+  try {
+    const pluginStore = strapi.store({ type: 'plugin', name: 'users-permissions' });
+    const grantSettings = ((await pluginStore.get({ key: 'grant' })) || {}) as Record<string, any>;
+    if (!grantSettings?.google) return;
+    if (grantSettings.google.custom_params?.prompt === 'select_account') return;
+    grantSettings.google.custom_params = { ...grantSettings.google.custom_params, prompt: 'select_account' };
+    await pluginStore.set({ key: 'grant', value: grantSettings });
+    strapi.log.info('[users-permissions] Google OAuth: prompt=select_account configurado');
+  } catch (e) {
+    strapi.log.warn('[users-permissions] No se pudo configurar Google OAuth prompt', e);
+  }
+};
+
+const ensureFilterScopeCatalogFilters = async (strapi: Core.Strapi) => {
+  try {
+    const [catalogFilters, filterScopes] = await Promise.all([
+      strapi.db.query(CATALOG_FILTER_UID).findMany({
+        select: ['id', 'documentId', 'key'],
+      }),
+      strapi.db.query(FILTER_SCOPE_UID).findMany({
+        select: ['id', 'documentId', 'filterKey'],
+        populate: {
+          catalogFilter: { select: ['id', 'documentId', 'key'] },
+        },
+      }),
+    ]);
+
+    if (!catalogFilters?.length || !filterScopes?.length) return;
+
+    const catalogFilterByKey = new Map<string, any>();
+    for (const filter of catalogFilters) {
+      const key = String((filter as any)?.key || '').trim();
+      if (key) catalogFilterByKey.set(key, filter);
+    }
+
+    let updatedCount = 0;
+    let missingCount = 0;
+
+    for (const scope of filterScopes as any[]) {
+      const resolvedScopeKey = resolveFilterScopeKeyFromScopeRecord(scope);
+      const relationFilter = scope.catalogFilter?.key
+        ? scope.catalogFilter
+        : catalogFilterByKey.get(resolveCatalogFilterKeyFromScopeKey(resolvedScopeKey));
+
+      if (!relationFilter?.id) {
+        missingCount += 1;
+        continue;
+      }
+
+      const data: Record<string, unknown> = {};
+      if (!scope.catalogFilter?.id) {
+        data.catalogFilter = { id: relationFilter.id };
+      }
+
+      if (resolvedScopeKey && scope.filterKey !== resolvedScopeKey) {
+        data.filterKey = resolvedScopeKey;
+      }
+
+      if (!Object.keys(data).length) continue;
+
+      await strapi.db.query(FILTER_SCOPE_UID).update({
+        where: { id: scope.id },
+        data,
+      });
+      updatedCount += 1;
+    }
+
+    if (updatedCount > 0) {
+      strapi.log.info(`[filter-scope] ${updatedCount} scopes sincronizados con Catalog Filter`);
+    }
+
+    if (missingCount > 0) {
+      strapi.log.warn(`[filter-scope] ${missingCount} scopes no pudieron vincularse a un Catalog Filter`);
+    }
+  } catch (error) {
+    strapi.log.warn('[filter-scope] No se pudo sincronizar catalogFilter en Filter Scope', error);
+  }
+};
+
 export default {
   /**
    * An asynchronous register function that runs before
@@ -50,11 +224,10 @@ export default {
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await ensurePerformanceIndexes(strapi);
-    const seededCatalogTaxonomy = await seedCatalogTaxonomy(strapi);
-
-    if (seededCatalogTaxonomy) {
-      strapi.log.info('[catalog-taxonomy] Seed inicial creado para Collection Types del catalogo');
-    }
+    await ensureOperatorRole(strapi);
+    await ensureOpsUser(strapi);
+    await ensureGoogleOAuthPrompt(strapi);
+    await ensureFilterScopeCatalogFilters(strapi);
 
     const resetPasswordUrl = process.env.UP_RESET_PASSWORD_URL?.trim();
     if (!resetPasswordUrl) {

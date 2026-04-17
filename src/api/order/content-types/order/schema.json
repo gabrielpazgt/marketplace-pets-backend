@@ -144,6 +144,12 @@
       "type": "decimal",
       "default": 0,
       "min": 0
+    },
+    "statusLogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order-status-log.order-status-log",
+      "mappedBy": "order"
     }
   }
 }

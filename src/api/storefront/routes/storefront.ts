@@ -52,6 +52,12 @@ export default {
     },
     {
       method: 'GET',
+      path: '/storefront/settings',
+      handler: 'storefront.getStorefrontSettings',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
       path: '/storefront/footer-newsletter-promo',
       handler: 'storefront.getFooterNewsletterPromo',
       config: { auth: false },
@@ -66,6 +72,12 @@ export default {
       method: 'GET',
       path: '/storefront/taxonomy/catalog',
       handler: 'storefront.listCatalogTaxonomy',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/taxonomy/filter-scopes',
+      handler: 'storefront.listFilterScopes',
       config: { auth: false },
     },
     {
@@ -85,6 +97,12 @@ export default {
       method: 'GET',
       path: '/storefront/guest/cart',
       handler: 'storefront.getGuestCart',
+      config: { auth: false },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/guest/cart/recommendations',
+      handler: 'storefront.listGuestCartRecommendations',
       config: { auth: false },
     },
     {
@@ -129,6 +147,18 @@ export default {
       path: '/storefront/me/cart',
       handler: 'storefront.getMyCart',
       config: { auth: false },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/me/cart/recommendations',
+      handler: 'storefront.listMyCartRecommendations',
+      config: { auth: false },
+    },
+    {
+      method: 'POST',
+      path: '/storefront/me/cart/adopt-guest',
+      handler: 'storefront.adoptGuestCart',
+      config: { auth: false, policies: ['global::require-storefront-user'] },
     },
     {
       method: 'GET',
@@ -209,6 +239,18 @@ export default {
       config: { auth: false },
     },
     {
+      method: 'POST',
+      path: '/storefront/me/pets/:id/avatar',
+      handler: 'storefront.uploadMyPetAvatar',
+      config: { auth: false },
+    },
+    {
+      method: 'DELETE',
+      path: '/storefront/me/pets/:id/avatar',
+      handler: 'storefront.deleteMyPetAvatar',
+      config: { auth: false },
+    },
+    {
       method: 'DELETE',
       path: '/storefront/me/pets/:id',
       handler: 'storefront.deleteMyPet',
@@ -267,6 +309,73 @@ export default {
       path: '/storefront/me/orders/:id',
       handler: 'storefront.getMyOrder',
       config: { auth: false },
+    },
+    // ── Ops routes (requieren rol admin u operator) ───────────────────────
+    {
+      method: 'GET',
+      path: '/storefront/ops/metrics',
+      handler: 'storefront.getOpsMetrics',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/orders',
+      handler: 'storefront.listOpsOrders',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/orders/:id',
+      handler: 'storefront.getOpsOrder',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'PATCH',
+      path: '/storefront/ops/orders/:id/status',
+      handler: 'storefront.updateOpsOrderStatus',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/metrics/enhanced',
+      handler: 'storefront.getOpsMetricsEnhanced',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/reports/sales',
+      handler: 'storefront.getOpsSalesReport',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/reports/products',
+      handler: 'storefront.getOpsTopProducts',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/reports/customers',
+      handler: 'storefront.getOpsTopCustomers',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/inventory',
+      handler: 'storefront.getOpsInventory',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'POST',
+      path: '/storefront/ops/inventory/bulk-update',
+      handler: 'storefront.bulkUpdateInventory',
+      config: { auth: false, policies: ['global::require-ops-user'] },
+    },
+    {
+      method: 'GET',
+      path: '/storefront/ops/finances',
+      handler: 'storefront.getOpsFinances',
+      config: { auth: false, policies: ['global::require-ops-user'] },
     },
   ].map((route) => {
     if (!route.path.startsWith('/storefront/me/')) {

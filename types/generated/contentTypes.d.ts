@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAdressAdress extends Struct.CollectionTypeSchema {
   collectionName: 'adresses';
   info: {
-    displayName: 'Adress';
+    displayName: 'Address';
     pluralName: 'adresses';
     singularName: 'adress';
   };
@@ -900,6 +900,92 @@ export interface ApiDietTagDietTag extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEnvironmentEnvironment extends Struct.SingleTypeSchema {
+  collectionName: 'environments';
+  info: {
+    description: 'Variables de configuracion generales para el storefront';
+    displayName: 'Enviroments';
+    pluralName: 'environments';
+    singularName: 'environment';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    freeShippingThreshold: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<500>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::environment.environment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Storefront Settings'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFilterScopeFilterScope extends Struct.CollectionTypeSchema {
+  collectionName: 'filter_scopes';
+  info: {
+    description: 'Define qu\u00E9 filtros aplican para una combinaci\u00F3n de especie y categor\u00EDa.';
+    displayName: 'Filter Scope';
+    pluralName: 'filter-scopes';
+    singularName: 'filter-scope';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    animals: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::catalog-animal.catalog-animal'
+    >;
+    catalogFilter: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::catalog-filter.catalog-filter'
+    > &
+      Schema.Attribute.Required;
+    categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::catalog-category.catalog-category'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    filterKey: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+        'content-type-builder': {
+          visible: false;
+        };
+      }>;
+    isVisible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::filter-scope.filter-scope'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<50>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHeaderAnnouncementHeaderAnnouncement
   extends Struct.SingleTypeSchema {
   collectionName: 'header_announcements';
@@ -1121,6 +1207,50 @@ export interface ApiOrderItemOrderItem extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    variant: Schema.Attribute.JSON;
+  };
+}
+
+export interface ApiOrderStatusLogOrderStatusLog
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'order_status_logs';
+  info: {
+    displayName: 'Order Status Log';
+    pluralName: 'order-status-logs';
+    singularName: 'order-status-log';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    changedBy: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::order-status-log.order-status-log'
+    > &
+      Schema.Attribute.Private;
+    note: Schema.Attribute.String;
+    order: Schema.Attribute.Relation<'manyToOne', 'api::order.order'>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      [
+        'pending',
+        'paid',
+        'processing',
+        'shipped',
+        'delivered',
+        'cancelled',
+        'refunded',
+      ]
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1221,6 +1351,10 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
         number
       > &
       Schema.Attribute.DefaultTo<0>;
+    statusLogs: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::order-status-log.order-status-log'
+    >;
     statusOrder: Schema.Attribute.Enumeration<
       [
         'pending',
@@ -1278,6 +1412,10 @@ export interface ApiPetProfilePetProfile extends Struct.CollectionTypeSchema {
     avatarHex: Schema.Attribute.String;
     birthdate: Schema.Attribute.Date;
     breed: Schema.Attribute.String;
+    catalogAnimal: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::catalog-animal.catalog-animal'
+    >;
     color: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1329,15 +1467,26 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    badge: Schema.Attribute.Enumeration<['NEW', 'TOP', 'SALE']>;
+    benefits: Schema.Attribute.Blocks;
     brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
     cart_items: Schema.Attribute.Relation<
       'oneToMany',
       'api::cart-item.cart-item'
     >;
+    catalogAnimals: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::catalog-animal.catalog-animal'
+    >;
+    catalogCategory: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::catalog-category.catalog-category'
+    >;
     category: Schema.Attribute.Enumeration<
       ['food', 'treats', 'hygiene', 'health', 'accesories', 'other']
     > &
       Schema.Attribute.DefaultTo<'other'>;
+    characteristics: Schema.Attribute.Blocks;
     compareAtPrice: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1375,11 +1524,14 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::order-item.order-item'
     >;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    price: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<0>;
     proteinSource: Schema.Attribute.Enumeration<
       ['chicken', 'beef', 'fish', 'lamb', 'turkey', 'insect', 'plant', 'mixed']
     >;
     publishedAt: Schema.Attribute.DateTime;
+    sku: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'name'>;
     speciesSupported: Schema.Attribute.Relation<
       'manyToMany',
@@ -1390,6 +1542,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    variants: Schema.Attribute.JSON;
     weightMaxKg: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<999>;
     weightMinKg: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
   };
@@ -1887,7 +2040,7 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
-    adresses: Schema.Attribute.Relation<'oneToMany', 'api::adress.adress'>;
+    addresses: Schema.Attribute.Relation<'oneToMany', 'api::adress.adress'>;
     avatar: Schema.Attribute.Media<'images'>;
     birthDate: Schema.Attribute.Date;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1994,12 +2147,15 @@ declare module '@strapi/strapi' {
       'api::catalog-filter.catalog-filter': ApiCatalogFilterCatalogFilter;
       'api::coupon.coupon': ApiCouponCoupon;
       'api::diet-tag.diet-tag': ApiDietTagDietTag;
+      'api::environment.environment': ApiEnvironmentEnvironment;
+      'api::filter-scope.filter-scope': ApiFilterScopeFilterScope;
       'api::header-announcement.header-announcement': ApiHeaderAnnouncementHeaderAnnouncement;
       'api::health-condition.health-condition': ApiHealthConditionHealthCondition;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::life-stage.life-stage': ApiLifeStageLifeStage;
       'api::membership.membership': ApiMembershipMembership;
       'api::order-item.order-item': ApiOrderItemOrderItem;
+      'api::order-status-log.order-status-log': ApiOrderStatusLogOrderStatusLog;
       'api::order.order': ApiOrderOrder;
       'api::pet-profile.pet-profile': ApiPetProfilePetProfile;
       'api::product.product': ApiProductProduct;

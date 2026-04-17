@@ -104,6 +104,11 @@
     },
     "notes": {
       "type": "text"
+    },
+    "catalogAnimal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::catalog-animal.catalog-animal"
     }
   }
 }

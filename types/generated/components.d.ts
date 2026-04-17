@@ -7,6 +7,10 @@ export interface SharedHeaderSlide extends Struct.ComponentSchema {
     displayName: 'Header Slide';
   };
   attributes: {
+    audience: Schema.Attribute.Enumeration<
+      ['all', 'guest', 'account', 'member']
+    > &
+      Schema.Attribute.DefaultTo<'all'>;
     endsAt: Schema.Attribute.DateTime;
     isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     message: Schema.Attribute.Text & Schema.Attribute.Required;

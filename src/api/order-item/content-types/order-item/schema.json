@@ -47,6 +47,9 @@
     },
     "sku": {
       "type": "string"
+    },
+    "variant": {
+      "type": "json"
     }
   }
 }

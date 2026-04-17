@@ -97,6 +97,10 @@ export default ({ strapi }) => {
       return execute(ctx, async () => service.listHeaderAnnouncements());
     },
 
+    async getStorefrontSettings(ctx: any) {
+      return execute(ctx, async () => service.getStorefrontSettings());
+    },
+
     async getFooterNewsletterPromo(ctx: any) {
       return execute(ctx, async () => service.getFooterNewsletterPromo());
     },
@@ -107,6 +111,11 @@ export default ({ strapi }) => {
 
     async listCatalogTaxonomy(ctx: any) {
       return execute(ctx, async () => service.listCatalogTaxonomy());
+    },
+
+    async listFilterScopes(ctx: any) {
+      const { animal, category } = ctx.query;
+      return execute(ctx, async () => service.listFilterScopesPayload(animal as string | undefined, category as string | undefined));
     },
 
     async getSitemapXml(ctx: any) {
@@ -131,6 +140,10 @@ export default ({ strapi }) => {
 
     async getGuestCart(ctx: any) {
       return execute(ctx, async () => service.getOrCreateGuestCart(getSessionKey(ctx)));
+    },
+
+    async listGuestCartRecommendations(ctx: any) {
+      return execute(ctx, async () => service.listGuestCartRecommendations(getSessionKey(ctx), ctx.query));
     },
 
     async addGuestCartItem(ctx: any) {
@@ -163,6 +176,21 @@ export default ({ strapi }) => {
       return execute(ctx, async () => {
         const user = await resolveUser(ctx, true);
         return service.getOrCreateUserCart(user.id);
+      });
+    },
+
+    async listMyCartRecommendations(ctx: any) {
+      return execute(ctx, async () => {
+        const user = await resolveUser(ctx, true);
+        return service.listUserCartRecommendations(user.id, ctx.query);
+      });
+    },
+
+    async adoptGuestCart(ctx: any) {
+      return execute(ctx, async () => {
+        const user = await resolveUser(ctx, true);
+        const { sessionKey } = ctx.request.body as { sessionKey?: string };
+        return service.adoptGuestCart(user.id, sessionKey || '');
       });
     },
 
@@ -264,6 +292,21 @@ export default ({ strapi }) => {
       });
     },
 
+    async uploadMyPetAvatar(ctx: any) {
+      return execute(ctx, async () => {
+        const user = await resolveUser(ctx, true);
+        const avatarId = toInt(ctx.request.body?.avatarId, 0);
+        return service.linkUserPetAvatar(user.id, toInt(ctx.params.id, 0), avatarId);
+      });
+    },
+
+    async deleteMyPetAvatar(ctx: any) {
+      return execute(ctx, async () => {
+        const user = await resolveUser(ctx, true);
+        return service.deleteUserPetAvatar(user.id, toInt(ctx.params.id, 0));
+      });
+    },
+
     async deleteMyPet(ctx: any) {
       return execute(ctx, async () => {
         const user = await resolveUser(ctx, true);
@@ -324,6 +367,89 @@ export default ({ strapi }) => {
       return execute(ctx, async () => {
         const user = await resolveUser(ctx, true);
         return service.getUserOrderById(user.id, toInt(ctx.params.id, 0));
+      });
+    },
+
+    // ── Portal Operativo ────────────────────────────────────────────────
+    async getOpsMetrics(ctx: any) {
+      return execute(ctx, async () => service.getOpsMetrics());
+    },
+
+    async listOpsOrders(ctx: any) {
+      return execute(ctx, async () => {
+        const page = toInt(ctx.query?.page, 1);
+        const pageSize = toInt(ctx.query?.pageSize, 20);
+        const status = ctx.query?.status as string | undefined;
+        return service.listOpsOrders(page, pageSize, status);
+      });
+    },
+
+    async getOpsOrder(ctx: any) {
+      return execute(ctx, async () => service.getOpsOrderById(toInt(ctx.params.id, 0)));
+    },
+
+    async updateOpsOrderStatus(ctx: any) {
+      return execute(ctx, async () => {
+        const id = toInt(ctx.params.id, 0);
+        const { status, note } = ctx.request.body as { status: string; note?: string };
+        const changedBy = ctx.state?.user?.email || ctx.state?.user?.username || 'ops';
+        return service.updateOpsOrderStatus(id, status, note, changedBy);
+      });
+    },
+
+    async getOpsMetricsEnhanced(ctx: any) {
+      return execute(ctx, async () => {
+        const period = ['today', 'week', 'month'].includes(ctx.query?.period)
+          ? ctx.query.period as 'today' | 'week' | 'month'
+          : 'month';
+        return service.getOpsMetricsEnhanced(period);
+      });
+    },
+
+    async getOpsSalesReport(ctx: any) {
+      return execute(ctx, async () => {
+        const from = String(ctx.query?.from || '');
+        const to = String(ctx.query?.to || '');
+        return service.getOpsSalesReport(from, to);
+      });
+    },
+
+    async getOpsTopProducts(ctx: any) {
+      return execute(ctx, async () => {
+        const from = String(ctx.query?.from || '');
+        const to = String(ctx.query?.to || '');
+        const limit = toInt(ctx.query?.limit, 20);
+        return service.getOpsTopProducts(from, to, limit);
+      });
+    },
+
+    async getOpsTopCustomers(ctx: any) {
+      return execute(ctx, async () => {
+        const from = String(ctx.query?.from || '');
+        const to = String(ctx.query?.to || '');
+        const limit = toInt(ctx.query?.limit, 20);
+        return service.getOpsTopCustomers(from, to, limit);
+      });
+    },
+
+    async getOpsInventory(ctx: any) {
+      return execute(ctx, async () => service.getOpsInventory());
+    },
+
+    async bulkUpdateInventory(ctx: any) {
+      return execute(ctx, async () => {
+        const body = ctx.request.body as { updates?: Array<{ sku: string; stock: number }> };
+        const updates = Array.isArray(body?.updates) ? body.updates : [];
+        return service.bulkUpdateInventory(updates);
+      });
+    },
+
+    async getOpsFinances(ctx: any) {
+      return execute(ctx, async () => {
+        const now = new Date();
+        const year = toInt(ctx.query?.year, now.getFullYear());
+        const month = toInt(ctx.query?.month, now.getMonth() + 1);
+        return service.getOpsFinances(year, month);
       });
     },
   };

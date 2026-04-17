@@ -17,6 +17,16 @@
       "type": "boolean",
       "default": true
     },
+    "audience": {
+      "type": "enumeration",
+      "enum": [
+        "all",
+        "guest",
+        "account",
+        "member"
+      ],
+      "default": "all"
+    },
     "startsAt": {
       "type": "datetime"
     },

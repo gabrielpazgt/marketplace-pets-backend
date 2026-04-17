@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { getCatalogTaxonomyPayloadFromDatabase } from '../utils/catalog-taxonomy-db';
-import { getCatalogTaxonomyPayload } from '../utils/catalog-taxonomy';
+import { resolveFilterScopeKeyFromScopeRecord } from '../../filter-scope/utils/catalog-filter-key-map';
 
 const USER_UID = 'plugin::users-permissions.user';
 const PRODUCT_UID = 'api::product.product';
@@ -12,11 +12,13 @@ const LIFE_STAGE_UID = 'api::life-stage.life-stage';
 const DIET_TAG_UID = 'api::diet-tag.diet-tag';
 const HEALTH_CONDITION_UID = 'api::health-condition.health-condition';
 const HEADER_ANNOUNCEMENT_UID = 'api::header-announcement.header-announcement';
+const ENVIRONMENT_UID = 'api::environment.environment';
 const CART_UID = 'api::cart.cart';
 const CART_ITEM_UID = 'api::cart-item.cart-item';
 const COUPON_UID = 'api::coupon.coupon';
 const ORDER_UID = 'api::order.order';
 const ORDER_ITEM_UID = 'api::order-item.order-item';
+const ORDER_STATUS_LOG_UID = 'api::order-status-log.order-status-log';
 
 const DEFAULT_CURRENCY = 'GTQ';
 const MAX_PAGE_SIZE = 100;
@@ -30,6 +32,8 @@ const DEFAULT_TIME_ZONE = 'America/Guatemala';
 const FREE_SHIPPING_THRESHOLD = 500;
 const STANDARD_SHIPPING_PRICE = 25;
 const EXPRESS_SHIPPING_PRICE = 45;
+const CART_RECOMMENDATION_LIMIT = 4;
+const CART_RECOMMENDATION_CANDIDATE_LIMIT = 40;
 const CATEGORY_LABELS: Record<string, string> = {
   food: 'Alimento',
   treats: 'Snacks',
@@ -348,6 +352,22 @@ const pickFirstNonEmpty = (values: any[]): string => {
   return '';
 };
 
+const pickFirstPresentValue = (values: any[]): any => {
+  for (const value of values) {
+    if (value === undefined || value === null) {
+      continue;
+    }
+
+    if (typeof value === 'string' && !value.trim()) {
+      continue;
+    }
+
+    return value;
+  }
+
+  return undefined;
+};
+
 const hasOwnField = (payload: any, fields: string[]): boolean =>
   fields.some((field) => Object.prototype.hasOwnProperty.call(payload || {}, field));
 
@@ -399,6 +419,14 @@ const parseIdList = (value: any): number[] => {
     .filter((item, index, self) => item > 0 && self.indexOf(item) === index);
 };
 
+const parseTextList = (value: any): string[] => {
+  if (!value) return [];
+  const source = Array.isArray(value) ? value : String(value).split(',');
+  return source
+    .map((item) => normalizeText(item))
+    .filter((item, index, self) => item.length > 0 && self.indexOf(item) === index);
+};
+
 const parseBool = (value: any): boolean => {
   if (typeof value === 'boolean') return value;
   const normalized = normalizeText(value).toLowerCase();
@@ -429,46 +457,80 @@ const parseSort = (value: any): Record<string, 'asc' | 'desc'> => {
   return { [field]: order };
 };
 
-const serializeProduct = (product: any) => ({
-  id: product.id,
-  documentId: product.documentId,
-  name: product.name,
-  slug: product.slug,
-  description: product.description,
-  price: roundMoney(toNumber(product.price, 0)),
-  compareAtPrice: roundMoney(toNumber(product.compareAtPrice, 0)) || null,
-  stock: toInt(product.stock, 0),
-  isFeatured: Boolean(product.isFeatured),
-  category: product.category,
-  subcategory: normalizeText(product.subcategory) || null,
-  form: product.form,
-  proteinSource: product.proteinSource,
-  weightMinKg: toNumber(product.weightMinKg, 0),
-  weightMaxKg: toNumber(product.weightMaxKg, 999),
-  publishedAt: product.publishedAt,
-  images: product.images || [],
-  brand: product.brand || null,
-  speciesSupported: product.speciesSupported || [],
-  lifeStages: product.lifeStages || [],
-  diet_tags: product.diet_tags || [],
-  health_claims: product.health_claims || [],
-  ingredients: product.ingredients || [],
-});
+const serializeProduct = (product: any) => {
+  const variants = normalizeProductVariants(product).map((variant) => serializeProductVariant(variant));
 
-const serializeProductCompact = (product: any) => ({
-  id: product.id,
-  documentId: product.documentId,
-  name: product.name,
-  slug: product.slug,
-  price: roundMoney(toNumber(product.price, 0)),
-  compareAtPrice: roundMoney(toNumber(product.compareAtPrice, 0)) || null,
-  stock: toInt(product.stock, 0),
-  category: product.category,
-  subcategory: normalizeText(product.subcategory) || null,
-  publishedAt: product.publishedAt,
-  images: product.images || [],
-  brand: product.brand || null,
-});
+  return {
+    id: product.id,
+    documentId: product.documentId,
+    name: product.name,
+    slug: product.slug,
+    description: product.description,
+    sku: normalizeText(product.sku) || null,
+    price: getEffectiveProductPrice(product),
+    compareAtPrice: getEffectiveProductCompareAtPrice(product),
+    stock: getEffectiveProductStock(product),
+    variants,
+    badge: product.badge || null,
+    isFeatured: Boolean(product.isFeatured),
+    category: product.category,
+    subcategory: normalizeText(product.subcategory) || null,
+    form: product.form,
+    proteinSource: product.proteinSource,
+    weightMinKg: toNumber(product.weightMinKg, 0),
+    weightMaxKg: toNumber(product.weightMaxKg, 999),
+    publishedAt: product.publishedAt,
+    images: product.images || [],
+    brand: serializeBrandSummary(product.brand || null),
+    speciesSupported: product.speciesSupported || [],
+    lifeStages: product.lifeStages || [],
+    diet_tags: product.diet_tags || [],
+    health_claims: product.health_claims || [],
+    ingredients: product.ingredients || [],
+    catalogAnimals: (product.catalogAnimals || []).map((a: any) => ({
+      id: a.id,
+      documentId: a.documentId,
+      key: a.key,
+      slug: a.slug,
+      label: a.label,
+    })),
+    catalogCategory: product.catalogCategory
+      ? {
+          id: product.catalogCategory.id,
+          documentId: product.catalogCategory.documentId,
+          key: product.catalogCategory.key,
+          slug: product.catalogCategory.slug,
+          label: product.catalogCategory.label,
+          level: product.catalogCategory.level,
+          legacyCategory: product.catalogCategory.legacyCategory || null,
+        }
+      : null,
+    characteristics: product.characteristics || null,
+    benefits: product.benefits || null,
+  };
+};
+
+const serializeProductCompact = (product: any) => {
+  const variants = normalizeProductVariants(product).map((variant) => serializeProductVariant(variant));
+
+  return {
+    id: product.id,
+    documentId: product.documentId,
+    name: product.name,
+    slug: product.slug,
+    sku: normalizeText(product.sku) || null,
+    price: getEffectiveProductPrice(product),
+    compareAtPrice: getEffectiveProductCompareAtPrice(product),
+    stock: getEffectiveProductStock(product),
+    variants,
+    badge: product.badge || null,
+    category: product.category,
+    subcategory: normalizeText(product.subcategory) || null,
+    publishedAt: product.publishedAt,
+    images: product.images || [],
+    brand: serializeBrandSummary(product.brand || null),
+  };
+};
 
 const buildFacetEntries = <T extends Record<string, any>>(
   entries: T[],
@@ -530,7 +592,7 @@ const collectTaxonomyFacet = (items: any[] = []) => {
 };
 
 const collectBrandFacet = (items: any[] = []) => {
-  const bucket = new Map<number, { id: number; documentId?: string; name: string; slug?: string | null; count: number }>();
+  const bucket = new Map<number, { id: number; documentId?: string; name: string; slug?: string | null; logo?: any; count: number }>();
 
   for (const brand of items) {
     const id = toInt(brand?.id, 0);
@@ -548,6 +610,7 @@ const collectBrandFacet = (items: any[] = []) => {
       documentId: brand?.documentId,
       name,
       slug: normalizeText(brand?.slug) || null,
+      logo: brand?.logo || null,
       count: 1,
     });
   }
@@ -555,14 +618,23 @@ const collectBrandFacet = (items: any[] = []) => {
   return buildFacetEntries(Array.from(bucket.values()), 'name');
 };
 
-const buildShippingPolicy = (subtotal: number, discountTotal: number) => {
+const buildShippingPolicy = (
+  subtotal: number,
+  discountTotal: number,
+  freeShippingThreshold = FREE_SHIPPING_THRESHOLD
+) => {
+  const threshold = Math.max(0, roundMoney(toNumber(freeShippingThreshold, FREE_SHIPPING_THRESHOLD)));
   const effectiveSubtotal = roundMoney(Math.max(0, subtotal - discountTotal));
-  const amountToFreeShipping = roundMoney(Math.max(0, FREE_SHIPPING_THRESHOLD - effectiveSubtotal));
-  const qualifiesForFreeShipping = amountToFreeShipping <= 0;
-  const progressPct = Math.min(100, Math.round((effectiveSubtotal / FREE_SHIPPING_THRESHOLD) * 100));
+  const amountToFreeShipping = threshold <= 0
+    ? 0
+    : roundMoney(Math.max(0, threshold - effectiveSubtotal));
+  const qualifiesForFreeShipping = threshold <= 0 || amountToFreeShipping <= 0;
+  const progressPct = threshold > 0
+    ? Math.min(100, Math.round((effectiveSubtotal / threshold) * 100))
+    : 100;
 
   return {
-    freeShippingThreshold: FREE_SHIPPING_THRESHOLD,
+    freeShippingThreshold: threshold,
     qualifiesForFreeShipping,
     amountToFreeShipping,
     progressPct,
@@ -587,11 +659,17 @@ const resolvePaymentKind = (value: any): PaymentKind | null => {
   throwHttpError(400, 'paymentKind must be card or bank');
 };
 
-const resolveShippingTotal = (subtotal: number, discountTotal: number, method: ShippingMethod): number => {
+const resolveShippingTotal = (
+  subtotal: number,
+  discountTotal: number,
+  method: ShippingMethod,
+  freeShippingThreshold = FREE_SHIPPING_THRESHOLD
+): number => {
+  const threshold = Math.max(0, roundMoney(toNumber(freeShippingThreshold, FREE_SHIPPING_THRESHOLD)));
   const effectiveSubtotal = roundMoney(Math.max(0, subtotal - discountTotal));
   if (effectiveSubtotal <= 0) return 0;
   if (method === 'express') return EXPRESS_SHIPPING_PRICE;
-  return effectiveSubtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_PRICE;
+  return threshold <= 0 || effectiveSubtotal >= threshold ? 0 : STANDARD_SHIPPING_PRICE;
 };
 
 const formatCurrencyLabel = (value: number): string => `Q${roundMoney(value).toFixed(2)}`;
@@ -618,6 +696,7 @@ const serializeBrandSummary = (brand: any) =>
         documentId: brand.documentId,
         name: brand.name,
         slug: brand.slug || null,
+        logo: serializeMedia(brand.logo || null),
       }
     : null;
 
@@ -669,9 +748,14 @@ const getCartItemLineTotal = (item: any): number => {
   }
 
   const qty = Math.max(1, toInt(item?.qty, 1));
-  const productPrice = item?.product
-    ? toNumber(item.product.price, toNumber(item?.unitPrice, 0))
-    : toNumber(item?.unitPrice, 0);
+  const resolvedVariant = item?.product
+    ? resolveProductVariant(item.product, item?.variant, false)
+    : null;
+  const productPrice = resolvedVariant
+    ? toNumber(resolvedVariant.price, toNumber(item?.unitPrice, 0))
+    : item?.product
+      ? getEffectiveProductPrice(item.product)
+      : toNumber(item?.unitPrice, 0);
 
   return roundMoney(Math.max(0, productPrice) * qty);
 };
@@ -817,6 +901,7 @@ const serializeHeaderAnnouncement = (announcement: any) => ({
   documentId: announcement.documentId || null,
   title: announcement.title || null,
   message: announcement.message || '',
+  audience: announcement.audience || 'all',
   startsAt: announcement.startsAt || null,
   endsAt: announcement.endsAt || null,
 });
@@ -834,7 +919,175 @@ const serializeMedia = (file: any) => {
   };
 };
 
-const serializeCart = (cart: any) => ({
+const normalizeVariantIdentity = (value: any): string =>
+  normalizeSearchText(value).replace(/\s+/g, '-');
+
+const normalizeProductVariants = (product: any): any[] => {
+  const rawVariants = Array.isArray(product?.variants) ? product.variants : [];
+
+  const normalized = rawVariants
+    .map((rawVariant: any, index: number) => {
+      if (!isObject(rawVariant)) return null;
+
+      const label = pickFirstNonEmpty([
+        rawVariant.label,
+        rawVariant.presentation,
+        rawVariant.size,
+        rawVariant.name,
+      ]) || `Presentacion ${index + 1}`;
+      const price = roundMoney(Math.max(0, toNumber(rawVariant.price, toNumber(product?.price, 0))));
+      const compareAtPrice = roundMoney(Math.max(0, toNumber(rawVariant.compareAtPrice, 0)));
+      const sku = normalizeText(rawVariant.sku) || null;
+      const presentation = normalizeText(rawVariant.presentation) || label;
+      const size = normalizeText(rawVariant.size) || null;
+      const id =
+        normalizeVariantIdentity(rawVariant.id || sku || label)
+        || `variant-${index + 1}`;
+
+      return {
+        id,
+        sku,
+        label,
+        presentation,
+        size,
+        price,
+        compareAtPrice: compareAtPrice > price ? compareAtPrice : null,
+        stock: Math.max(0, toInt(rawVariant.stock, 0)),
+        isDefault: normalizeBooleanInput(rawVariant.isDefault) === true,
+        sortOrder: toInt(rawVariant.sortOrder, index),
+      };
+    })
+    .filter(Boolean)
+    .sort((a: any, b: any) => {
+      if (a.isDefault !== b.isDefault) return a.isDefault ? -1 : 1;
+      if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+      return String(a.label || '').localeCompare(String(b.label || ''), 'es');
+    });
+
+  if (!normalized.length) return [];
+
+  if (!normalized.some((variant) => variant.isDefault)) {
+    normalized[0].isDefault = true;
+  }
+
+  return normalized;
+};
+
+const serializeProductVariant = (variant: any) => {
+  if (!variant) return null;
+
+  return {
+    id: variant.id,
+    sku: variant.sku || null,
+    label: variant.label,
+    presentation: variant.presentation || null,
+    size: variant.size || null,
+    price: roundMoney(toNumber(variant.price, 0)),
+    compareAtPrice: roundMoney(toNumber(variant.compareAtPrice, 0)) || null,
+    stock: Math.max(0, toInt(variant.stock, 0)),
+    isDefault: Boolean(variant.isDefault),
+    sortOrder: toInt(variant.sortOrder, 0),
+  };
+};
+
+const getDefaultProductVariant = (product: any) => {
+  const variants = normalizeProductVariants(product);
+  return variants.find((variant) => variant.isDefault) || variants[0] || null;
+};
+
+const getEffectiveProductPrice = (product: any): number => {
+  const defaultVariant = getDefaultProductVariant(product);
+  if (defaultVariant) {
+    return roundMoney(toNumber(defaultVariant.price, 0));
+  }
+
+  return roundMoney(toNumber(product?.price, 0));
+};
+
+const getEffectiveProductCompareAtPrice = (product: any): number | null => {
+  const effectivePrice = getEffectiveProductPrice(product);
+  const defaultVariant = getDefaultProductVariant(product);
+  const rawCompareAtPrice = defaultVariant
+    ? toNumber(defaultVariant.compareAtPrice, 0)
+    : toNumber(product?.compareAtPrice, 0);
+  const compareAtPrice = roundMoney(rawCompareAtPrice);
+
+  return compareAtPrice > effectivePrice ? compareAtPrice : null;
+};
+
+const getEffectiveProductStock = (product: any): number => {
+  const variants = normalizeProductVariants(product);
+  if (!variants.length) {
+    return Math.max(0, toInt(product?.stock, 0));
+  }
+
+  return Math.max(
+    0,
+    variants.reduce((acc: number, variant: any) => acc + Math.max(0, toInt(variant.stock, 0)), 0)
+  );
+};
+
+const resolveProductVariant = (product: any, requestedVariant: any, fallbackToDefault = false) => {
+  const variants = normalizeProductVariants(product);
+  if (!variants.length) return null;
+
+  const requestedId = normalizeVariantIdentity(requestedVariant?.id || '');
+  const requestedSku = normalizeText(requestedVariant?.sku).toLowerCase();
+  const requestedLabel = normalizeSearchText(
+    requestedVariant?.label || requestedVariant?.presentation || requestedVariant?.size || ''
+  );
+
+  const matched = variants.find((variant: any) => {
+    if (requestedId && variant.id === requestedId) return true;
+    if (requestedSku && String(variant.sku || '').toLowerCase() === requestedSku) return true;
+    if (requestedLabel) {
+      const normalizedLabel = normalizeSearchText(variant.label || '');
+      const normalizedPresentation = normalizeSearchText(variant.presentation || '');
+      const normalizedSize = normalizeSearchText(variant.size || '');
+      return [normalizedLabel, normalizedPresentation, normalizedSize].includes(requestedLabel);
+    }
+
+    return false;
+  });
+
+  if (matched) return matched;
+  if (fallbackToDefault) return getDefaultProductVariant(product);
+  return null;
+};
+
+const buildVariantSnapshot = (variant: any) => {
+  const serialized = serializeProductVariant(variant);
+  if (!serialized) return null;
+
+  return {
+    id: serialized.id,
+    sku: serialized.sku,
+    label: serialized.label,
+    presentation: serialized.presentation,
+    size: serialized.size,
+  };
+};
+
+const buildVariantIdentityKey = (variant: any): string => {
+  if (!variant || !isObject(variant)) {
+    return 'base';
+  }
+
+  const label = pickFirstNonEmpty([variant.label, variant.presentation, variant.size]);
+  return JSON.stringify({
+    id: normalizeVariantIdentity(variant.id || ''),
+    sku: normalizeText(variant.sku).toLowerCase(),
+    label: normalizeSearchText(label),
+  });
+};
+
+const buildOrderItemNameSnapshot = (product: any, variant: any): string => {
+  const productName = normalizeText(product?.name) || 'Producto';
+  const variantLabel = normalizeText(variant?.label || variant?.presentation || variant?.size);
+  return variantLabel ? `${productName} - ${variantLabel}` : productName;
+};
+
+const serializeCart = (cart: any, settings?: { freeShippingThreshold: number }) => ({
   id: cart.id,
   documentId: cart.documentId,
   sessionKey: cart.sessionKey || null,
@@ -848,7 +1101,8 @@ const serializeCart = (cart: any) => ({
   expiresAt: cart.expiresAt,
   shippingPolicy: buildShippingPolicy(
     roundMoney(toNumber(cart.subtotal, 0)),
-    roundMoney(toNumber(cart.discountTotal, 0))
+    roundMoney(toNumber(cart.discountTotal, 0)),
+    settings?.freeShippingThreshold
   ),
   coupon: cart.coupon
     ? {
@@ -866,18 +1120,61 @@ const serializeCart = (cart: any) => ({
     unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
     lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
     notes: item.notes || null,
-    variant: item.variant || null,
+    variant: buildVariantSnapshot(item.variant) || null,
     product: item.product
-      ? {
-          id: item.product.id,
-          documentId: item.product.documentId,
-          name: item.product.name,
-          slug: item.product.slug,
-          price: roundMoney(toNumber(item.product.price, 0)),
-          stock: toInt(item.product.stock, 0),
-          images: item.product.images || [],
-          brand: serializeBrandSummary(item.product.brand || null),
-        }
+      ? (() => {
+          const selectedVariant = resolveProductVariant(item.product, item.variant, false);
+          const currentUnitPrice = roundMoney(
+            toNumber(
+              item.unitPrice,
+              selectedVariant ? toNumber(selectedVariant.price, 0) : getEffectiveProductPrice(item.product)
+            )
+          );
+          const selectedCompareAt = selectedVariant
+            ? roundMoney(toNumber(selectedVariant.compareAtPrice, 0))
+            : roundMoney(toNumber(getEffectiveProductCompareAtPrice(item.product), 0));
+          const compareAtPrice = selectedCompareAt > currentUnitPrice ? selectedCompareAt : null;
+
+          return {
+            id: item.product.id,
+            documentId: item.product.documentId,
+            name: item.product.name,
+            slug: item.product.slug,
+            price: currentUnitPrice,
+            compareAtPrice,
+            badge: item.product.badge || null,
+            stock: getEffectiveProductStock(item.product),
+            category: item.product.category || null,
+            subcategory: normalizeText(item.product.subcategory) || null,
+            form: normalizeText(item.product.form) || null,
+            proteinSource: normalizeText(item.product.proteinSource) || null,
+            images: item.product.images || [],
+            brand: serializeBrandSummary(item.product.brand || null),
+            speciesSupported: item.product.speciesSupported || [],
+            catalogAnimals: (item.product.catalogAnimals || []).map((entry: any) => ({
+              id: entry.id,
+              documentId: entry.documentId,
+              key: entry.key,
+              slug: entry.slug,
+              label: entry.label,
+            })),
+            catalogCategory: item.product.catalogCategory
+              ? {
+                  id: item.product.catalogCategory.id,
+                  documentId: item.product.catalogCategory.documentId,
+                  key: item.product.catalogCategory.key,
+                  slug: item.product.catalogCategory.slug,
+                  label: item.product.catalogCategory.label,
+                  level: item.product.catalogCategory.level,
+                  legacyCategory: item.product.catalogCategory.legacyCategory || null,
+                }
+              : null,
+            lifeStages: item.product.lifeStages || [],
+            diet_tags: item.product.diet_tags || [],
+            health_claims: item.product.health_claims || [],
+            ingredients: item.product.ingredients || [],
+          };
+        })()
       : null,
   })),
 });
@@ -912,6 +1209,13 @@ const serializeOrder = (order: any) => {
     billingAddress: order.billingAddress,
     shippingAddress: order.shippingAddress,
     createdAt: order.createdAt,
+    statusLogs: (order.statusLogs || []).map((log: any) => ({
+      id: log.id,
+      status: log.status,
+      note: log.note || null,
+      changedBy: log.changedBy || null,
+      createdAt: log.createdAt,
+    })),
     order_items: (order.order_items || []).map((item: any) => ({
       id: item.id,
       qty: toInt(item.qty, 1),
@@ -919,6 +1223,7 @@ const serializeOrder = (order: any) => {
       lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
       nameSnapshot: item.nameSnapshot,
       sku: item.sku || null,
+      variant: buildVariantSnapshot(item.variant) || null,
       product: item.product
         ? {
             id: item.product.id,
@@ -971,6 +1276,9 @@ const serializePet = (pet: any) => ({
   lifeStage: pet.lifeStage || null,
   dietTags: pet.dietTags || [],
   healthConditions: pet.healthConditions || [],
+  catalogAnimal: pet.catalogAnimal
+    ? { id: pet.catalogAnimal.id, documentId: pet.catalogAnimal.documentId, key: pet.catalogAnimal.key, slug: pet.catalogAnimal.slug, label: pet.catalogAnimal.label }
+    : null,
 });
 
 const serializeMembershipPlan = (plan: any) => ({
@@ -1088,6 +1396,40 @@ const evaluateCoupon = (coupon: any, subtotal: number, cartItems: any[] = []) =>
 };
 
 export default ({ strapi }) => {
+  const normalizeFreeShippingThreshold = (value: any): number => {
+    const parsed = roundMoney(toNumber(value, FREE_SHIPPING_THRESHOLD));
+    return Number.isFinite(parsed) && parsed >= 0 ? parsed : FREE_SHIPPING_THRESHOLD;
+  };
+
+  const getStorefrontSettings = async () => {
+    const environment = await strapi.db.query(ENVIRONMENT_UID).findOne({});
+
+    return {
+      freeShippingThreshold: normalizeFreeShippingThreshold(environment?.freeShippingThreshold),
+    };
+  };
+
+  const getStorefrontSettingsPayload = async () => ({
+    data: await getStorefrontSettings(),
+  });
+
+  const productRecommendationPopulate = {
+    images: true,
+    variants: true,
+    brand: {
+      populate: {
+        logo: true,
+      },
+    },
+    speciesSupported: true,
+    catalogAnimals: true,
+    catalogCategory: true,
+    lifeStages: true,
+    diet_tags: true,
+    health_claims: true,
+    ingredients: true,
+  };
+
   const cartPopulate = {
     coupon: {
       populate: couponPopulate,
@@ -1095,10 +1437,7 @@ export default ({ strapi }) => {
     items: {
       populate: {
         product: {
-          populate: {
-            images: true,
-            brand: true,
-          },
+          populate: productRecommendationPopulate,
         },
       },
     },
@@ -1123,9 +1462,37 @@ export default ({ strapi }) => {
         },
       },
     },
+    statusLogs: {
+      orderBy: { createdAt: 'asc' },
+    },
+  };
+
+  const petPopulate = {
+    avatar: true,
+    specie: true,
+    catalogAnimal: true,
+    lifeStage: true,
+    dietTags: true,
+    healthConditions: true,
+  };
+
+  const toPetMutationData = (data: any) => {
+    const next = { ...data };
+
+    if (Array.isArray(next.dietTags)) {
+      next.dietTags = { set: next.dietTags };
+    }
+
+    if (Array.isArray(next.healthConditions)) {
+      next.healthConditions = { set: next.healthConditions };
+    }
+
+    return next;
   };
 
   const withTrx = (payload: any, trx: any) => (trx ? { ...payload, transacting: trx } : payload);
+
+  const serializeCartWithSettings = async (cart: any) => serializeCart(cart, await getStorefrontSettings());
 
   const getUserFromAuthorization = async (authorizationHeader: string, required = false) => {
     const normalized = normalizeText(authorizationHeader);
@@ -1234,6 +1601,343 @@ export default ({ strapi }) => {
     return cart;
   };
 
+  const collectCartRecommendationContext = (cart: any) => {
+    const productIds = new Set<number>();
+    const animalKeys = new Set<string>();
+    const specieIds = new Set<number>();
+    const categorySlugs = new Set<string>();
+    const categories = new Set<string>();
+    const subcategories = new Set<string>();
+    const lifeStageIds = new Set<number>();
+    const dietTagIds = new Set<number>();
+    const healthConditionIds = new Set<number>();
+    const brandIds = new Set<number>();
+    const forms = new Set<string>();
+    const proteinSources = new Set<string>();
+
+    for (const item of cart?.items || []) {
+      const product = item?.product;
+      const productId = toInt(product?.id, 0);
+      if (productId > 0) {
+        productIds.add(productId);
+      }
+
+      for (const animal of product?.catalogAnimals || []) {
+        const key = normalizeText(animal?.key);
+        if (key) {
+          animalKeys.add(key);
+        }
+      }
+
+      for (const specie of product?.speciesSupported || []) {
+        const id = toInt(specie?.id, 0);
+        if (id > 0) {
+          specieIds.add(id);
+        }
+      }
+
+      const categorySlug = normalizeText(product?.catalogCategory?.slug);
+      if (categorySlug) {
+        categorySlugs.add(categorySlug);
+      }
+
+      const category = normalizeText(product?.category);
+      if (category) {
+        categories.add(category);
+      }
+
+      const subcategory = normalizeText(product?.subcategory);
+      if (subcategory) {
+        subcategories.add(subcategory);
+      }
+
+      for (const stage of product?.lifeStages || []) {
+        const id = toInt(stage?.id, 0);
+        if (id > 0) {
+          lifeStageIds.add(id);
+        }
+      }
+
+      for (const tag of product?.diet_tags || []) {
+        const id = toInt(tag?.id, 0);
+        if (id > 0) {
+          dietTagIds.add(id);
+        }
+      }
+
+      for (const claim of product?.health_claims || []) {
+        const id = toInt(claim?.id, 0);
+        if (id > 0) {
+          healthConditionIds.add(id);
+        }
+      }
+
+      const brandId = toInt(product?.brand?.id, 0);
+      if (brandId > 0) {
+        brandIds.add(brandId);
+      }
+
+      const form = normalizeText(product?.form);
+      if (form) {
+        forms.add(form);
+      }
+
+      const proteinSource = normalizeText(product?.proteinSource);
+      if (proteinSource) {
+        proteinSources.add(proteinSource);
+      }
+    }
+
+    return {
+      productIds: Array.from(productIds),
+      animalKeys: Array.from(animalKeys),
+      specieIds: Array.from(specieIds),
+      categorySlugs: Array.from(categorySlugs),
+      categories: Array.from(categories),
+      subcategories: Array.from(subcategories),
+      lifeStageIds: Array.from(lifeStageIds),
+      dietTagIds: Array.from(dietTagIds),
+      healthConditionIds: Array.from(healthConditionIds),
+      brandIds: Array.from(brandIds),
+      forms: Array.from(forms),
+      proteinSources: Array.from(proteinSources),
+      hasAnimalContext: animalKeys.size > 0 || specieIds.size > 0,
+    };
+  };
+
+  const hasIntersection = (left: Array<string | number>, right: Array<string | number>) =>
+    left.some((value) => right.includes(value));
+
+  const matchesCartAnimalContext = (product: any, context: ReturnType<typeof collectCartRecommendationContext>) => {
+    if (!context.hasAnimalContext) {
+      return true;
+    }
+
+    const productAnimalKeys = (product?.catalogAnimals || [])
+      .map((entry: any) => normalizeText(entry?.key))
+      .filter(Boolean);
+    const productSpecieIds = (product?.speciesSupported || [])
+      .map((entry: any) => toInt(entry?.id, 0))
+      .filter((value: number) => value > 0);
+
+    if (!productAnimalKeys.length && !productSpecieIds.length) {
+      return true;
+    }
+
+    return hasIntersection(productAnimalKeys, context.animalKeys) || hasIntersection(productSpecieIds, context.specieIds);
+  };
+
+  const scoreRecommendedProduct = (product: any, context: ReturnType<typeof collectCartRecommendationContext>) => {
+    let score = 0;
+
+    const productAnimalKeys = (product?.catalogAnimals || [])
+      .map((entry: any) => normalizeText(entry?.key))
+      .filter(Boolean);
+    const productSpecieIds = (product?.speciesSupported || [])
+      .map((entry: any) => toInt(entry?.id, 0))
+      .filter((value: number) => value > 0);
+    const productDietTagIds = (product?.diet_tags || [])
+      .map((entry: any) => toInt(entry?.id, 0))
+      .filter((value: number) => value > 0);
+    const productHealthClaimIds = (product?.health_claims || [])
+      .map((entry: any) => toInt(entry?.id, 0))
+      .filter((value: number) => value > 0);
+    const productLifeStageIds = (product?.lifeStages || [])
+      .map((entry: any) => toInt(entry?.id, 0))
+      .filter((value: number) => value > 0);
+
+    const categorySlug = normalizeText(product?.catalogCategory?.slug);
+    const category = normalizeText(product?.category);
+    const subcategory = normalizeText(product?.subcategory);
+    const form = normalizeText(product?.form);
+    const proteinSource = normalizeText(product?.proteinSource);
+    const brandId = toInt(product?.brand?.id, 0);
+
+    score += productAnimalKeys.filter((value) => context.animalKeys.includes(value)).length * 90;
+    score += productSpecieIds.filter((value) => context.specieIds.includes(value)).length * 80;
+
+    if (categorySlug && context.categorySlugs.includes(categorySlug)) {
+      score += 42;
+    }
+
+    if (category && context.categories.includes(category)) {
+      score += 24;
+    }
+
+    if (subcategory && context.subcategories.includes(subcategory)) {
+      score += 18;
+    }
+
+    score += productLifeStageIds.filter((value) => context.lifeStageIds.includes(value)).length * 12;
+    score += productDietTagIds.filter((value) => context.dietTagIds.includes(value)).length * 8;
+    score += productHealthClaimIds.filter((value) => context.healthConditionIds.includes(value)).length * 7;
+
+    if (brandId > 0 && context.brandIds.includes(brandId)) {
+      score += 10;
+    }
+
+    if (form && context.forms.includes(form)) {
+      score += 9;
+    }
+
+    if (proteinSource && context.proteinSources.includes(proteinSource)) {
+      score += 6;
+    }
+
+    if (parseBool(product?.isFeatured)) {
+      score += 2;
+    }
+
+    return score;
+  };
+
+  const appendUniqueProducts = (bucket: any[], candidates: any[] = []) => {
+    const seen = new Set(bucket.map((entry) => toInt(entry?.id, 0)));
+
+    for (const product of candidates || []) {
+      const id = toInt(product?.id, 0);
+      if (id <= 0 || seen.has(id)) continue;
+      bucket.push(product);
+      seen.add(id);
+    }
+  };
+
+  const listCartRecommendationsPayload = async (cart: any, query: any = {}) => {
+    const limit = Math.min(12, Math.max(1, toInt(query?.limit, CART_RECOMMENDATION_LIMIT)));
+    const context = collectCartRecommendationContext(cart);
+
+    if (!context.productIds.length) {
+      return { data: [] };
+    }
+
+    const baseConditions: any[] = [
+      { publishedAt: { $notNull: true } },
+      { stock: { $gt: 0 } },
+      { id: { $notIn: context.productIds } },
+    ];
+
+    const relevanceFilters: any[] = [];
+
+    if (context.animalKeys.length > 0) {
+      relevanceFilters.push({ catalogAnimals: { key: { $in: context.animalKeys } } });
+    }
+
+    if (context.specieIds.length > 0) {
+      relevanceFilters.push({ speciesSupported: { id: { $in: context.specieIds } } });
+    }
+
+    if (context.categorySlugs.length > 0) {
+      relevanceFilters.push({ catalogCategory: { slug: { $in: context.categorySlugs } } });
+    }
+
+    if (context.categories.length > 0) {
+      relevanceFilters.push({ category: { $in: context.categories } });
+    }
+
+    if (context.subcategories.length > 0) {
+      relevanceFilters.push({ subcategory: { $in: context.subcategories } });
+    }
+
+    if (context.lifeStageIds.length > 0) {
+      relevanceFilters.push({ lifeStages: { id: { $in: context.lifeStageIds } } });
+    }
+
+    if (context.dietTagIds.length > 0) {
+      relevanceFilters.push({ diet_tags: { id: { $in: context.dietTagIds } } });
+    }
+
+    if (context.healthConditionIds.length > 0) {
+      relevanceFilters.push({ health_claims: { id: { $in: context.healthConditionIds } } });
+    }
+
+    if (context.forms.length > 0) {
+      relevanceFilters.push({ form: { $in: context.forms } });
+    }
+
+    if (context.proteinSources.length > 0) {
+      relevanceFilters.push({ proteinSource: { $in: context.proteinSources } });
+    }
+
+    const selected: any[] = [];
+
+    if (relevanceFilters.length > 0) {
+      const candidates = await strapi.db.query(PRODUCT_UID).findMany({
+        where: {
+          $and: [...baseConditions, { $or: relevanceFilters }],
+        },
+        populate: productRecommendationPopulate,
+        orderBy: [{ isFeatured: 'desc' }, { updatedAt: 'desc' }],
+        limit: CART_RECOMMENDATION_CANDIDATE_LIMIT,
+      });
+
+      const ranked = (candidates || [])
+        .filter((product: any) => matchesCartAnimalContext(product, context))
+        .map((product: any) => ({
+          product,
+          score: scoreRecommendedProduct(product, context),
+        }))
+        .filter((entry: any) => entry.score > 0)
+        .sort((left: any, right: any) => {
+          if (right.score !== left.score) return right.score - left.score;
+          return Date.parse(right.product?.updatedAt || right.product?.createdAt || '')
+            - Date.parse(left.product?.updatedAt || left.product?.createdAt || '');
+        })
+        .map((entry: any) => entry.product);
+
+      appendUniqueProducts(selected, ranked);
+    }
+
+    if (selected.length < limit) {
+      const fallbackAnimalFilters: any[] = [];
+
+      if (context.animalKeys.length > 0) {
+        fallbackAnimalFilters.push({ catalogAnimals: { key: { $in: context.animalKeys } } });
+      }
+
+      if (context.specieIds.length > 0) {
+        fallbackAnimalFilters.push({ speciesSupported: { id: { $in: context.specieIds } } });
+      }
+
+      const fallbackWhere =
+        fallbackAnimalFilters.length > 0
+          ? { $and: [...baseConditions, { $or: fallbackAnimalFilters }] }
+          : { $and: baseConditions };
+
+      const fallback = await strapi.db.query(PRODUCT_UID).findMany({
+        where: fallbackWhere,
+        populate: productRecommendationPopulate,
+        orderBy: [{ isFeatured: 'desc' }, { updatedAt: 'desc' }],
+        limit: CART_RECOMMENDATION_CANDIDATE_LIMIT,
+      });
+
+      appendUniqueProducts(
+        selected,
+        (fallback || []).filter((product: any) => matchesCartAnimalContext(product, context))
+      );
+    }
+
+    if (selected.length < limit) {
+      const generalFallback = await strapi.db.query(PRODUCT_UID).findMany({
+        where: { $and: baseConditions },
+        populate: productRecommendationPopulate,
+        orderBy: [{ isFeatured: 'desc' }, { updatedAt: 'desc' }],
+        limit: CART_RECOMMENDATION_CANDIDATE_LIMIT,
+      });
+
+      appendUniqueProducts(
+        selected,
+        (generalFallback || []).filter((product: any) => matchesCartAnimalContext(product, context))
+      );
+    }
+
+    return {
+      data: selected.slice(0, limit).map((product: any) => serializeProduct(product)),
+      meta: {
+        count: Math.min(limit, selected.length),
+      },
+    };
+  };
+
   const ensureGuestActiveCart = async (sessionKeyInput: string) => {
     const sessionKey = normalizeSessionKey(sessionKeyInput) || crypto.randomUUID();
     let cart = await findActiveGuestCart(sessionKey);
@@ -1252,23 +1956,37 @@ export default ({ strapi }) => {
 
     for (const item of cart.items || []) {
       const qty = Math.max(1, toInt(item.qty, 1));
-      const productPrice = item.product
-        ? toNumber(item.product.price, toNumber(item.unitPrice, 0))
-        : toNumber(item.unitPrice, 0);
+      const resolvedVariant = item.product
+        ? resolveProductVariant(item.product, item.variant, false)
+        : null;
+      const normalizedVariant = buildVariantSnapshot(resolvedVariant) || null;
+      const productPrice = resolvedVariant
+        ? toNumber(resolvedVariant.price, toNumber(item.unitPrice, 0))
+        : item.product
+          ? getEffectiveProductPrice(item.product)
+          : toNumber(item.unitPrice, 0);
       const unitPrice = roundMoney(Math.max(0, productPrice));
       const lineTotal = roundMoney(unitPrice * qty);
       subtotal += lineTotal;
 
       const storedUnitPrice = roundMoney(toNumber(item.unitPrice, 0));
       const storedLineTotal = roundMoney(toNumber(item.lineTotal, 0));
+      const storedVariantKey = buildVariantIdentityKey(item.variant);
+      const nextVariantKey = buildVariantIdentityKey(normalizedVariant);
 
-      if (storedUnitPrice !== unitPrice || storedLineTotal !== lineTotal || toInt(item.qty, 1) !== qty) {
+      if (
+        storedUnitPrice !== unitPrice
+        || storedLineTotal !== lineTotal
+        || toInt(item.qty, 1) !== qty
+        || storedVariantKey !== nextVariantKey
+      ) {
         await strapi.db.query(CART_ITEM_UID).update({
           where: { id: item.id },
           data: {
             qty,
             unitPrice,
             lineTotal,
+            variant: normalizedVariant,
           },
         });
       }
@@ -1276,6 +1994,7 @@ export default ({ strapi }) => {
       item.qty = qty;
       item.unitPrice = unitPrice;
       item.lineTotal = lineTotal;
+      item.variant = normalizedVariant;
     }
 
     return roundMoney(subtotal);
@@ -1334,7 +2053,7 @@ export default ({ strapi }) => {
     cart.shippingTotal = shippingTotal;
     cart.grandTotal = grandTotal;
 
-    return serializeCart(cart);
+    return serializeCartWithSettings(cart);
   };
 
   const recalculateCart = async (cartId: number) => {
@@ -1356,8 +2075,7 @@ export default ({ strapi }) => {
         publishedAt: { $notNull: true },
       },
       populate: {
-        images: true,
-        brand: true,
+        ...productRecommendationPopulate,
       },
     });
 
@@ -1370,23 +2088,30 @@ export default ({ strapi }) => {
       throwHttpError(404, 'Carrito activo no encontrado');
     }
 
-    const variant = isObject(payload?.variant) ? payload.variant : null;
+    const requestedVariant = isObject(payload?.variant) ? payload.variant : null;
+    const resolvedVariant = resolveProductVariant(product, requestedVariant, true);
+    const variant = buildVariantSnapshot(resolvedVariant) || null;
     const notes = normalizeText(payload?.notes);
-    const variantKey = JSON.stringify(variant || null);
+    const variantKey = buildVariantIdentityKey(variant);
 
     const existingItem = (cart.items || []).find((item: any) => {
       const itemProductId = getRelationId(item.product);
-      return itemProductId === productId && JSON.stringify(item.variant || null) === variantKey;
+      return itemProductId === productId && buildVariantIdentityKey(item.variant) === variantKey;
     });
 
     const currentQty = existingItem ? toInt(existingItem.qty, 1) : 0;
     const targetQty = currentQty + qtyToAdd;
+    const availableStock = resolvedVariant
+      ? Math.max(0, toInt(resolvedVariant.stock, 0))
+      : Math.max(0, toInt(product.stock, 0));
 
-    if (toInt(product.stock, 0) < targetQty) {
+    if (availableStock < targetQty) {
       throwHttpError(400, 'No hay suficiente inventario para la cantidad solicitada');
     }
 
-    const unitPrice = roundMoney(toNumber(product.price, 0));
+    const unitPrice = resolvedVariant
+      ? roundMoney(toNumber(resolvedVariant.price, 0))
+      : getEffectiveProductPrice(product);
     const lineTotal = roundMoney(unitPrice * targetQty);
 
     if (existingItem) {
@@ -1460,14 +2185,22 @@ export default ({ strapi }) => {
     }
 
     if (!item.product) {
-      throwHttpError(400, 'El producto del carrito ya no está disponible');
+      throwHttpError(400, 'El producto del carrito ya no esta disponible');
     }
 
-    if (toInt(item.product.stock, 0) < qty) {
+    const resolvedVariant = resolveProductVariant(item.product, item.variant, true);
+    const normalizedVariant = buildVariantSnapshot(resolvedVariant) || null;
+    const availableStock = resolvedVariant
+      ? Math.max(0, toInt(resolvedVariant.stock, 0))
+      : Math.max(0, getEffectiveProductStock(item.product));
+
+    if (availableStock < qty) {
       throwHttpError(400, 'No hay suficiente inventario para la cantidad solicitada');
     }
 
-    const unitPrice = roundMoney(toNumber(item.product.price, toNumber(item.unitPrice, 0)));
+    const unitPrice = resolvedVariant
+      ? roundMoney(toNumber(resolvedVariant.price, toNumber(item.unitPrice, 0)))
+      : getEffectiveProductPrice(item.product);
     const lineTotal = roundMoney(unitPrice * qty);
 
     await strapi.db.query(CART_ITEM_UID).update({
@@ -1476,12 +2209,14 @@ export default ({ strapi }) => {
         qty,
         unitPrice,
         lineTotal,
+        variant: normalizedVariant,
       },
     });
 
     item.qty = qty;
     item.unitPrice = unitPrice;
     item.lineTotal = lineTotal;
+    item.variant = normalizedVariant;
 
     return recalculateCartFromState(cart);
   };
@@ -1556,7 +2291,7 @@ export default ({ strapi }) => {
     cart.shippingTotal = 0;
     cart.grandTotal = grandTotal;
 
-    return serializeCart(cart);
+    return serializeCartWithSettings(cart);
   };
 
   const clearCouponFromCart = async (cartId: number, currentCart: any = null) => {
@@ -1585,7 +2320,7 @@ export default ({ strapi }) => {
     cart.shippingTotal = 0;
     cart.grandTotal = grandTotal;
 
-    return serializeCart(cart);
+    return serializeCartWithSettings(cart);
   };
 
   const assertCheckoutAddress = (address: any, fieldName: 'billingAddress' | 'shippingAddress') => {
@@ -1625,7 +2360,7 @@ export default ({ strapi }) => {
     }
 
     if (!rawCart.items || rawCart.items.length === 0) {
-      throwHttpError(400, 'No puedes finalizar una compra con el carrito vacío');
+      throwHttpError(400, 'No puedes finalizar una compra con el carrito vacio');
     }
 
     let checkoutEmail = normalizeText(payload?.email);
@@ -1645,10 +2380,18 @@ export default ({ strapi }) => {
     const shippingMethod = resolveShippingMethod(payload?.shippingMethod ?? payload?.shippingMethodId);
     const paymentKind = resolvePaymentKind(payload?.paymentKind ?? payload?.paymentMethod);
 
+    const unavailableItems: Array<{ name: string; qty: number; unitPrice: number; lineTotal: number }> = [];
+
     for (const item of rawCart.items) {
       const productId = getRelationId(item.product);
       if (!productId) {
-        throwHttpError(400, 'El producto del carrito ya no está disponible');
+        unavailableItems.push({
+          name: item.nameSnapshot || 'Producto',
+          qty: toInt(item.qty, 1),
+          unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
+          lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
+        });
+        continue;
       }
 
       const latestProduct = await strapi.db
@@ -1656,24 +2399,54 @@ export default ({ strapi }) => {
         .findOne(withTrx({ where: { id: productId, publishedAt: { $notNull: true } } }, trx));
 
       if (!latestProduct) {
-        throwHttpError(400, `El producto ${productId} ya no está disponible`);
+        unavailableItems.push({
+          name: item.nameSnapshot || `Producto #${productId}`,
+          qty: toInt(item.qty, 1),
+          unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
+          lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
+        });
+        continue;
       }
 
-      if (toInt(latestProduct.stock, 0) < toInt(item.qty, 1)) {
-        throwHttpError(400, `No hay suficiente inventario para ${latestProduct.name}`);
+      const resolvedVariant = resolveProductVariant(latestProduct, item.variant, true);
+      const rawStock = resolvedVariant ? resolvedVariant.stock : latestProduct.stock;
+      const stockTracked = rawStock !== null && rawStock !== undefined;
+      const availableStock = stockTracked
+        ? (resolvedVariant
+            ? Math.max(0, toInt(resolvedVariant.stock, 0))
+            : Math.max(0, getEffectiveProductStock(latestProduct)))
+        : Infinity;
+
+      if (availableStock < toInt(item.qty, 1)) {
+        unavailableItems.push({
+          name: latestProduct.name,
+          qty: toInt(item.qty, 1),
+          unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
+          lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
+        });
       }
+    }
+
+    if (unavailableItems.length > 0) {
+      throwHttpError(400, 'Algunos productos no tienen stock disponible', { unavailable: unavailableItems });
     }
 
     const subtotal = roundMoney(toNumber(rawCart.subtotal, 0));
     const couponEvaluation = rawCart.coupon ? evaluateCoupon(rawCart.coupon, subtotal, rawCart.items || []) : null;
     if (rawCart.coupon && !couponEvaluation?.valid) {
-      throwHttpError(400, couponEvaluation?.reason || 'El cupón ya no se puede aplicar');
+      throwHttpError(400, couponEvaluation?.reason || 'El cupon ya no se puede aplicar');
     }
 
     const discountTotal = couponEvaluation?.valid
       ? roundMoney(couponEvaluation.discount)
       : roundMoney(toNumber(rawCart.discountTotal, 0));
-    const shippingTotal = resolveShippingTotal(subtotal, discountTotal, shippingMethod);
+    const settings = await getStorefrontSettings();
+    const shippingTotal = resolveShippingTotal(
+      subtotal,
+      discountTotal,
+      shippingMethod,
+      settings.freeShippingThreshold
+    );
     const taxTotal = 0;
     const grandTotal = roundMoney(Math.max(0, subtotal - discountTotal + shippingTotal + taxTotal));
     const affiliateCommission = couponEvaluation?.affiliateCommission || {
@@ -1730,7 +2503,11 @@ export default ({ strapi }) => {
         .findOne(withTrx({ where: { id: productId } }, trx));
 
       const qty = Math.max(1, toInt(item.qty, 1));
-      const unitPrice = roundMoney(toNumber(latestProduct?.price, toNumber(item.unitPrice, 0)));
+      const resolvedVariant = resolveProductVariant(latestProduct, item.variant, true);
+      const normalizedVariant = buildVariantSnapshot(resolvedVariant) || null;
+      const unitPrice = resolvedVariant
+        ? roundMoney(toNumber(resolvedVariant.price, toNumber(item.unitPrice, 0)))
+        : getEffectiveProductPrice(latestProduct);
       const lineTotal = roundMoney(unitPrice * qty);
 
       await strapi.db.query(ORDER_ITEM_UID).create(
@@ -1739,37 +2516,78 @@ export default ({ strapi }) => {
             data: {
               order: createdOrder.id,
               product: productId,
-              nameSnapshot: latestProduct?.name || 'Unknown Product',
+              nameSnapshot: buildOrderItemNameSnapshot(latestProduct, normalizedVariant),
               qty,
               unitPrice,
               lineTotal,
-              sku: latestProduct?.slug || null,
+              sku: normalizedVariant?.sku || normalizeText(latestProduct?.sku) || latestProduct?.slug || null,
+              variant: normalizedVariant,
             },
           },
           trx
         )
       );
 
-      const currentStock = Math.max(0, toInt(latestProduct?.stock, 0));
-      if (currentStock < qty) {
-        throwHttpError(409, `Stock changed while processing ${latestProduct?.name || `product ${productId}`}`);
-      }
-      const nextStock = Math.max(0, currentStock - qty);
+      // Si stock es null en BD el producto no tiene tracking de stock — saltarse deducción
+      const rawStock = latestProduct?.stock;
+      const stockTracked = rawStock !== null && rawStock !== undefined;
 
-      const updatedProduct = await strapi.db.query(PRODUCT_UID).update(
-        withTrx(
-          {
-            where: { id: productId, stock: { $eq: currentStock } },
-            data: {
-              stock: nextStock,
-            },
-          },
-          trx
-        )
-      );
+      if (stockTracked) {
+        const currentStock = Math.max(0, getEffectiveProductStock(latestProduct));
+        const currentVariants = normalizeProductVariants(latestProduct);
+        const activeVariant = resolvedVariant
+          ? currentVariants.find((variant) => variant.id === resolvedVariant.id) || resolvedVariant
+          : null;
 
-      if (!updatedProduct) {
-        throwHttpError(409, `Stock changed while processing ${latestProduct?.name || `product ${productId}`}`);
+        if (activeVariant) {
+          const currentVariantStock = Math.max(0, toInt(activeVariant.stock, 0));
+          if (currentVariantStock < qty) {
+            throwHttpError(409, `Stock insuficiente para ${latestProduct?.name || `producto ${productId}`}`);
+          }
+
+          const nextVariants = currentVariants.map((variant) =>
+            variant.id === activeVariant.id
+              ? { ...variant, stock: Math.max(0, toInt(variant.stock, 0) - qty) }
+              : variant
+          );
+          const nextStock = nextVariants.reduce(
+            (sum, variant) => sum + Math.max(0, toInt(variant.stock, 0)),
+            0
+          );
+
+          const updatedProduct = await strapi.db.query(PRODUCT_UID).update(
+            withTrx(
+              {
+                where: { id: productId, stock: { $eq: currentStock } },
+                data: { stock: nextStock, variants: nextVariants },
+              },
+              trx
+            )
+          );
+
+          if (!updatedProduct) {
+            throwHttpError(409, `Stock cambió mientras se procesaba ${latestProduct?.name || `producto ${productId}`}`);
+          }
+        } else {
+          if (currentStock < qty) {
+            throwHttpError(409, `Stock insuficiente para ${latestProduct?.name || `producto ${productId}`}`);
+          }
+          const nextStock = Math.max(0, currentStock - qty);
+
+          const updatedProduct = await strapi.db.query(PRODUCT_UID).update(
+            withTrx(
+              {
+                where: { id: productId, stock: { $eq: currentStock } },
+                data: { stock: nextStock },
+              },
+              trx
+            )
+          );
+
+          if (!updatedProduct) {
+            throwHttpError(409, `Stock cambió mientras se procesaba ${latestProduct?.name || `producto ${productId}`}`);
+          }
+        }
       }
     }
 
@@ -1812,7 +2630,7 @@ export default ({ strapi }) => {
 
     return {
       order: serializeOrder(order),
-      nextCart: serializeCart(nextCart),
+      nextCart: serializeCart(nextCart, settings),
     };
   };
 
@@ -1859,42 +2677,86 @@ export default ({ strapi }) => {
     }
 
     const category = normalizeText(query?.category);
-    if (category) {
+    const subcategory = normalizeText(query?.subcategory);
+    const animalKey = normalizeText(query?.animalKey ?? query?.animal);
+    const categorySlug = normalizeText(query?.categorySlug);
+    const specieIds = parseIdList(query?.specieIds ?? query?.specieId);
+
+    let categoryHandledByTaxonomyFallback = false;
+    let subcategoryHandledByTaxonomyFallback = false;
+    let speciesHandledByTaxonomyFallback = false;
+
+    if (subcategory && categorySlug) {
+      conditions.push({
+        $or: [
+          { catalogCategory: { slug: { $eq: categorySlug } } },
+          { subcategory: { $eqi: subcategory } },
+        ],
+      });
+      subcategoryHandledByTaxonomyFallback = true;
+    } else if (categorySlug) {
+      if (category) {
+        conditions.push({
+          $or: [
+            { catalogCategory: { slug: { $eq: categorySlug } } },
+            { category: { $eq: category } },
+          ],
+        });
+        categoryHandledByTaxonomyFallback = true;
+      } else {
+        conditions.push({ catalogCategory: { slug: { $eq: categorySlug } } });
+      }
+    }
+
+    if (category && !categoryHandledByTaxonomyFallback) {
       conditions.push({ category: { $eq: category } });
     }
 
-    const subcategory = normalizeText(query?.subcategory);
-    if (subcategory) {
+    if (subcategory && !subcategoryHandledByTaxonomyFallback) {
       conditions.push({ subcategory: { $eqi: subcategory } });
+    }
+
+    // New taxonomy filters: animal key and category slug
+    if (animalKey) {
+      if (specieIds.length > 0) {
+        conditions.push({
+          $or: [
+            { catalogAnimals: { key: { $eq: animalKey } } },
+            { speciesSupported: { id: { $in: specieIds } } },
+          ],
+        });
+        speciesHandledByTaxonomyFallback = true;
+      } else {
+        conditions.push({ catalogAnimals: { key: { $eq: animalKey } } });
+      }
     }
 
     if (parseBool(query?.featured)) {
       conditions.push({ isFeatured: { $eq: true } });
     }
 
-    const form = normalizeText(query?.form);
-    if (form) {
-      conditions.push({ form: { $eq: form } });
+    const forms = parseTextList(query?.forms ?? query?.form);
+    if (forms.length > 0) {
+      conditions.push({ form: { $in: forms } });
     }
 
-    const proteinSource = normalizeText(query?.proteinSource);
-    if (proteinSource) {
-      conditions.push({ proteinSource: { $eq: proteinSource } });
+    const proteinSources = parseTextList(query?.proteinSources ?? query?.proteinSource);
+    if (proteinSources.length > 0) {
+      conditions.push({ proteinSource: { $in: proteinSources } });
     }
 
-    const brandId = toInt(query?.brandId, 0);
-    if (brandId > 0) {
-      conditions.push({ brand: { id: { $eq: brandId } } });
+    const brandIds = parseIdList(query?.brandIds ?? query?.brandId);
+    if (brandIds.length > 0) {
+      conditions.push({ brand: { id: { $in: brandIds } } });
     }
 
-    const specieId = toInt(query?.specieId, 0);
-    if (specieId > 0) {
-      conditions.push({ speciesSupported: { id: { $eq: specieId } } });
+    if (specieIds.length > 0 && !speciesHandledByTaxonomyFallback) {
+      conditions.push({ speciesSupported: { id: { $in: specieIds } } });
     }
 
-    const lifeStageId = toInt(query?.lifeStageId, 0);
-    if (lifeStageId > 0) {
-      conditions.push({ lifeStages: { id: { $eq: lifeStageId } } });
+    const lifeStageIds = parseIdList(query?.lifeStageIds ?? query?.lifeStageId);
+    if (lifeStageIds.length > 0) {
+      conditions.push({ lifeStages: { id: { $in: lifeStageIds } } });
     }
 
     const dietTagIds = parseIdList(query?.dietTagIds);
@@ -1942,6 +2804,7 @@ export default ({ strapi }) => {
           lifeStage: true,
           dietTags: true,
           healthConditions: true,
+          catalogAnimal: true,
         },
       });
 
@@ -1949,43 +2812,24 @@ export default ({ strapi }) => {
         throwHttpError(404, 'Pet profile not found for this user');
       }
 
-      if (pet.specie?.id) {
+      // Prefer new taxonomy, but keep legacy species as fallback while products migrate.
+      if (pet.catalogAnimal?.key && pet.specie?.id) {
+        conditions.push({
+          $or: [
+            { catalogAnimals: { key: { $eq: pet.catalogAnimal.key } } },
+            { speciesSupported: { id: { $eq: pet.specie.id } } },
+          ],
+        });
+      } else if (pet.catalogAnimal?.key) {
+        conditions.push({ catalogAnimals: { key: { $eq: pet.catalogAnimal.key } } });
+      } else if (pet.specie?.id) {
         conditions.push({ speciesSupported: { id: { $eq: pet.specie.id } } });
       }
 
-      if (pet.lifeStage?.id) {
-        conditions.push({ lifeStages: { id: { $eq: pet.lifeStage.id } } });
-      }
-
-      const weightKg = toNumber(pet.weightKg, Number.NaN);
-      if (Number.isFinite(weightKg)) {
-        conditions.push({ weightMinKg: { $lte: weightKg } });
-        conditions.push({ weightMaxKg: { $gte: weightKg } });
-      }
-
-      const strictPet = parseBool(query?.strictPet);
-
-      const petDietIds = (pet.dietTags || []).map((tag: any) => tag.id).filter(Boolean);
-      if (petDietIds.length > 0) {
-        if (strictPet) {
-          for (const dietId of petDietIds) {
-            conditions.push({ diet_tags: { id: { $eq: dietId } } });
-          }
-        } else {
-          conditions.push({ diet_tags: { id: { $in: petDietIds } } });
-        }
-      }
-
-      const petHealthIds = (pet.healthConditions || []).map((condition: any) => condition.id).filter(Boolean);
-      if (petHealthIds.length > 0) {
-        if (strictPet) {
-          for (const conditionId of petHealthIds) {
-            conditions.push({ health_claims: { id: { $eq: conditionId } } });
-          }
-        } else {
-          conditions.push({ health_claims: { id: { $in: petHealthIds } } });
-        }
-      }
+      // With a pet template we only hard-filter by species. Stage, weight, diet
+      // tags and health claims are handled as compatibility hints elsewhere,
+      // because many products still have partial metadata and strict gating
+      // hides valid results from the catalog.
     }
 
     return conditions.length > 0 ? { $and: conditions } : {};
@@ -2077,7 +2921,9 @@ export default ({ strapi }) => {
     }
 
     if (hasOwnField(payload, ['birthdate', 'birthDate', 'fechaNacimiento'])) {
-      data.birthdate = normalizeDateInput(extractFirstValue(payload, ['birthdate', 'birthDate', 'fechaNacimiento']));
+      data.birthdate = normalizeDateInput(
+        pickFirstPresentValue([payload.birthdate, payload.birthDate, payload.fechaNacimiento])
+      );
     }
 
     if (hasOwnField(payload, ['breed', 'raza'])) {
@@ -2093,7 +2939,10 @@ export default ({ strapi }) => {
     }
 
     if (hasOwnField(payload, ['weightKg', 'weight', 'pesoKg'])) {
-      const weightValue = toNumber(extractFirstValue(payload, ['weightKg', 'weight', 'pesoKg']), Number.NaN);
+      const weightValue = toNumber(
+        pickFirstPresentValue([payload.weightKg, payload.weight, payload.pesoKg]),
+        Number.NaN
+      );
       data.weightKg = Number.isFinite(weightValue) ? weightValue : null;
     }
 
@@ -2134,7 +2983,7 @@ export default ({ strapi }) => {
     }
 
     const specieId = toInt(
-      pickFirstNonEmpty([payload.specieId, payload.speciesId, payload.specie, payload.species]),
+      pickFirstPresentValue([payload.specieId, payload.speciesId, payload.specie, payload.species]),
       0
     );
     if (specieId > 0) {
@@ -2143,8 +2992,19 @@ export default ({ strapi }) => {
       data.specie = null;
     }
 
+    // New taxonomy: catalogAnimalId links to catalog-animal
+    const catalogAnimalId = toInt(
+      pickFirstPresentValue([payload.catalogAnimalId, payload.catalogAnimal]),
+      0
+    );
+    if (catalogAnimalId > 0) {
+      data.catalogAnimal = catalogAnimalId;
+    } else if (hasOwnField(payload, ['catalogAnimalId', 'catalogAnimal'])) {
+      data.catalogAnimal = null;
+    }
+
     const lifeStageId = toInt(
-      pickFirstNonEmpty([payload.lifeStageId, payload.lifeStage, payload.etapaVida]),
+      pickFirstPresentValue([payload.lifeStageId, payload.lifeStage, payload.etapaVida]),
       0
     );
     if (lifeStageId > 0) {
@@ -2177,8 +3037,14 @@ export default ({ strapi }) => {
     };
   };
 
+  const CATALOG_ANIMAL_UID = 'api::catalog-animal.catalog-animal';
+
   const listPetTaxonomyPayload = async () => {
-    const [species, lifeStages, dietTags, healthConditions] = await Promise.all([
+    const [catalogAnimals, species, lifeStages, dietTags, healthConditions] = await Promise.all([
+      strapi.db.query(CATALOG_ANIMAL_UID).findMany({
+        where: { isActive: { $ne: false }, publishedAt: { $notNull: true } },
+        orderBy: [{ sortOrder: 'asc' }, { label: 'asc' }],
+      }),
       strapi.db.query(SPECIE_UID).findMany({
         where: { publishedAt: { $notNull: true } },
         orderBy: [{ name: 'asc' }],
@@ -2207,6 +3073,16 @@ export default ({ strapi }) => {
 
     return {
       data: {
+        // catalogAnimals is the new authoritative species list for pet forms
+        catalogAnimals: (catalogAnimals || []).map((a: any) => ({
+          id: a.id,
+          documentId: a.documentId,
+          key: a.key,
+          slug: a.slug,
+          label: a.label,
+          sortOrder: a.sortOrder,
+        })),
+        // Legacy species taxonomy used by product filters and pet matching.
         species: normalizeTaxonomy(species),
         lifeStages: normalizeTaxonomy(lifeStages),
         dietTags: normalizeTaxonomy(dietTags),
@@ -2215,9 +3091,60 @@ export default ({ strapi }) => {
     };
   };
 
+  const FILTER_SCOPE_UID = 'api::filter-scope.filter-scope';
+
+  const listFilterScopesPayload = async (animalSlug?: string, categoryCode?: string) => {
+    const allScopes = await strapi.db.query(FILTER_SCOPE_UID).findMany({
+      where: { isVisible: true },
+      populate: {
+        catalogFilter: { select: ['key'] },
+        animals: { select: ['slug', 'key'] },
+        categories: { select: ['slug', 'code'] },
+      },
+      orderBy: { sortOrder: 'asc' },
+    });
+
+    const applicable = allScopes.filter((scope: any) => {
+      const animalMatch =
+        !scope.animals?.length ||
+        !animalSlug ||
+        scope.animals.some((a: any) => a.slug === animalSlug || a.key === animalSlug);
+      const categoryMatch =
+        !scope.categories?.length ||
+        !categoryCode ||
+        scope.categories.some((c: any) => c.slug === categoryCode || c.code === categoryCode);
+      return animalMatch && categoryMatch;
+    });
+
+    // Dedup by filterKey, keeping lowest sortOrder (already sorted)
+    const seen = new Set<string>();
+    const filterKeys: string[] = [];
+    const filters: Array<{ filterKey: string; sortOrder: number }> = [];
+    for (const scope of applicable) {
+      const resolvedFilterKey = resolveFilterScopeKeyFromScopeRecord(scope);
+      if (!resolvedFilterKey || seen.has(resolvedFilterKey)) continue;
+      seen.add(resolvedFilterKey);
+      filterKeys.push(resolvedFilterKey);
+      filters.push({ filterKey: resolvedFilterKey, sortOrder: scope.sortOrder ?? 50 });
+    }
+
+    return { data: { filterKeys, filters } };
+  };
+
   const listCatalogTaxonomyPayload = async () => {
     const databasePayload = await getCatalogTaxonomyPayloadFromDatabase(strapi);
-    return databasePayload || getCatalogTaxonomyPayload();
+    if (databasePayload) {
+      return databasePayload;
+    }
+
+    return {
+      data: {
+        version: toIsoNow().slice(0, 10),
+        generatedFrom: 'database-empty',
+        filterLibrary: [],
+        animals: [],
+      },
+    };
   };
 
   const listProductFacetsPayload = async (query: any = {}, userId?: number) => {
@@ -2228,13 +3155,22 @@ export default ({ strapi }) => {
       products = await runWithTimeout(
         strapi.db.query(PRODUCT_UID).findMany({
           where,
-          select: ['price', 'category', 'subcategory', 'form', 'proteinSource'],
+          select: ['price', 'variants', 'category', 'subcategory', 'form', 'proteinSource'],
           populate: {
             brand: {
               select: ['id', 'documentId', 'name', 'slug'],
+              populate: {
+                logo: true,
+              },
             },
             speciesSupported: {
               select: ['id', 'documentId', 'name', 'slug'],
+            },
+            catalogAnimals: {
+              select: ['id', 'documentId', 'key', 'slug', 'label'],
+            },
+            catalogCategory: {
+              select: ['id', 'documentId', 'key', 'slug', 'label', 'level', 'legacyCategory'],
             },
             lifeStages: {
               select: ['id', 'documentId', 'name', 'slug'],
@@ -2263,9 +3199,11 @@ export default ({ strapi }) => {
       throw error;
     }
 
+    // Use the effective price per product (default variant price for variant
+    // products, root price for simple products). Exclude Q0 and non-finite.
     const priceValues = (products || [])
-      .map((product: any) => roundMoney(toNumber(product.price, Number.NaN)))
-      .filter((price: number) => Number.isFinite(price));
+      .map((product: any) => roundMoney(getEffectiveProductPrice(product)))
+      .filter((price: number) => Number.isFinite(price) && price > 0);
 
     return {
       data: {
@@ -2277,7 +3215,7 @@ export default ({ strapi }) => {
           (products || []).map((product: any) => product.proteinSource),
           PROTEIN_SOURCE_LABELS
         ),
-        species: collectTaxonomyFacet((products || []).flatMap((product: any) => product.speciesSupported || [])),
+        species: collectTaxonomyFacet((products || []).flatMap((product: any) => (product.catalogAnimals || []).map((a: any) => ({ id: a.id, documentId: a.documentId, name: a.label, slug: a.slug })))),
         lifeStages: collectTaxonomyFacet((products || []).flatMap((product: any) => product.lifeStages || [])),
         dietTags: collectTaxonomyFacet((products || []).flatMap((product: any) => product.diet_tags || [])),
         healthConditions: collectTaxonomyFacet((products || []).flatMap((product: any) => product.health_claims || [])),
@@ -2569,8 +3507,11 @@ export default ({ strapi }) => {
   };
 
   const buildMerchantProductType = (product: any): string => {
-    const speciesLabel = normalizeText(product?.speciesSupported?.[0]?.name);
-    const categoryLabel = CATEGORY_LABELS[normalizeText(product?.category)] || normalizeText(product?.category);
+    // Prefer new taxonomy (catalogAnimals + catalogCategory)
+    const speciesLabel = normalizeText(product?.catalogAnimals?.[0]?.label || product?.speciesSupported?.[0]?.name);
+    const categoryLabel = normalizeText(product?.catalogCategory?.label)
+      || CATEGORY_LABELS[normalizeText(product?.category)]
+      || normalizeText(product?.category);
     const subcategoryLabel = normalizeText(product?.subcategory);
 
     return [speciesLabel, categoryLabel, subcategoryLabel].filter(Boolean).join(' > ');
@@ -2593,8 +3534,8 @@ export default ({ strapi }) => {
       )
       .map((product: any) => {
         const slug = normalizeText(product.slug);
-        const currentPrice = roundMoney(toNumber(product.price, 0));
-        const compareAtPrice = roundMoney(toNumber(product.compareAtPrice, 0));
+        const currentPrice = getEffectiveProductPrice(product);
+        const compareAtPrice = getEffectiveProductCompareAtPrice(product) || 0;
         const hasSalePrice = compareAtPrice > currentPrice;
         const productLink = getStorefrontUrl(`/catalog/product/${encodeURIComponent(slug)}`);
         const mainImage = getMediaPublicUrl(product?.images?.[0]?.url || '');
@@ -2605,7 +3546,7 @@ export default ({ strapi }) => {
         const description = extractRichTextPlainText(product?.description) || normalizeText(product?.name);
         const brandName = normalizeText(product?.brand?.name);
         const productType = buildMerchantProductType(product);
-        const availability = toInt(product?.stock, 0) > 0 ? 'in_stock' : 'out_of_stock';
+        const availability = getEffectiveProductStock(product) > 0 ? 'in_stock' : 'out_of_stock';
 
         const xmlLines = [
           '    <item>',
@@ -2664,12 +3605,22 @@ export default ({ strapi }) => {
       const populate = compact
         ? {
             images: true,
-            brand: true,
+            brand: {
+              populate: {
+                logo: true,
+              },
+            },
           }
         : {
             images: true,
-            brand: true,
+            brand: {
+              populate: {
+                logo: true,
+              },
+            },
             speciesSupported: true,
+            catalogAnimals: true,
+            catalogCategory: true,
             lifeStages: true,
             diet_tags: true,
             health_claims: true,
@@ -2743,8 +3694,14 @@ export default ({ strapi }) => {
         where,
         populate: {
           images: true,
-          brand: true,
+          brand: {
+            populate: {
+              logo: true,
+            },
+          },
           speciesSupported: true,
+          catalogAnimals: true,
+          catalogCategory: true,
           lifeStages: true,
           diet_tags: true,
           health_claims: true,
@@ -2773,6 +3730,10 @@ export default ({ strapi }) => {
       return listHeaderAnnouncementsPayload();
     },
 
+    async getStorefrontSettings() {
+      return getStorefrontSettingsPayload();
+    },
+
     async getFooterNewsletterPromo() {
       return getFooterNewsletterPromoPayload();
     },
@@ -2783,6 +3744,10 @@ export default ({ strapi }) => {
 
     async listCatalogTaxonomy() {
       return listCatalogTaxonomyPayload();
+    },
+
+    async listFilterScopesPayload(animalSlug?: string, categoryCode?: string) {
+      return listFilterScopesPayload(animalSlug, categoryCode);
     },
 
     async getSitemapXml() {
@@ -2797,6 +3762,11 @@ export default ({ strapi }) => {
       const cart = await ensureGuestActiveCart(sessionKeyInput);
       const normalized = await recalculateCartFromState(cart);
       return { data: normalized };
+    },
+
+    async listGuestCartRecommendations(sessionKeyInput: string, query: any = {}) {
+      const cart = await ensureGuestActiveCart(sessionKeyInput);
+      return listCartRecommendationsPayload(cart, query);
     },
 
     async addGuestCartItem(sessionKeyInput: string, payload: any) {
@@ -2841,6 +3811,70 @@ export default ({ strapi }) => {
       const cart = await ensureUserActiveCart(userId);
       const normalized = await recalculateCartFromState(cart);
       return { data: normalized };
+    },
+
+    async listUserCartRecommendations(userId: number, query: any = {}) {
+      const cart = await ensureUserActiveCart(userId);
+      return listCartRecommendationsPayload(cart, query);
+    },
+
+    async adoptGuestCart(userId: number, sessionKeyInput: string) {
+      const sessionKey = normalizeSessionKey(sessionKeyInput);
+      if (!sessionKey) {
+        return this.getOrCreateUserCart(userId);
+      }
+
+      const guestCart = await findActiveGuestCart(sessionKey);
+      const guestItems: any[] = guestCart?.items || [];
+
+      if (!guestCart || guestItems.length === 0) {
+        return this.getOrCreateUserCart(userId);
+      }
+
+      const userCart = await ensureUserActiveCart(userId);
+      const userItems: any[] = userCart.items || [];
+
+      for (const gi of guestItems) {
+        const guestVariantKey = buildVariantIdentityKey(gi.variant);
+        const productId = gi.product?.id;
+        if (!productId) continue;
+
+        const existing = userItems.find(
+          (ui: any) =>
+            ui.product?.id === productId &&
+            buildVariantIdentityKey(ui.variant) === guestVariantKey
+        );
+
+        if (existing) {
+          const newQty = toInt(existing.qty, 1) + toInt(gi.qty, 1);
+          const unitPrice = roundMoney(toNumber(existing.unitPrice, 0) || toNumber(gi.unitPrice, 0));
+          await strapi.db.query(CART_ITEM_UID).update({
+            where: { id: existing.id },
+            data: { qty: newQty, lineTotal: roundMoney(unitPrice * newQty) },
+          });
+        } else {
+          const unitPrice = roundMoney(toNumber(gi.unitPrice, 0));
+          await strapi.db.query(CART_ITEM_UID).create({
+            data: {
+              cart: userCart.id,
+              product: productId,
+              qty: toInt(gi.qty, 1),
+              unitPrice,
+              lineTotal: roundMoney(unitPrice * toInt(gi.qty, 1)),
+              variant: gi.variant || null,
+              notes: gi.notes || null,
+            },
+          });
+        }
+      }
+
+      // Mark guest cart as converted so it won't be picked up again
+      await strapi.db.query(CART_UID).update({
+        where: { id: guestCart.id },
+        data: { statusCart: 'converted' },
+      });
+
+      return this.getOrCreateUserCart(userId);
     },
 
     async addUserCartItem(userId: number, payload: any) {
@@ -3140,13 +4174,7 @@ export default ({ strapi }) => {
     async listUserPets(userId: number) {
       const pets = await strapi.db.query(PET_PROFILE_UID).findMany({
         where: { owner: { id: userId } },
-        populate: {
-          avatar: true,
-          specie: true,
-          lifeStage: true,
-          dietTags: true,
-          healthConditions: true,
-        },
+        populate: petPopulate,
         orderBy: { createdAt: 'desc' },
       });
 
@@ -3163,22 +4191,16 @@ export default ({ strapi }) => {
 
     async createUserPet(userId: number, payload: any) {
       const data = sanitizePetPayload(payload, true);
-      const created = await strapi.db.query(PET_PROFILE_UID).create({
+      const created = await strapi.entityService.create(PET_PROFILE_UID, {
         data: {
-          ...data,
+          ...toPetMutationData(data),
           owner: userId,
         },
       });
 
       const pet = await strapi.db.query(PET_PROFILE_UID).findOne({
         where: { id: created.id },
-        populate: {
-          avatar: true,
-          specie: true,
-          lifeStage: true,
-          dietTags: true,
-          healthConditions: true,
-        },
+        populate: petPopulate,
       });
 
       return {
@@ -3199,20 +4221,73 @@ export default ({ strapi }) => {
       }
 
       const data = sanitizePetPayload(payload, false);
-      await strapi.db.query(PET_PROFILE_UID).update({
-        where: { id: existing.id },
-        data,
+      await strapi.entityService.update(PET_PROFILE_UID, existing.id, {
+        data: toPetMutationData(data),
       });
 
       const pet = await strapi.db.query(PET_PROFILE_UID).findOne({
         where: { id: existing.id },
-        populate: {
-          avatar: true,
-          specie: true,
-          lifeStage: true,
-          dietTags: true,
-          healthConditions: true,
+        populate: petPopulate,
+      });
+
+      return {
+        data: serializePet(pet),
+      };
+    },
+
+    async linkUserPetAvatar(userId: number, petId: number, fileId: number) {
+      if (!fileId) {
+        throwHttpError(400, 'Se requiere el ID del archivo subido');
+      }
+
+      const existing = await strapi.db.query(PET_PROFILE_UID).findOne({
+        where: {
+          id: petId,
+          owner: { id: userId },
         },
+      });
+
+      if (!existing) {
+        throwHttpError(404, 'Pet not found');
+      }
+
+      await strapi.entityService.update(PET_PROFILE_UID, existing.id, {
+        data: toPetMutationData({
+          avatar: fileId,
+        }),
+      });
+
+      const pet = await strapi.db.query(PET_PROFILE_UID).findOne({
+        where: { id: existing.id },
+        populate: petPopulate,
+      });
+
+      return {
+        data: serializePet(pet),
+      };
+    },
+
+    async deleteUserPetAvatar(userId: number, petId: number) {
+      const existing = await strapi.db.query(PET_PROFILE_UID).findOne({
+        where: {
+          id: petId,
+          owner: { id: userId },
+        },
+      });
+
+      if (!existing) {
+        throwHttpError(404, 'Pet not found');
+      }
+
+      await strapi.entityService.update(PET_PROFILE_UID, existing.id, {
+        data: toPetMutationData({
+          avatar: null,
+        }),
+      });
+
+      const pet = await strapi.db.query(PET_PROFILE_UID).findOne({
+        where: { id: existing.id },
+        populate: petPopulate,
       });
 
       return {
@@ -3370,6 +4445,631 @@ export default ({ strapi }) => {
 
       return {
         data: serializeOrder(order),
+      };
+    },
+
+    // ── Portal Operativo ────────────────────────────────────────────────
+    async getOpsMetrics() {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+      const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+
+      const [totalOrders, pendingOrders, ordersToday, revenueAgg, recentRaw] = await Promise.all([
+        strapi.db.query('api::order.order').count({}),
+        strapi.db.query('api::order.order').count({ where: { statusOrder: { $in: ['pending', 'processing'] } } }),
+        strapi.db.query('api::order.order').count({ where: { createdAt: { $gte: startOfDay } } }),
+        strapi.db.query('api::order.order').findMany({
+          where: { createdAt: { $gte: startOfMonth } },
+          select: ['grandTotal'],
+        }),
+        strapi.db.query('api::order.order').findMany({
+          orderBy: { createdAt: 'desc' },
+          limit: 10,
+          populate: { customer: { select: ['username', 'email'] } },
+        }),
+      ]);
+
+      const revenueMonth = (revenueAgg as any[]).reduce((sum: number, o: any) => sum + toNumber(o.grandTotal, 0), 0);
+
+      const recentOrders = (recentRaw as any[]).map((o: any) => ({
+        id: o.id,
+        orderNumber: o.orderNumber || o.oderNumber,
+        email: o.email,
+        grandTotal: roundMoney(toNumber(o.grandTotal, 0)),
+        statusOrder: o.statusOrder,
+        createdAt: o.createdAt,
+        customerName: o.customer ? (o.customer.username || o.customer.email) : undefined,
+      }));
+
+      return {
+        data: {
+          totalOrders,
+          revenueMonth: roundMoney(revenueMonth),
+          pendingOrders,
+          ordersToday,
+          recentOrders,
+        },
+      };
+    },
+
+    async listOpsOrders(page: number, pageSize: number, status?: string) {
+      const where: any = {};
+      if (status) where.statusOrder = status;
+
+      const [orders, total] = await Promise.all([
+        strapi.db.query('api::order.order').findMany({
+          where,
+          orderBy: { createdAt: 'desc' },
+          limit: pageSize,
+          offset: (page - 1) * pageSize,
+          populate: {
+            customer: { select: ['username', 'email'] },
+            order_items: { select: ['nameSnapshot', 'qty', 'unitPrice', 'lineTotal'] },
+          },
+        }),
+        strapi.db.query('api::order.order').count({ where }),
+      ]);
+
+      return {
+        data: (orders as any[]).map((o: any) => ({
+          id: o.id,
+          orderNumber: o.orderNumber || o.oderNumber,
+          email: o.email,
+          grandTotal: roundMoney(toNumber(o.grandTotal, 0)),
+          statusOrder: o.statusOrder,
+          createdAt: o.createdAt,
+          customerName: o.customer ? (o.customer.username || o.customer.email) : undefined,
+          paymentKind: o.paymentKind,
+          shippingAddress: o.shippingAddress ? {
+            line1: o.shippingAddress.line1,
+            city: o.shippingAddress.municipality || o.shippingAddress.city,
+            country: o.shippingAddress.country,
+          } : undefined,
+          items: (o.order_items || []).map((item: any) => ({
+            nameSnapshot: item.nameSnapshot,
+            qty: item.qty,
+            unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
+            lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
+          })),
+        })),
+        meta: {
+          pagination: {
+            page,
+            pageSize,
+            total,
+            pageCount: Math.ceil(total / pageSize),
+          },
+        },
+      };
+    },
+
+    async getOpsOrderById(id: number) {
+      const order = await strapi.db.query('api::order.order').findOne({
+        where: { id },
+        populate: {
+          customer: { select: ['username', 'email'] },
+          order_items: { select: ['nameSnapshot', 'qty', 'unitPrice', 'lineTotal', 'sku'] },
+          statusLogs: { orderBy: { createdAt: 'asc' } },
+        },
+      });
+      if (!order) throwHttpError(404, 'Order not found');
+
+      const o = order as any;
+      return {
+        data: {
+          id: o.id,
+          orderNumber: o.orderNumber || o.oderNumber,
+          email: o.email,
+          subtotal: roundMoney(toNumber(o.subtotal, 0)),
+          shippingTotal: roundMoney(toNumber(o.shippingTotal, 0)),
+          discountTotal: roundMoney(toNumber(o.discountTotal, 0)),
+          grandTotal: roundMoney(toNumber(o.grandTotal, 0)),
+          statusOrder: o.statusOrder,
+          createdAt: o.createdAt,
+          customerName: o.customer ? (o.customer.username || o.customer.email) : undefined,
+          paymentKind: o.paymentKind,
+          shippingAddress: o.shippingAddress ? {
+            fullName: o.shippingAddress.fullName || o.shippingAddress.firstName || undefined,
+            line1: o.shippingAddress.line1,
+            line2: o.shippingAddress.line2 || undefined,
+            municipality: o.shippingAddress.municipality || undefined,
+            department: o.shippingAddress.department || undefined,
+            zipCode: o.shippingAddress.zipCode || undefined,
+            country: o.shippingAddress.country,
+          } : undefined,
+          items: (o.order_items || []).map((item: any) => ({
+            nameSnapshot: item.nameSnapshot,
+            sku: item.sku || null,
+            qty: item.qty,
+            unitPrice: roundMoney(toNumber(item.unitPrice, 0)),
+            lineTotal: roundMoney(toNumber(item.lineTotal, 0)),
+          })),
+          statusLogs: (o.statusLogs || []).map((log: any) => ({
+            id: log.id,
+            status: log.status,
+            note: log.note || null,
+            changedBy: log.changedBy || null,
+            createdAt: log.createdAt,
+          })),
+        },
+      };
+    },
+
+    async updateOpsOrderStatus(id: number, status: string, note?: string, changedBy?: string) {
+      const VALID = ['pending', 'processing', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+      if (!VALID.includes(status)) throwHttpError(400, 'Invalid status');
+
+      // Map 'confirmed' → 'paid' for the schema enum (ops uses 'confirmed', schema has 'paid')
+      const schemaStatus = status === 'confirmed' ? 'paid' : status;
+      await strapi.db.query('api::order.order').update({ where: { id }, data: { statusOrder: schemaStatus } });
+
+      // Crear log del cambio de status
+      try {
+        await strapi.db.query(ORDER_STATUS_LOG_UID).create({
+          data: {
+            order: id,
+            status: schemaStatus,
+            note: note || null,
+            changedBy: changedBy || 'ops',
+          },
+        });
+      } catch (err) {
+        strapi.log.warn('Error creando log de status:', err);
+      }
+
+      const updated = await strapi.db.query('api::order.order').findOne({ where: { id } });
+      const o = updated as any;
+      return { data: { id: o.id, orderNumber: o.orderNumber || o.oderNumber, statusOrder: o.statusOrder } };
+    },
+
+    async getOpsMetricsEnhanced(period: 'today' | 'week' | 'month' = 'month') {
+      const now = new Date();
+      const ACTIVE = { statusOrder: { $notIn: ['cancelled', 'refunded'] } };
+
+      // Determine period start and previous period bounds
+      let periodStart: Date, prevStart: Date, prevEnd: Date;
+      if (period === 'today') {
+        periodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        prevStart   = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        prevEnd     = periodStart;
+      } else if (period === 'week') {
+        // Monday as first day of week
+        const dow = now.getDay() === 0 ? 6 : now.getDay() - 1;
+        periodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow);
+        prevStart   = new Date(periodStart.getTime() - 7 * 24 * 60 * 60 * 1000);
+        prevEnd     = periodStart;
+      } else {
+        periodStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        prevStart   = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        prevEnd     = periodStart;
+      }
+
+      const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+      const periodStartISO = periodStart.toISOString();
+      const prevStartISO   = prevStart.toISOString();
+      const prevEndISO     = prevEnd.toISOString();
+
+      const [
+        totalOrders, pendingOrders, processingOrders, shippedOrders, ordersToday,
+        cancelledCount, currentOrders, prevOrders, membershipCount, recentRaw,
+      ] = await Promise.all([
+        strapi.db.query('api::order.order').count({}),
+        strapi.db.query('api::order.order').count({ where: { statusOrder: 'pending' } }),
+        strapi.db.query('api::order.order').count({ where: { statusOrder: 'processing' } }),
+        strapi.db.query('api::order.order').count({ where: { statusOrder: 'shipped' } }),
+        strapi.db.query('api::order.order').count({ where: { createdAt: { $gte: startOfDay } } }),
+        strapi.db.query('api::order.order').count({ where: { statusOrder: 'cancelled' } }),
+        strapi.db.query('api::order.order').findMany({ where: { createdAt: { $gte: periodStartISO }, ...ACTIVE }, select: ['grandTotal'] }),
+        strapi.db.query('api::order.order').findMany({ where: { createdAt: { $gte: prevStartISO, $lt: prevEndISO }, ...ACTIVE }, select: ['grandTotal'] }),
+        strapi.db.query('api::order.order').count({ where: { membershipApplied: true, createdAt: { $gte: periodStartISO } } }),
+        strapi.db.query('api::order.order').findMany({ orderBy: { createdAt: 'desc' }, limit: 10, populate: { customer: { select: ['username', 'email'] } } }),
+      ]);
+
+      const sum = (rows: any[]) => rows.reduce((s, o) => s + toNumber(o.grandTotal, 0), 0);
+      const revenuePeriod = roundMoney(sum(currentOrders as any[]));
+      const revenuePrev   = roundMoney(sum(prevOrders as any[]));
+      const avgOrderValue = (currentOrders as any[]).length > 0
+        ? roundMoney(revenuePeriod / (currentOrders as any[]).length)
+        : 0;
+      const cancellationRate = (totalOrders as number) > 0
+        ? Math.round(((cancelledCount as number) / (totalOrders as number)) * 100 * 10) / 10
+        : 0;
+
+      const recentOrders = (recentRaw as any[]).map((o: any) => ({
+        id: o.id,
+        orderNumber: o.orderNumber || o.oderNumber,
+        email: o.email,
+        grandTotal: roundMoney(toNumber(o.grandTotal, 0)),
+        statusOrder: o.statusOrder,
+        createdAt: o.createdAt,
+        customerName: o.customer ? (o.customer.username || o.customer.email) : undefined,
+      }));
+
+      return {
+        data: {
+          period,
+          totalOrders,
+          revenueMonth: revenuePeriod,    // kept for backwards compat
+          revenueLastMonth: revenuePrev,  // kept for backwards compat
+          revenuePeriod,
+          revenuePrev,
+          avgOrderValue,
+          pendingOrders, processingOrders, shippedOrders, ordersToday,
+          cancellationRate, membershipOrdersCount: membershipCount, recentOrders,
+          revenueToday: revenuePeriod,    // kept for backwards compat
+          revenueYesterday: revenuePrev,  // kept for backwards compat
+        },
+      };
+    },
+
+    async getOpsSalesReport(from: string, to: string) {
+      const ACTIVE = { statusOrder: { $notIn: ['cancelled', 'refunded'] } };
+      const where: any = { ...ACTIVE };
+      if (from) where.createdAt = { ...where.createdAt, $gte: from };
+      if (to) where.createdAt = { ...where.createdAt, $lte: to };
+
+      const orders = await strapi.db.query('api::order.order').findMany({
+        where,
+        select: ['grandTotal', 'subtotal', 'shippingTotal', 'discountTotal', 'createdAt', 'membershipApplied'],
+        orderBy: { createdAt: 'asc' },
+        limit: 10000,
+      }) as any[];
+
+      // Group by day
+      const byDay: Record<string, { ordersCount: number; grossRevenue: number; shippingRevenue: number; totalDiscounts: number; netRevenue: number }> = {};
+      let totals = { ordersCount: 0, grossRevenue: 0, shippingRevenue: 0, totalDiscounts: 0, netRevenue: 0 };
+      const byPayment: Record<string, { count: number; revenue: number }> = {};
+      let membershipOrdersCount = 0;
+
+      for (const o of orders) {
+        const day = String(o.createdAt || '').slice(0, 10);
+        const gross = toNumber(o.grandTotal, 0);
+        const shipping = toNumber(o.shippingTotal, 0);
+        const discount = toNumber(o.discountTotal, 0);
+        const net = gross - discount;
+
+        if (!byDay[day]) byDay[day] = { ordersCount: 0, grossRevenue: 0, shippingRevenue: 0, totalDiscounts: 0, netRevenue: 0 };
+        byDay[day].ordersCount++;
+        byDay[day].grossRevenue += gross;
+        byDay[day].shippingRevenue += shipping;
+        byDay[day].totalDiscounts += discount;
+        byDay[day].netRevenue += net;
+
+        totals.ordersCount++;
+        totals.grossRevenue += gross;
+        totals.shippingRevenue += shipping;
+        totals.totalDiscounts += discount;
+        totals.netRevenue += net;
+
+        const kind = String(o.paymentKind || 'other');
+        if (!byPayment[kind]) byPayment[kind] = { count: 0, revenue: 0 };
+        byPayment[kind].count++;
+        byPayment[kind].revenue += gross;
+
+        if (o.membershipApplied) membershipOrdersCount++;
+      }
+
+      const periods = Object.entries(byDay).map(([period, vals]) => ({
+        period,
+        ordersCount: vals.ordersCount,
+        grossRevenue: roundMoney(vals.grossRevenue),
+        shippingRevenue: roundMoney(vals.shippingRevenue),
+        totalDiscounts: roundMoney(vals.totalDiscounts),
+        netRevenue: roundMoney(vals.netRevenue),
+        avgOrderValue: vals.ordersCount > 0 ? roundMoney(vals.grossRevenue / vals.ordersCount) : 0,
+      }));
+
+      return {
+        data: {
+          periods,
+          totals: {
+            ordersCount: totals.ordersCount,
+            grossRevenue: roundMoney(totals.grossRevenue),
+            shippingRevenue: roundMoney(totals.shippingRevenue),
+            totalDiscounts: roundMoney(totals.totalDiscounts),
+            netRevenue: roundMoney(totals.netRevenue),
+            avgOrderValue: totals.ordersCount > 0 ? roundMoney(totals.grossRevenue / totals.ordersCount) : 0,
+          },
+          byPaymentKind: Object.entries(byPayment).map(([kind, v]) => ({
+            kind, count: v.count, revenue: roundMoney(v.revenue),
+          })),
+          membershipOrdersCount,
+        },
+      };
+    },
+
+    async getOpsTopProducts(from: string, to: string, limit = 20) {
+      const ACTIVE = { statusOrder: { $notIn: ['cancelled', 'refunded'] } };
+      const where: any = { order: { ...ACTIVE } };
+      if (from || to) {
+        where.order.createdAt = {};
+        if (from) where.order.createdAt.$gte = from;
+        if (to) where.order.createdAt.$lte = to;
+      }
+
+      const items = await strapi.db.query('api::order-item.order-item').findMany({
+        where,
+        select: ['nameSnapshot', 'sku', 'qty', 'lineTotal'],
+        limit: 50000,
+      }) as any[];
+
+      const byProduct: Record<string, { totalQty: number; totalRevenue: number; ordersCount: number }> = {};
+      for (const item of items) {
+        const key = `${item.nameSnapshot}|${item.sku || ''}`;
+        if (!byProduct[key]) byProduct[key] = { totalQty: 0, totalRevenue: 0, ordersCount: 0 };
+        byProduct[key].totalQty += toInt(item.qty, 0);
+        byProduct[key].totalRevenue += toNumber(item.lineTotal, 0);
+        byProduct[key].ordersCount++;
+      }
+
+      const products = Object.entries(byProduct)
+        .map(([key, vals]) => {
+          const [name, sku] = key.split('|');
+          return { name, sku: sku || undefined, totalQty: vals.totalQty, totalRevenue: roundMoney(vals.totalRevenue), ordersCount: vals.ordersCount };
+        })
+        .sort((a, b) => b.totalRevenue - a.totalRevenue)
+        .slice(0, limit);
+
+      return { data: products };
+    },
+
+    async getOpsTopCustomers(from: string, to: string, limit = 20) {
+      const ACTIVE = { statusOrder: { $notIn: ['cancelled', 'refunded'] } };
+      const where: any = { ...ACTIVE };
+      if (from || to) {
+        where.createdAt = {};
+        if (from) where.createdAt.$gte = from;
+        if (to) where.createdAt.$lte = to;
+      }
+
+      const orders = await strapi.db.query('api::order.order').findMany({
+        where,
+        select: ['email', 'grandTotal', 'createdAt'],
+        populate: { customer: { select: ['username'] } },
+        limit: 50000,
+      }) as any[];
+
+      const byCustomer: Record<string, { customerName?: string; ordersCount: number; totalSpent: number; lastOrderAt: string }> = {};
+      for (const o of orders) {
+        const email = String(o.email || '');
+        if (!byCustomer[email]) {
+          byCustomer[email] = {
+            customerName: o.customer?.username || undefined,
+            ordersCount: 0, totalSpent: 0, lastOrderAt: o.createdAt,
+          };
+        }
+        byCustomer[email].ordersCount++;
+        byCustomer[email].totalSpent += toNumber(o.grandTotal, 0);
+        if (o.createdAt > byCustomer[email].lastOrderAt) byCustomer[email].lastOrderAt = o.createdAt;
+      }
+
+      const customers = Object.entries(byCustomer)
+        .map(([email, vals]) => ({
+          email, customerName: vals.customerName, ordersCount: vals.ordersCount,
+          totalSpent: roundMoney(vals.totalSpent), lastOrderAt: vals.lastOrderAt,
+        }))
+        .sort((a, b) => b.totalSpent - a.totalSpent)
+        .slice(0, limit);
+
+      return { data: customers };
+    },
+
+    async getOpsInventory() {
+      const products = await strapi.db.query('api::product.product').findMany({
+        select: ['id', 'name', 'sku', 'price', 'stock', 'variants', 'publishedAt'],
+        populate: { brand: { select: ['name'] } },
+        limit: 5000,
+        orderBy: { name: 'asc' },
+      }) as any[];
+
+      let outOfStock = 0, lowStock = 0, noTracking = 0;
+
+      const stockStatus = (stock: number | null | undefined) => {
+        const tracked = stock !== null && stock !== undefined;
+        return { tracked, out: tracked && stock === 0, low: tracked && (stock as number) > 0 && (stock as number) <= 5 };
+      };
+
+      const mapped = products.map((p: any) => {
+        const normalizedVariants = normalizeProductVariants(p);
+        const hasVariants = normalizedVariants.length > 0;
+
+        const variants = normalizedVariants.map((v: any) => {
+          const s = stockStatus(v.stock);
+          if (!s.tracked) noTracking++;
+          else if (s.out) outOfStock++;
+          else if (s.low) lowStock++;
+          return {
+            id: v.id,
+            label: v.label,
+            sku: v.sku || undefined,
+            price: roundMoney(toNumber(v.price, 0)),
+            stock: v.stock as number,
+            lowStockAlert: s.out || s.low,
+          };
+        });
+
+        let productStock: number | null = null;
+        if (!hasVariants) {
+          const raw = p.stock;
+          const tracked = raw !== null && raw !== undefined;
+          productStock = tracked ? raw : null;
+          const s = stockStatus(productStock);
+          if (!tracked) noTracking++;
+          else if (s.out) outOfStock++;
+          else if (s.low) lowStock++;
+        }
+
+        return {
+          id: p.id,
+          name: p.name,
+          sku: p.sku || undefined,
+          price: roundMoney(toNumber(p.price, 0)),
+          stock: hasVariants ? null : productStock,
+          hasVariants,
+          variants: hasVariants ? variants : [],
+          brand: p.brand ? { name: p.brand.name } : undefined,
+          lowStockAlert: hasVariants
+            ? variants.some((v: any) => v.lowStockAlert)
+            : (productStock === 0 || (productStock !== null && productStock <= 5)),
+          isActive: Boolean(p.publishedAt),
+        };
+      });
+
+      return {
+        data: {
+          summary: { totalProducts: products.length, outOfStock, lowStock, noTracking },
+          products: mapped,
+        },
+      };
+    },
+
+    async bulkUpdateInventory(updates: Array<{ sku: string; stock: number }>) {
+      if (!Array.isArray(updates) || updates.length === 0) {
+        return { data: { updated: 0, notFound: [], errors: [] } };
+      }
+
+      const skuSet = new Set(updates.map(u => u.sku.trim()).filter(Boolean));
+      const updateMap: Record<string, number> = {};
+      for (const u of updates) {
+        const sku = u.sku.trim();
+        if (sku) updateMap[sku] = Math.floor(Math.max(0, Number(u.stock)));
+      }
+
+      // Validate quantities up front
+      const errors: string[] = [];
+      for (const u of updates) {
+        const stock = Number(u.stock);
+        if (isNaN(stock) || stock < 0) {
+          errors.push(`${u.sku}: cantidad inválida`);
+          skuSet.delete(u.sku.trim());
+        }
+      }
+
+      // Fetch all products (product-level SKU match + variant JSON scan)
+      const allProducts = await strapi.db.query('api::product.product').findMany({
+        select: ['id', 'sku', 'stock', 'variants'],
+        limit: 10000,
+      }) as any[];
+
+      const notFound = new Set<string>(skuSet);
+      let updated = 0;
+
+      for (const product of allProducts) {
+        const productSku = (product.sku || '').trim();
+        const rawVariants: any[] = Array.isArray(product.variants) ? product.variants : [];
+        const hasVariants = rawVariants.length > 0;
+
+        // --- Product-level SKU match ---
+        if (!hasVariants && productSku && skuSet.has(productSku)) {
+          try {
+            await strapi.db.query('api::product.product').update({
+              where: { id: product.id },
+              data: { stock: updateMap[productSku] },
+            });
+            notFound.delete(productSku);
+            updated++;
+          } catch {
+            errors.push(`${productSku}: error al actualizar`);
+          }
+          continue;
+        }
+
+        // --- Variant-level SKU match ---
+        if (hasVariants) {
+          let variantsChanged = false;
+          const updatedVariants = rawVariants.map((v: any) => {
+            const vSku = (v.sku || '').trim();
+            if (vSku && skuSet.has(vSku)) {
+              notFound.delete(vSku);
+              variantsChanged = true;
+              updated++;
+              return { ...v, stock: updateMap[vSku] };
+            }
+            return v;
+          });
+
+          if (variantsChanged) {
+            try {
+              await strapi.db.query('api::product.product').update({
+                where: { id: product.id },
+                data: { variants: updatedVariants },
+              });
+            } catch {
+              // Revert count on failure
+              const failedSkus = rawVariants
+                .filter((v: any) => (v.sku || '').trim() && skuSet.has((v.sku || '').trim()))
+                .map((v: any) => (v.sku || '').trim());
+              for (const s of failedSkus) {
+                errors.push(`${s}: error al actualizar`);
+                updated--;
+              }
+            }
+          }
+        }
+      }
+
+      return { data: { updated, notFound: [...notFound], errors } };
+    },
+
+    async getOpsFinances(year: number, month: number) {
+      // month is 1-based (1=Jan)
+      const startDate = new Date(year, month - 1, 1).toISOString();
+      const endDate = new Date(year, month, 1).toISOString();
+      const ACTIVE = { statusOrder: { $notIn: ['cancelled', 'refunded'] } };
+
+      const [orders, commissionOrders] = await Promise.all([
+        strapi.db.query('api::order.order').findMany({
+          where: { ...ACTIVE, createdAt: { $gte: startDate, $lt: endDate } },
+          select: ['grandTotal', 'subtotal', 'shippingTotal', 'discountTotal', 'membershipApplied'],
+          limit: 10000,
+        }),
+        strapi.db.query('api::order.order').findMany({
+          where: { createdAt: { $gte: startDate, $lt: endDate }, affiliateCommissionAmount: { $gt: 0 } },
+          select: ['affiliateCommissionAmount', 'affiliateCommissionType', 'affiliateCommissionValue', 'couponCode', 'grandTotal'],
+          populate: { couponInfluencer: { select: ['username', 'email'] } },
+          limit: 10000,
+        }),
+      ]) as [any[], any[]];
+
+      let grossRevenue = 0, netRevenue = 0, totalDiscounts = 0, shippingRevenue = 0, membershipOrders = 0;
+      const byPayment: Record<string, { count: number; revenue: number }> = {};
+
+      for (const o of orders) {
+        const gross = toNumber(o.grandTotal, 0);
+        const discount = toNumber(o.discountTotal, 0);
+        grossRevenue += gross;
+        totalDiscounts += discount;
+        netRevenue += gross - discount;
+        shippingRevenue += toNumber(o.shippingTotal, 0);
+        if (o.membershipApplied) membershipOrders++;
+        const k = String(o.paymentKind || 'other');
+        if (!byPayment[k]) byPayment[k] = { count: 0, revenue: 0 };
+        byPayment[k].count++;
+        byPayment[k].revenue += gross;
+      }
+
+      const commissions: Record<string, { influencerName: string; couponCode: string; ordersCount: number; totalCommission: number }> = {};
+      for (const o of commissionOrders) {
+        const name = o.couponInfluencer?.username || o.couponInfluencer?.email || 'Desconocido';
+        const key = `${name}|${o.couponCode || ''}`;
+        if (!commissions[key]) commissions[key] = { influencerName: name, couponCode: o.couponCode || '', ordersCount: 0, totalCommission: 0 };
+        commissions[key].ordersCount++;
+        commissions[key].totalCommission += toNumber(o.affiliateCommissionAmount, 0);
+      }
+
+      return {
+        data: {
+          year, month,
+          grossRevenue: roundMoney(grossRevenue),
+          netRevenue: roundMoney(netRevenue),
+          totalDiscounts: roundMoney(totalDiscounts),
+          shippingRevenue: roundMoney(shippingRevenue),
+          ordersCount: orders.length,
+          avgOrderValue: orders.length > 0 ? roundMoney(grossRevenue / orders.length) : 0,
+          membershipOrdersCount: membershipOrders,
+          byPaymentKind: Object.entries(byPayment).map(([kind, v]) => ({ kind, count: v.count, revenue: roundMoney(v.revenue) })),
+          commissions: Object.values(commissions).map(c => ({ ...c, totalCommission: roundMoney(c.totalCommission) })),
+        },
       };
     },
   };

@@ -45,6 +45,49 @@ const removeTransientRegisterFields = (body: Record<string, unknown>) => {
 };
 
 export default (plugin: any) => {
+  // ── Parchear el endpoint /api/users/me para incluir siempre el rol ──────────
+  const patchUserController = (userControllerFactory: any) => {
+    const factory = typeof userControllerFactory === 'function'
+      ? userControllerFactory
+      : () => userControllerFactory;
+
+    return ({ strapi }: any) => {
+      const controller = factory({ strapi });
+      const originalMe = controller.me?.bind(controller);
+
+      controller.me = async (ctx: any) => {
+        await originalMe(ctx);
+
+        // Enriquecer la respuesta con el rol
+        const userId = ctx.body?.id;
+        if (ctx.status === 200 && userId) {
+          try {
+            const user = await strapi.db.query('plugin::users-permissions.user').findOne({
+              where: { id: userId },
+              populate: ['role'],
+            });
+            if (user?.role) {
+              ctx.body.role = {
+                id:   user.role.id,
+                name: user.role.name,
+                type: user.role.type,
+              };
+            }
+          } catch {
+            // No bloquear si falla el populate del rol
+          }
+        }
+      };
+
+      return controller;
+    };
+  };
+
+  if (plugin.controllers?.user) {
+    plugin.controllers.user = patchUserController(plugin.controllers.user);
+  }
+
+  // ── Parchear registro para normalizar campos extra ──────────────────────────
   const patchRegister = (registerHandler: any) => async (ctx: any) => {
     const body = ctx?.request?.body;
 

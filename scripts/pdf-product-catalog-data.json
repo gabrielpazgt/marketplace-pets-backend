@@ -1,0 +1,7464 @@
+{
+  "products": [
+    {
+      "name": "BROXIMICINA",
+      "slug": "broximicina",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Broximicina",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "CLINPET PLUS 150 mg",
+      "slug": "clinpet-plus-150-mg",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Clinpet Plus",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "CLINPET PLUS 50 mg",
+      "slug": "clinpet-plus-50-mg",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Clinpet Plus",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "DOXIMICINA 100 mg",
+      "slug": "doximicina-100-mg",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Doximicina",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "DOXIMICINA MALLOVET",
+      "slug": "doximicina-mallovet",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Doximicina",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "ENROMAX 150 mg",
+      "slug": "enromax-150-mg",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Enromax",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "ENROMAX 20%",
+      "slug": "enromax-20",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Enromax",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "ENROMAX 50 mg",
+      "slug": "enromax-50-mg",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Enromax",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "FLORFEVET PLUS 20%",
+      "slug": "florfevet-plus-20",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Florfevet Plus",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "TRIPLE SULFA MALLOVET",
+      "slug": "triple-sulfa-mallovet",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Triple Sulfa Mallovet",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "CATALOGO MALLOVET 2023 MALLO GUATEMALA_COMPRIMIDO.pdf"
+    },
+    {
+      "name": "ALPISTE VITAMINADO Y SEMILLA DE GIRASOL",
+      "slug": "alpiste-vitaminado-y-semilla-de-girasol",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ALPISTE",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "species": [
+        "ave"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ANTISÁRNICO",
+      "slug": "antisarnico",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ANTISÁRNICO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARBORIVER 1%",
+      "slug": "arboriver-1",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARBORIVER",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARBORIVER 2%",
+      "slug": "arboriver-2",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARBORIVER",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARBORIVER 4%",
+      "slug": "arboriver-4",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARBORIVER",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARBOTETRA L.A.",
+      "slug": "arbotetra-l-a",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARBOTETRA",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARBOVIT",
+      "slug": "arbovit",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARBOVIT",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ARTRIFLEX",
+      "slug": "artriflex",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ARTRIFLEX",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "AVALANCHE",
+      "slug": "avalanche",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "AVALANCHE",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "AVIWELL",
+      "slug": "aviwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "AVIWELL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "BRONCOSTOP",
+      "slug": "broncostop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "BRONCOSTOP",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "BURBUWELL SHAMPOO",
+      "slug": "burbuwell-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "BURBUWELL",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "BUTAVET",
+      "slug": "butavet",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "BUTAVET",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "CAMPEON PASTA",
+      "slug": "campeon-pasta",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "CAMPEON",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "CERDIWELL",
+      "slug": "cerdiwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "CERDIWELL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "COMPLETO",
+      "slug": "completo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "COMPLETO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "CRECIWELL",
+      "slug": "creciwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "CRECIWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "CYBOR 10 EA",
+      "slug": "cybor-10-ea",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "CYBOR",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "CYBOR 40 PH",
+      "slug": "cybor-40-ph",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "CYBOR",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "DAGGER",
+      "slug": "dagger",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "DAGGER",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "DEFENDER",
+      "slug": "defender",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "DEFENDER",
+      "category": "health",
+      "subcategory": "Digestivos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "DESPARAZOLE",
+      "slug": "desparazole",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "DESPARAZOLE",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "DEXADROP",
+      "slug": "dexadrop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "DEXADROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "DEXIUM",
+      "slug": "dexium",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "DEXIUM",
+      "category": "health",
+      "subcategory": "Analgesicos y antiinflamatorios",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ELECTROWELL",
+      "slug": "electrowell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ELECTROWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ENERGIL",
+      "slug": "energil",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ENERGIL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "ENGORDA",
+      "slug": "engorda",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "ENGORDA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "FERRADOX PLUS",
+      "slug": "ferradox-plus",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "FERRADOX PLUS",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "FULLMECTINA",
+      "slug": "fullmectina",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "FULLMECTINA",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "GANARETTO",
+      "slug": "ganaretto",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "GANARETTO",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "GANARETTO 25%",
+      "slug": "ganaretto-25",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "GANARETTO",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "GANAVERM AL 25%",
+      "slug": "ganaverm-al-25",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "GANAVERM",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "GANAVERM GRANULADO",
+      "slug": "ganaverm-granulado",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "GANAVERM",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "GANAVERM SUSPENSIÓN ORAL",
+      "slug": "ganaverm-suspension-oral",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "GANAVERM",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "HIDRAVET",
+      "slug": "hidravet",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Hidravet",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "IVERBOL L.A.",
+      "slug": "iverbol-l-a",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "IVERBOL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "IVERMUSCULO",
+      "slug": "ivermusculo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "IVERMUSCULO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "IVERWELL",
+      "slug": "iverwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "IVERWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "IVERWELL AVES",
+      "slug": "iverwell-aves",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "IVERWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "ave"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "IVERWELL TOTAL L.A.",
+      "slug": "iverwell-total-l-a",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "IVERWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "KITA VERRUGAS",
+      "slug": "kita-verrugas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "KITA",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LARVIWELL",
+      "slug": "larviwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LARVIWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LATANDROP",
+      "slug": "latandrop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LATANDROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LAZZIO JABÓN",
+      "slug": "lazzio-jabon",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LAZZIO",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LAZZIO PIPETAS",
+      "slug": "lazzio-pipetas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LAZZIO",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LAZZIO SHAMPOO",
+      "slug": "lazzio-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LAZZIO",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LAZZIO TALCO",
+      "slug": "lazzio-talco",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LAZZIO",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LEVAVET 12%",
+      "slug": "levavet-12",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LEVAVET",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LOCIÓN PARA CASCOS",
+      "slug": "locion-para-cascos",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LOCIÓN",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "LUBRIDROP",
+      "slug": "lubridrop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "LUBRIDROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "MEGAVITAMINA",
+      "slug": "megavitamina",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "MEGAVITAMINA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "MR.CAT PIPETAS",
+      "slug": "mr-cat-pipetas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Mr.Cat",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "MR.DOG (Shampoo & Spray antisépticos) ® ®",
+      "slug": "mr-dog-shampoo-spray-antisepticos",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Mr.Dog",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "MR.DOG PIPETAS",
+      "slug": "mr-dog-pipetas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Mr.Dog",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "MR.DOG UNGÜENTO MÚLTIPLE",
+      "slug": "mr-dog-unguento-multiple",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "Mr.Dog",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "NEOCAN",
+      "slug": "neocan",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "NEOCAN",
+      "category": "health",
+      "subcategory": "Digestivos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "NF-WELL",
+      "slug": "nf-well",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "NF-WELL",
+      "category": "health",
+      "subcategory": "Digestivos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "OPHTAL DROP (COLIRIOS VET)",
+      "slug": "ophtal-drop-colirios-vet",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "OPHTAL DROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PADRINO",
+      "slug": "padrino",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PADRINO",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PANAWELL GRANULADO 4% (Aves/cerdos)",
+      "slug": "panawell-granulado-4-aves-cerdos",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PANAWELL",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "ave"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM AVENA SHAMPOO",
+      "slug": "platinum-avena-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [
+        "avena"
+      ],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM BABY ALOE SHAMPOO",
+      "slug": "platinum-baby-aloe-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM BEAUTY SHAMPOO",
+      "slug": "platinum-beauty-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM F SHAMPOO",
+      "slug": "platinum-f-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM JABÓN DERMATOLÓGICO",
+      "slug": "platinum-jabon-dermatologico",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM NOIR SHAMPOO",
+      "slug": "platinum-noir-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PLATINUM SHAMPOO",
+      "slug": "platinum-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PLATINUM",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "POMADA PARA UBRES",
+      "slug": "pomada-para-ubres",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "POMADA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PORKY",
+      "slug": "porky",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PORKY",
+      "category": "health",
+      "subcategory": "Antibioticos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "POWERFULL",
+      "slug": "powerfull",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "POWERFULL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "PUJANTEX",
+      "slug": "pujantex",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "PUJANTEX",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "SANGHA GEL",
+      "slug": "sangha-gel",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "SANGHA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "sección de",
+      "slug": "seccion",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "sección",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "SEL-E",
+      "slug": "sel-e",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "SEL-E",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "SHAMPOO AZABACHE",
+      "slug": "shampoo-azabache",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "SHAMPOO",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "SHAMPOO WELLCO NF",
+      "slug": "shampoo-wellco-nf",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "SHAMPOO",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "STALLONE PASTA HIT",
+      "slug": "stallone-pasta",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "STALLONE",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "SUPERIOR",
+      "slug": "superior",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "SUPERIOR",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TIMOLDROP",
+      "slug": "timoldrop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TIMOLDROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TINTURA DE YODO",
+      "slug": "tintura-de-yodo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TINTURA",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TOBRADOP",
+      "slug": "tobradop",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TOBRADOP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TOBRADROP DX",
+      "slug": "tobradrop-dx",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TOBRADROP",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TORNADO",
+      "slug": "tornado",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TORNADO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "TROMPA",
+      "slug": "trompa",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "TROMPA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VAMPIGEL",
+      "slug": "vampigel",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VAMPIGEL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VAMPIRETTO",
+      "slug": "vampiretto",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VAMPIRETTO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VAMPIRO",
+      "slug": "vampiro",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VAMPIRO",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VERRUWELL",
+      "slug": "verruwell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VERRUWELL",
+      "category": "health",
+      "subcategory": "Digestivos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITA B12",
+      "slug": "vita-b12",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITA B12 CON FÓSFORO",
+      "slug": "vita-b12-con-fosforo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITA ENERGY",
+      "slug": "vita-energy",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITA FORZA",
+      "slug": "vita-forza",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITABOL",
+      "slug": "vitabol",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITABOL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITACOMPLEX",
+      "slug": "vitacomplex",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITACOMPLEX",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITACOMPLEX FUERTE",
+      "slug": "vitacomplex-fuerte",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITACOMPLEX",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITAVET AD",
+      "slug": "vitavet-ad",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITAVET",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "VITAWELL",
+      "slug": "vitawell",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "VITAWELL",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "WELLCAP",
+      "slug": "wellcap",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "WELLCAP",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "XTRA-FORZA",
+      "slug": "xtra-forza",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Catálogo_VET2021_ESP_compressed.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "",
+      "stock": 0,
+      "variants": [],
+      "published": false,
+      "brand": "XTRA-FORZA",
+      "category": "health",
+      "subcategory": "Vitaminas y suplementos",
+      "form": "supplement",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Catálogo_VET2021_ESP_compressed.pdf"
+    },
+    {
+      "name": "Summit 10 Adult Chicken and Rice",
+      "slug": "summit-10-adult-chicken-and-rice",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 155,
+      "compareAtPrice": 0,
+      "sku": "41017SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41017SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 155,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41018SUMMIT",
+          "label": "15 kg",
+          "presentation": "15 kg",
+          "size": "15 KG",
+          "price": 615,
+          "compareAtPrice": null,
+          "stock": 10
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "pollo",
+        "arroz-integral"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Adult Lamb and Rice",
+      "slug": "summit-10-adult-lamb-and-rice",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 740,
+      "compareAtPrice": 0,
+      "sku": "41019SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41019SUMMIT",
+          "label": "15 kg",
+          "presentation": "15 kg",
+          "size": "15 KG",
+          "price": 740,
+          "compareAtPrice": null,
+          "stock": 10
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "lamb",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "cordero",
+        "arroz-integral"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Cat Adult Chicken and Rice",
+      "slug": "summit-10-cat-adult-chicken-and-rice",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 180,
+      "compareAtPrice": 0,
+      "sku": "42009SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42009SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 180,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "pollo",
+        "arroz-integral"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Cat Light and Sterilised",
+      "slug": "summit-10-cat-light-and-sterilised",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 100,
+      "compareAtPrice": 0,
+      "sku": "42010SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42010SUMMIT",
+          "label": "1.5 kg",
+          "presentation": "1.5 kg",
+          "size": "1.5 KG",
+          "price": 100,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "42011SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 175,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "mixed",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [
+        "low_calorie"
+      ],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Grain Free Adult Cat Hair Care",
+      "slug": "summit-10-grain-free-adult-cat-hair-care",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 320,
+      "compareAtPrice": 0,
+      "sku": "42013SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42013SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 320,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "mixed",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [
+        "grain_free"
+      ],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Grain Free Adult Cat Sensitive",
+      "slug": "summit-10-grain-free-adult-cat-sensitive",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 385,
+      "compareAtPrice": 0,
+      "sku": "42012SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42012SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 385,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "fish",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [
+        "grain_free",
+        "hypoallergenic"
+      ],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Grain Free Chicken and Potato",
+      "slug": "summit-10-grain-free-chicken-and-potato",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 795,
+      "compareAtPrice": 0,
+      "sku": "41023SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41023SUMMIT",
+          "label": "12 kg",
+          "presentation": "12 kg",
+          "size": "12 KG",
+          "price": 795,
+          "compareAtPrice": null,
+          "stock": 10
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [
+        "grain_free"
+      ],
+      "health": [],
+      "ingredients": [
+        "pollo"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Grain Free Puppy Sensitive",
+      "slug": "summit-10-grain-free-puppy-sensitive",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 745,
+      "compareAtPrice": 0,
+      "sku": "41026S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41026S10",
+          "label": "8 kg",
+          "presentation": "8 kg",
+          "size": "8 KG",
+          "price": 745,
+          "compareAtPrice": null,
+          "stock": 10
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "fish",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [
+        "grain_free",
+        "hypoallergenic"
+      ],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Grain Free Sensitive Salmon and Potato",
+      "slug": "summit-10-grain-free-sensitive-salmon-and-potato",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 285,
+      "compareAtPrice": 0,
+      "sku": "41024S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41024S10",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 285,
+          "compareAtPrice": null,
+          "stock": 14
+        },
+        {
+          "sku": "41025S10",
+          "label": "12 kg",
+          "presentation": "12 kg",
+          "size": "12 KG",
+          "price": 905,
+          "compareAtPrice": null,
+          "stock": 8
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "fish",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [
+        "grain_free",
+        "hypoallergenic"
+      ],
+      "health": [],
+      "ingredients": [
+        "salmon"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Kitten",
+      "slug": "summit-10-kitten",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 160,
+      "compareAtPrice": 0,
+      "sku": "42007SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42007SUMMIT",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 160,
+          "compareAtPrice": null,
+          "stock": 16
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "gatito"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Summit 10 Puppy Chicken and Rice",
+      "slug": "summit-10-puppy-chicken-and-rice",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 180,
+      "compareAtPrice": 0,
+      "sku": "41015SUMMIT",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41015SUMMIT",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 180,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41016SUMMIT",
+          "label": "15 kg",
+          "presentation": "15 kg",
+          "size": "15 KG",
+          "price": 720,
+          "compareAtPrice": null,
+          "stock": 10
+        }
+      ],
+      "published": true,
+      "brand": "Summit 10",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "pollo",
+        "arroz-integral"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Cat Chicken",
+      "slug": "whole-choice-adult-cat-chicken",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 215,
+      "compareAtPrice": 0,
+      "sku": "42003S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42003S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 215,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "42004S10",
+          "label": "7 kg",
+          "presentation": "7 kg",
+          "size": "7 KG",
+          "price": 615,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "pollo"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Chicken",
+      "slug": "whole-choice-adult-dog-chicken",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 180,
+      "compareAtPrice": 0,
+      "sku": "41005S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41005S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 180,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41006S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 600,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "pollo"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Insect",
+      "slug": "whole-choice-adult-dog-insect",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 225,
+      "compareAtPrice": 0,
+      "sku": "41011S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41011S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 225,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41012S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 720,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "insect",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "insecto"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Lamb",
+      "slug": "whole-choice-adult-dog-lamb",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 225,
+      "compareAtPrice": 0,
+      "sku": "41009S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41009S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 225,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41010S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 715,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "lamb",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "cordero"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Mini",
+      "slug": "whole-choice-adult-dog-mini",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 120,
+      "compareAtPrice": 0,
+      "sku": "41004S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41004S10",
+          "label": "800 g",
+          "presentation": "800 g",
+          "size": "800 G",
+          "price": 120,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41003S10",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 305,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Salmon",
+      "slug": "whole-choice-adult-dog-salmon",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 235,
+      "compareAtPrice": 0,
+      "sku": "41007S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41007S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 235,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41008S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 725,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "fish",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [
+        "salmon"
+      ],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Adult Dog Senior Light",
+      "slug": "whole-choice-adult-dog-senior-light",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 185,
+      "compareAtPrice": 0,
+      "sku": "41013S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41013S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 185,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41014S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 680,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "senior",
+        "adulto"
+      ],
+      "dietTags": [
+        "low_calorie"
+      ],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Kitten",
+      "slug": "whole-choice-kitten",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 125,
+      "compareAtPrice": 0,
+      "sku": "42001S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "42001S10",
+          "label": "800 g",
+          "presentation": "800 g",
+          "size": "800 G",
+          "price": 125,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "42002S10",
+          "label": "3 kg",
+          "presentation": "3 kg",
+          "size": "3 KG",
+          "price": 315,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "gatito"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Whole Choice Puppy",
+      "slug": "whole-choice-puppy",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde Lista de precios con imagen Summit 10.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 190,
+      "compareAtPrice": 0,
+      "sku": "41001S10",
+      "stock": 24,
+      "variants": [
+        {
+          "sku": "41001S10",
+          "label": "2 kg",
+          "presentation": "2 kg",
+          "size": "2 KG",
+          "price": 190,
+          "compareAtPrice": null,
+          "stock": 18
+        },
+        {
+          "sku": "41002S10",
+          "label": "10 kg",
+          "presentation": "10 kg",
+          "size": "10 KG",
+          "price": 670,
+          "compareAtPrice": null,
+          "stock": 12
+        }
+      ],
+      "published": true,
+      "brand": "Whole Choice",
+      "category": "food",
+      "subcategory": "Alimento seco",
+      "form": "kibble",
+      "proteinSource": "chicken",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "Lista de precios con imagen Summit 10.pdf"
+    },
+    {
+      "name": "Alebo Advanced Antiparasitario Oral",
+      "slug": "alebo-advanced-antiparasitario-oral",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET021401",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET021401",
+          "label": "112.5 mg / 2-4.5 kg",
+          "presentation": "112.5 mg / 2-4.5 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021402",
+          "label": "250 mg / 4.5-10 kg",
+          "presentation": "250 mg / 4.5-10 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021403",
+          "label": "500 mg / 10-20 kg",
+          "presentation": "500 mg / 10-20 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021404",
+          "label": "1000 mg / 20-40 kg",
+          "presentation": "1000 mg / 20-40 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Alebo",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Alebo Antiparasitario Oral",
+      "slug": "alebo-antiparasitario-oral",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET021301",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET021301",
+          "label": "50 mg / 2-4.5 kg",
+          "presentation": "50 mg / 2-4.5 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021302",
+          "label": "100 mg / 4.5-10 kg",
+          "presentation": "100 mg / 4.5-10 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021303",
+          "label": "200 mg / 10-20 kg",
+          "presentation": "200 mg / 10-20 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET021304",
+          "label": "400 mg / 20-40 kg",
+          "presentation": "400 mg / 20-40 kg",
+          "size": "1 tableta",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Alebo",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Amoxivet Polvo",
+      "slug": "amoxivet-polvo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET030802",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET030802",
+          "label": "15 mL",
+          "presentation": "15 mL",
+          "size": "15 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET030801",
+          "label": "60 mL",
+          "presentation": "60 mL",
+          "size": "60 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Amoxivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Bioma Arena para Gatos",
+      "slug": "bioma-arena-para-gatos",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "G502",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "G502",
+          "label": "Super absorbente 6 kg",
+          "presentation": "Super absorbente 6 kg",
+          "size": "6 kg",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "G503",
+          "label": "Perfumada 6 kg",
+          "presentation": "Perfumada 6 kg",
+          "size": "6 kg",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Bioma",
+      "category": "hygiene",
+      "subcategory": "Arena para gatos",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Colivet Suspension",
+      "slug": "colivet-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET080401",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET080401",
+          "label": "120 mL",
+          "presentation": "120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Colivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "DermiClin Antifungico y Antiseptico",
+      "slug": "dermiclin-antifungico-y-antiseptico",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET011701",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET011701",
+          "label": "Shampoo 350 mL",
+          "presentation": "Shampoo 350 mL",
+          "size": "350 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET090601",
+          "label": "Jabon 100 g",
+          "presentation": "Jabon 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "DermiClin",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "DermiClin Antiseborreico",
+      "slug": "dermiclin-antiseborreico",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET011901",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET011901",
+          "label": "Shampoo 350 mL",
+          "presentation": "Shampoo 350 mL",
+          "size": "350 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET090801",
+          "label": "Jabon 100 g",
+          "presentation": "Jabon 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "DermiClin",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "DermiClin Antiseptico y Humectante",
+      "slug": "dermiclin-antiseptico-y-humectante",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET090701",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET090701",
+          "label": "Jabon 100 g",
+          "presentation": "Jabon 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "DermiClin",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Fragancia",
+      "slug": "fido-fragancia",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET170301",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET170301",
+          "label": "Floral 120 mL",
+          "presentation": "Floral 120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET170303",
+          "label": "Talco 120 mL",
+          "presentation": "Talco 120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET170302",
+          "label": "Tropical 120 mL",
+          "presentation": "Tropical 120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje",
+        "control-olor"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Jabon",
+      "slug": "fido-jabon",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET090103",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET090103",
+          "label": "Pastilla 20 g",
+          "presentation": "Pastilla 20 g",
+          "size": "20 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET090101",
+          "label": "Pastilla 100 g",
+          "presentation": "Pastilla 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Pipeta Antiparasitaria",
+      "slug": "fido-pipeta-antiparasitaria",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET100501",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET100501",
+          "label": "0.67 mL / 1-10 kg",
+          "presentation": "0.67 mL / 1-10 kg",
+          "size": "0.67 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET100502",
+          "label": "1.34 mL / 11-20 kg",
+          "presentation": "1.34 mL / 11-20 kg",
+          "size": "1.34 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET100503",
+          "label": "2.68 mL / 21-40 kg",
+          "presentation": "2.68 mL / 21-40 kg",
+          "size": "2.68 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET100504",
+          "label": "4.02 mL / 41-60 kg",
+          "presentation": "4.02 mL / 41-60 kg",
+          "size": "4.02 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Shampoo Antipulgas",
+      "slug": "fido-shampoo-antipulgas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010101",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010101",
+          "label": "240 mL",
+          "presentation": "240 mL",
+          "size": "240 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010102",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010103",
+          "label": "1000 mL",
+          "presentation": "1000 mL",
+          "size": "1000 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010104",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Shampoo Avena y Aloe Vera",
+      "slug": "fido-shampoo-avena-y-aloe-vera",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010109",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010109",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [
+        "avena"
+      ],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Shampoo Cachorro",
+      "slug": "fido-shampoo-cachorro",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010108",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010108",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Spray Antipulgas",
+      "slug": "fido-spray-antipulgas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET070301",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET070301",
+          "label": "200 mL",
+          "presentation": "200 mL",
+          "size": "200 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET070302",
+          "label": "400 mL",
+          "presentation": "400 mL",
+          "size": "400 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fido Talco",
+      "slug": "fido-talco",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET040201",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET040201",
+          "label": "100 g",
+          "presentation": "100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fido",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fiprokill Liquido",
+      "slug": "fiprokill-liquido",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET070501",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET070501",
+          "label": "100 mL",
+          "presentation": "100 mL",
+          "size": "100 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET070502",
+          "label": "1000 mL",
+          "presentation": "1000 mL",
+          "size": "1000 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fiprokill",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fiprokill Plus Pipeta Gato",
+      "slug": "fiprokill-plus-pipeta-gato",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET100301",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET100301",
+          "label": "0.5 mL",
+          "presentation": "0.5 mL",
+          "size": "0.5 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fiprokill",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Floxivet Tabletas",
+      "slug": "floxivet-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020701",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020701",
+          "label": "Blister 8 tabletas",
+          "presentation": "Blister 8 tabletas",
+          "size": "8 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Floxivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Fulmi Traz Bano Garrapaticida",
+      "slug": "fulmi-traz-bano-garrapaticida",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET070701",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET070701",
+          "label": "20 mL",
+          "presentation": "20 mL",
+          "size": "20 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET070702",
+          "label": "100 mL",
+          "presentation": "100 mL",
+          "size": "100 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Fulmi Traz",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Furosivet Solucion",
+      "slug": "furosivet-solucion",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET060301",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET060301",
+          "label": "120 mL",
+          "presentation": "120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Furosivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Bano en Seco",
+      "slug": "groom-star-bano-en-seco",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET011401",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET011401",
+          "label": "400 mL",
+          "presentation": "400 mL",
+          "size": "400 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Concentrado",
+      "slug": "groom-star-concentrado",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET011101",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET011101",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Fragancia",
+      "slug": "groom-star-fragancia",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET170201",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET170201",
+          "label": "200 mL",
+          "presentation": "200 mL",
+          "size": "200 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje",
+        "control-olor"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Pelo Blanco Shampoo",
+      "slug": "groom-star-pelo-blanco-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010204",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010204",
+          "label": "240 mL",
+          "presentation": "240 mL",
+          "size": "240 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010201",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010202",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Pelo Negro Shampoo",
+      "slug": "groom-star-pelo-negro-shampoo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010304",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010304",
+          "label": "240 mL",
+          "presentation": "240 mL",
+          "size": "240 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010301",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010302",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Quita Olores y Manchas",
+      "slug": "groom-star-quita-olores-y-manchas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET120101",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET120101",
+          "label": "400 mL",
+          "presentation": "400 mL",
+          "size": "400 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Shampoo Aloe Vera",
+      "slug": "groom-star-shampoo-aloe-vera",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010504",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010504",
+          "label": "240 mL",
+          "presentation": "240 mL",
+          "size": "240 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010501",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010502",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Shampoo Gato",
+      "slug": "groom-star-shampoo-gato",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET011303",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET011303",
+          "label": "240 mL",
+          "presentation": "240 mL",
+          "size": "240 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET011301",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Groom Star Shampoo Medicado",
+      "slug": "groom-star-shampoo-medicado",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010401",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010401",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET010402",
+          "label": "1 galon",
+          "presentation": "1 galon",
+          "size": "1 galon",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Groom Star",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Compuesto Tabletas",
+      "slug": "helmivet-compuesto-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020503",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020503",
+          "label": "2.5 kg / blister 2 tabletas",
+          "presentation": "2.5 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET020504",
+          "label": "10 kg / blister 2 tabletas",
+          "presentation": "10 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET020505",
+          "label": "30 kg / blister 2 tabletas",
+          "presentation": "30 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Plus Adulto Suspension",
+      "slug": "helmivet-plus-adulto-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET080507",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET080507",
+          "label": "100 mL",
+          "presentation": "100 mL",
+          "size": "100 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET080502",
+          "label": "Jeringa 10 mL",
+          "presentation": "Jeringa 10 mL",
+          "size": "10 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Plus Cachorro Suspension",
+      "slug": "helmivet-plus-cachorro-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET080602",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET080602",
+          "label": "Jeringa 10 mL",
+          "presentation": "Jeringa 10 mL",
+          "size": "10 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET080603",
+          "label": "500 mL",
+          "presentation": "500 mL",
+          "size": "500 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Plus Etapa 1 Tabletas",
+      "slug": "helmivet-plus-etapa-1-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020201",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020201",
+          "label": "Blister 2 tabletas",
+          "presentation": "Blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Plus RX Tabletas",
+      "slug": "helmivet-plus-rx-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020203",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020203",
+          "label": "2.5 kg / blister 2 tabletas",
+          "presentation": "2.5 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET020204",
+          "label": "10 kg / blister 2 tabletas",
+          "presentation": "10 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET020205",
+          "label": "30 kg / blister 2 tabletas",
+          "presentation": "30 kg / blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Simple Suspension",
+      "slug": "helmivet-simple-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET080102",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET080102",
+          "label": "Jeringa 10 mL",
+          "presentation": "Jeringa 10 mL",
+          "size": "10 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET080103",
+          "label": "15 mL",
+          "presentation": "15 mL",
+          "size": "15 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "VET080104",
+          "label": "500 mL",
+          "presentation": "500 mL",
+          "size": "500 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Helmivet Simple Tabletas",
+      "slug": "helmivet-simple-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020401",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020401",
+          "label": "Blister 2 tabletas",
+          "presentation": "Blister 2 tabletas",
+          "size": "2 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Helmivet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Hidravet Polvo Oral",
+      "slug": "hidravet-polvo-oral",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET030201",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET030201",
+          "label": "Sobre 34 g",
+          "presentation": "Sobre 34 g",
+          "size": "34 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Hidravet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Lord Pets Shampoo Cachorro",
+      "slug": "lord-pets-shampoo-cachorro",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET010701",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET010701",
+          "label": "480 mL",
+          "presentation": "480 mL",
+          "size": "480 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Lord Pets",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "cachorro"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Neurovitaminas Gotero",
+      "slug": "neurovitaminas-gotero",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "MCQV37",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "MCQV37",
+          "label": "15 mL",
+          "presentation": "15 mL",
+          "size": "15 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Neurovitaminas",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato",
+        "ave"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Otican Gotas Oticas",
+      "slug": "otican-gotas-oticas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "MCQV39",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "MCQV39",
+          "label": "5 mL",
+          "presentation": "5 mL",
+          "size": "5 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Otican",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato",
+        "ave"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Pet Salon Fragancia",
+      "slug": "pet-salon-fragancia",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET170101",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET170101",
+          "label": "200 mL",
+          "presentation": "200 mL",
+          "size": "200 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Pet Salon",
+      "category": "hygiene",
+      "subcategory": "Cuidado e higiene",
+      "form": "hygiene",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "piel-pelaje",
+        "control-olor"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Sabueso Adulto Alimento Humedo",
+      "slug": "sabueso-adulto-alimento-humedo",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "DPF-007",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "DPF-007",
+          "label": "Carne 100 g",
+          "presentation": "Carne 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        },
+        {
+          "sku": "DPF-008",
+          "label": "Pollo 100 g",
+          "presentation": "Pollo 100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Sabueso",
+      "category": "food",
+      "subcategory": "Alimento humedo",
+      "form": "wet",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Sabueso Adulto Dental Sticks",
+      "slug": "sabueso-adulto-dental-sticks",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET150318",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET150318",
+          "label": "150 g",
+          "presentation": "150 g",
+          "size": "150 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Sabueso",
+      "category": "treats",
+      "subcategory": "Premios",
+      "form": "treat",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [
+        "cuidado-dental"
+      ],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Sabueso Adulto Galletitas",
+      "slug": "sabueso-adulto-galletitas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "DPF-009",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "DPF-009",
+          "label": "100 g",
+          "presentation": "100 g",
+          "size": "100 g",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Sabueso",
+      "category": "treats",
+      "subcategory": "Premios",
+      "form": "treat",
+      "proteinSource": "mixed",
+      "species": [
+        "perro"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Sulfavet Suspension",
+      "slug": "sulfavet-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET080801",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET080801",
+          "label": "60 mL",
+          "presentation": "60 mL",
+          "size": "60 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Sulfavet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Sulfavet Tabletas",
+      "slug": "sulfavet-tabletas",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET020802",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET020802",
+          "label": "Frasco 100 tabletas",
+          "presentation": "Frasco 100 tabletas",
+          "size": "100 tabletas",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Sulfavet",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    },
+    {
+      "name": "Vetsalfato Suspension",
+      "slug": "vetsalfato-suspension",
+      "description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Importado desde SIN PRECIO - CATALOGO GENERAL.pdf."
+            }
+          ]
+        }
+      ],
+      "price": 0,
+      "compareAtPrice": 0,
+      "sku": "VET081001",
+      "stock": 0,
+      "variants": [
+        {
+          "sku": "VET081001",
+          "label": "120 mL",
+          "presentation": "120 mL",
+          "size": "120 mL",
+          "price": 0,
+          "compareAtPrice": null,
+          "stock": 0
+        }
+      ],
+      "published": false,
+      "brand": "Vetsalfato",
+      "category": "health",
+      "subcategory": "Soporte veterinario",
+      "form": "supplement",
+      "proteinSource": "mixed",
+      "species": [
+        "perro",
+        "gato"
+      ],
+      "lifeStages": [
+        "adulto"
+      ],
+      "dietTags": [],
+      "health": [],
+      "ingredients": [],
+      "sourcePdf": "SIN PRECIO - CATALOGO GENERAL.pdf"
+    }
+  ]
+}

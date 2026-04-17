@@ -252,6 +252,15 @@ const normalizeText = (value) =>
     .trim()
     .toLowerCase();
 
+const normalizeFilterKeyList = (filters) =>
+  Array.from(
+    new Set(
+      (Array.isArray(filters) ? filters : [])
+        .map((item) => normalizeText(typeof item === 'string' ? item : item?.key))
+        .filter(Boolean)
+    )
+  );
+
 const collectEntityIds = async (strapi, uid, where = {}) => {
   const ids = [];
   let lastId = 0;
@@ -407,11 +416,13 @@ const buildProductsFromTaxonomy = (taxonomyData, slugify, targetCount) => {
     for (const category of categories) {
       const legacyCategory = resolveLegacyCategory(category);
       const categoryLabel = String(category?.label || legacyCategory).trim();
+      const categoryFilterKeys = normalizeFilterKeyList(category?.recommendedFilters);
       const subcategories = Array.isArray(category?.subcategories) ? category.subcategories : [];
 
       for (const subcategory of subcategories) {
         const subcategoryLabel = String(subcategory?.label || subcategory?.slug || 'General').trim();
         const subcategorySlug = String(subcategory?.slug || '').trim();
+        const subcategoryFilterKeys = normalizeFilterKeyList(subcategory?.recommendedFilters);
 
         if (!subcategoryLabel) continue;
 
@@ -423,6 +434,7 @@ const buildProductsFromTaxonomy = (taxonomyData, slugify, targetCount) => {
           categoryLabel,
           subcategoryLabel,
           subcategorySlug,
+          recommendedFilterKeys: subcategoryFilterKeys.length ? subcategoryFilterKeys : categoryFilterKeys,
         });
       }
     }
@@ -481,10 +493,10 @@ const buildProductsFromTaxonomy = (taxonomyData, slugify, targetCount) => {
       ? [dietSlugs[index % dietSlugs.length]]
       : [];
     const health = [healthSlugs[index % healthSlugs.length]];
-    const ingredients =
-      entry.legacyCategory === 'accesories' || entry.legacyCategory === 'other'
-        ? []
-        : [ingredientSlugs[index % ingredientSlugs.length], ingredientSlugs[(index + 3) % ingredientSlugs.length]];
+    const supportsIngredients = (entry.recommendedFilterKeys || []).includes('ingredients');
+    const ingredients = supportsIngredients
+      ? [ingredientSlugs[index % ingredientSlugs.length], ingredientSlugs[(index + 3) % ingredientSlugs.length]]
+      : [];
 
     products.push({
       name,

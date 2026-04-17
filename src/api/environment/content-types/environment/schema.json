@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "environments",
+  "info": {
+    "singularName": "environment",
+    "pluralName": "environments",
+    "displayName": "Enviroments",
+    "description": "Variables de configuracion generales para el storefront"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Storefront Settings"
+    },
+    "freeShippingThreshold": {
+      "type": "decimal",
+      "required": true,
+      "default": 500
+    }
+  }
+}
