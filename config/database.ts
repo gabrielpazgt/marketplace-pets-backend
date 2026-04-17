@@ -6,9 +6,6 @@ export default ({ env }) => {
   const rejectUnauthorized = env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true);
   const nodeEnv = env('NODE_ENV', 'development');
 
-  if (sslEnabled && nodeEnv === 'production' && !rejectUnauthorized) {
-    throw new Error('DATABASE_SSL_REJECT_UNAUTHORIZED must be true in production');
-  }
 
   const sslConfig =
     sslEnabled &&
