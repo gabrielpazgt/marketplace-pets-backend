@@ -29,10 +29,17 @@ export default ({ env }) => {
     },
     upload: {
       config: {
+        provider: env('SUPABASE_API_URL') ? 'strapi-provider-upload-supabase' : 'local',
+        providerOptions: env('SUPABASE_API_URL') ? {
+          apiUrl: env('SUPABASE_API_URL'),
+          apiKey: env('SUPABASE_API_KEY'),
+          bucket: env('SUPABASE_BUCKET', 'uploads'),
+          directory: env('SUPABASE_DIRECTORY', ''),
+          options: {},
+        } : {},
         // Desactiva la re-compresión del archivo original por Sharp.
         // En Windows, el archivo temporal "optimized-*" queda bloqueado
-        // y causa EBUSY al intentar borrarlo. Los breakpoints (thumbnail,
-        // small, medium, large) siguen generándose normalmente.
+        // y causa EBUSY al intentar borrarlo.
         sizeOptimization: false,
       },
     },
