@@ -19,6 +19,7 @@ const COUPON_UID = 'api::coupon.coupon';
 const ORDER_UID = 'api::order.order';
 const ORDER_ITEM_UID = 'api::order-item.order-item';
 const ORDER_STATUS_LOG_UID = 'api::order-status-log.order-status-log';
+const MEMBERSHIP_LOG_UID = 'api::membership-log.membership-log';
 
 const DEFAULT_CURRENCY = 'GTQ';
 const MAX_PAGE_SIZE = 100;
@@ -29,9 +30,9 @@ const QUERY_CACHE_MAX_ENTRIES = 300;
 const DISCOVERY_CACHE_TTL_MS = 1000 * 60 * 15;
 const DEFAULT_LANGUAGE = 'es';
 const DEFAULT_TIME_ZONE = 'America/Guatemala';
-const FREE_SHIPPING_THRESHOLD = 500;
-const STANDARD_SHIPPING_PRICE = 25;
-const EXPRESS_SHIPPING_PRICE = 45;
+const FREE_SHIPPING_THRESHOLD = 400;
+const STANDARD_SHIPPING_PRICE = 30;
+const EXPRESS_SHIPPING_PRICE = 40;
 const CART_RECOMMENDATION_LIMIT = 4;
 const CART_RECOMMENDATION_CANDIDATE_LIMIT = 40;
 const CATEGORY_LABELS: Record<string, string> = {
@@ -62,7 +63,7 @@ const PROTEIN_SOURCE_LABELS: Record<string, string> = {
 };
 
 type ShippingMethod = 'standard' | 'express';
-type PaymentKind = 'card' | 'bank';
+type PaymentKind = 'card' | 'bank' | 'cash';
 
 const throwHttpError = (status: number, message: string, details: any = undefined) => {
   const error: any = new Error(message);
@@ -653,23 +654,26 @@ const resolvePaymentKind = (value: any): PaymentKind | null => {
   if (!normalized) return null;
   if (normalized === 'card') return 'card';
   if (normalized === 'bank') return 'bank';
-  if (normalized === 'cod') {
-    throwHttpError(400, 'paymentKind cod is not supported');
-  }
-  throwHttpError(400, 'paymentKind must be card or bank');
+  if (normalized === 'cash') return 'cash';
+  throwHttpError(400, 'paymentKind must be card, bank or cash');
 };
 
 const resolveShippingTotal = (
   subtotal: number,
   discountTotal: number,
   method: ShippingMethod,
-  freeShippingThreshold = FREE_SHIPPING_THRESHOLD
+  freeShippingThreshold = FREE_SHIPPING_THRESHOLD,
+  department?: string
 ): number => {
   const threshold = Math.max(0, roundMoney(toNumber(freeShippingThreshold, FREE_SHIPPING_THRESHOLD)));
   const effectiveSubtotal = roundMoney(Math.max(0, subtotal - discountTotal));
   if (effectiveSubtotal <= 0) return 0;
   if (method === 'express') return EXPRESS_SHIPPING_PRICE;
-  return threshold <= 0 || effectiveSubtotal >= threshold ? 0 : STANDARD_SHIPPING_PRICE;
+  const isCapital = !department || normalizeText(department).toLowerCase() === 'guatemala';
+  if (isCapital) {
+    return threshold <= 0 || effectiveSubtotal >= threshold ? 0 : STANDARD_SHIPPING_PRICE;
+  }
+  return Math.round(STANDARD_SHIPPING_PRICE * 0.5);
 };
 
 const formatCurrencyLabel = (value: number): string => `Q${roundMoney(value).toFixed(2)}`;
@@ -2445,7 +2449,8 @@ export default ({ strapi }) => {
       subtotal,
       discountTotal,
       shippingMethod,
-      settings.freeShippingThreshold
+      settings.freeShippingThreshold,
+      normalizeText(payload?.shippingAddress?.department).toLowerCase() || undefined
     );
     const taxTotal = 0;
     const grandTotal = roundMoney(Math.max(0, subtotal - discountTotal + shippingTotal + taxTotal));
@@ -3991,10 +3996,38 @@ export default ({ strapi }) => {
         updateData.membershipStartedAt = null;
       }
 
+      const currentUser = await strapi.db.query(USER_UID).findOne({
+        where: { id: userId },
+        select: ['membershipTier'],
+      });
+      const fromTier: 'free' | 'premium' = currentUser?.membershipTier === 'premium' ? 'premium' : 'free';
+
       await strapi.db.query(USER_UID).update({
         where: { id: userId },
         data: updateData,
       });
+
+      let event: 'subscribed' | 'cancelled' | 'renewed' = 'subscribed';
+      if (targetTier === 'free') {
+        event = 'cancelled';
+      } else if (fromTier === 'premium') {
+        event = 'renewed';
+      }
+
+      try {
+        await strapi.db.query(MEMBERSHIP_LOG_UID).create({
+          data: {
+            user: userId,
+            event,
+            fromTier,
+            toTier: targetTier,
+            amount: targetTier === 'premium' ? 75 : 0,
+            notes: payload?.notes || null,
+          },
+        });
+      } catch (_logErr) {
+        strapi.log.warn('[membership] could not create membership-log entry');
+      }
 
       return getUserMembershipPayload(userId);
     },

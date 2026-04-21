@@ -1211,6 +1211,44 @@ export interface ApiOrderItemOrderItem extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMembershipLogMembershipLog extends Struct.CollectionTypeSchema {
+  collectionName: 'membership_logs';
+  info: {
+    displayName: 'Membership Log';
+    pluralName: 'membership-logs';
+    singularName: 'membership-log';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event: Schema.Attribute.Enumeration<['subscribed', 'cancelled', 'renewed']> &
+      Schema.Attribute.Required;
+    fromTier: Schema.Attribute.Enumeration<['free', 'premium']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::membership-log.membership-log'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    toTier: Schema.Attribute.Enumeration<['free', 'premium']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiOrderStatusLogOrderStatusLog
   extends Struct.CollectionTypeSchema {
   collectionName: 'order_status_logs';
@@ -2153,6 +2191,7 @@ declare module '@strapi/strapi' {
       'api::health-condition.health-condition': ApiHealthConditionHealthCondition;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::life-stage.life-stage': ApiLifeStageLifeStage;
+      'api::membership-log.membership-log': ApiMembershipLogMembershipLog;
       'api::membership.membership': ApiMembershipMembership;
       'api::order-item.order-item': ApiOrderItemOrderItem;
       'api::order-status-log.order-status-log': ApiOrderStatusLogOrderStatusLog;

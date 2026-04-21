@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "membership_logs",
+  "info": {
+    "singularName": "membership-log",
+    "pluralName": "membership-logs",
+    "displayName": "Membership Log"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "event": {
+      "type": "enumeration",
+      "enum": ["subscribed", "cancelled", "renewed"],
+      "required": true
+    },
+    "fromTier": {
+      "type": "enumeration",
+      "enum": ["free", "premium"]
+    },
+    "toTier": {
+      "type": "enumeration",
+      "enum": ["free", "premium"],
+      "required": true
+    },
+    "amount": {
+      "type": "decimal",
+      "default": 0,
+      "min": 0
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}
