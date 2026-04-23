@@ -3946,7 +3946,7 @@ export default ({ strapi }) => {
       }
 
       if (hasOwnField(payload, ['gender'])) {
-        const allowed = ['masculino', 'femenino', 'otro'];
+        const allowed = ['masculino', 'femenino'];
         const g = (payload?.gender || '').toLowerCase().trim();
         data.gender = allowed.includes(g) ? g : null;
       }

@@ -91,7 +91,7 @@
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["masculino", "femenino", "otro"]
+      "enum": ["masculino", "femenino"]
     },
     "avatar": {
       "type": "media",
