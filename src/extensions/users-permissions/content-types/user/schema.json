@@ -89,6 +89,10 @@
     "birthDate": {
       "type": "date"
     },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["masculino", "femenino", "otro"]
+    },
     "avatar": {
       "type": "media",
       "multiple": false,

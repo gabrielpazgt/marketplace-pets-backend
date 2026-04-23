@@ -1319,6 +1319,7 @@ const serializeUserProfile = (user: any, stats: { orders: number; pets: number; 
   phone: user.phone || null,
   documentIdNumber: user.documentIdNumber || null,
   birthDate: user.birthDate || null,
+  gender: user.gender || null,
   avatar: user.avatar || null,
   fullName: [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username,
   membershipTier: user.membershipTier || 'free',
@@ -3942,6 +3943,12 @@ export default ({ strapi }) => {
 
       if (hasOwnField(payload, birthDateFields)) {
         data.birthDate = normalizeDateInput(pickFirstNonEmpty(birthDateFields.map((field) => payload?.[field])));
+      }
+
+      if (hasOwnField(payload, ['gender'])) {
+        const allowed = ['masculino', 'femenino', 'otro'];
+        const g = (payload?.gender || '').toLowerCase().trim();
+        data.gender = allowed.includes(g) ? g : null;
       }
 
       if (Object.keys(data).length > 0) {
