@@ -1309,7 +1309,7 @@ const serializeUserPreferences = (user: any) => ({
   twoFactorEnabled: Boolean(user.twoFactorEnabled),
 });
 
-const serializeUserProfile = (user: any, stats: { orders: number; pets: number }) => ({
+const serializeUserProfile = (user: any, stats: { orders: number; pets: number; savedAmount: number }) => ({
   id: user.id,
   documentId: user.documentId,
   username: user.username,
@@ -2852,13 +2852,22 @@ export default ({ strapi }) => {
       throwHttpError(404, 'User not found');
     }
 
-    const [orders, pets] = await Promise.all([
+    const [orders, pets, userOrders] = await Promise.all([
       strapi.db.query(ORDER_UID).count({ where: { user: { id: userId } } }),
       strapi.db.query(PET_PROFILE_UID).count({ where: { owner: { id: userId } } }),
+      strapi.db.query(ORDER_UID).findMany({
+        where: { user: { id: userId } },
+        select: ['discountTotal'],
+      }),
     ]);
 
+    const savedAmount = userOrders.reduce(
+      (sum: number, o: any) => sum + toNumber(o.discountTotal, 0),
+      0
+    );
+
     return {
-      data: serializeUserProfile(user, { orders, pets }),
+      data: serializeUserProfile(user, { orders, pets, savedAmount: roundMoney(savedAmount) }),
     };
   };
 
