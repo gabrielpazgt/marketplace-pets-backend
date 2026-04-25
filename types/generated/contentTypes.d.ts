@@ -1119,6 +1119,54 @@ export interface ApiLifeStageLifeStage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMembershipLogMembershipLog
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'membership_logs';
+  info: {
+    displayName: 'Membership Log';
+    pluralName: 'membership-logs';
+    singularName: 'membership-log';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    event: Schema.Attribute.Enumeration<
+      ['subscribed', 'cancelled', 'renewed']
+    > &
+      Schema.Attribute.Required;
+    fromTier: Schema.Attribute.Enumeration<['free', 'premium']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::membership-log.membership-log'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    toTier: Schema.Attribute.Enumeration<['free', 'premium']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiMembershipMembership extends Struct.CollectionTypeSchema {
   collectionName: 'memberships';
   info: {
@@ -1208,44 +1256,6 @@ export interface ApiOrderItemOrderItem extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     variant: Schema.Attribute.JSON;
-  };
-}
-
-export interface ApiMembershipLogMembershipLog extends Struct.CollectionTypeSchema {
-  collectionName: 'membership_logs';
-  info: {
-    displayName: 'Membership Log';
-    pluralName: 'membership-logs';
-    singularName: 'membership-log';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    amount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    event: Schema.Attribute.Enumeration<['subscribed', 'cancelled', 'renewed']> &
-      Schema.Attribute.Required;
-    fromTier: Schema.Attribute.Enumeration<['free', 'premium']>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::membership-log.membership-log'
-    > &
-      Schema.Attribute.Private;
-    notes: Schema.Attribute.Text;
-    publishedAt: Schema.Attribute.DateTime;
-    toTier: Schema.Attribute.Enumeration<['free', 'premium']> &
-      Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -2103,6 +2113,7 @@ export interface PluginUsersPermissionsUser
         maxLength: 80;
         minLength: 1;
       }>;
+    gender: Schema.Attribute.Enumeration<['masculino', 'femenino']>;
     lastName: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
